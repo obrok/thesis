@@ -1,0 +1,19 @@
+#!/usr/bin/python
+
+import sys
+import codecs
+sys.path += ":.."
+
+from gensim import models
+from thesis.model.lsa_model import ModelWrapper
+
+filename = sys.argv[1]
+model_name = sys.argv[2]
+
+with codecs.open(filename, "r", "utf-8") as file:
+  docs = file.read().rsplit("\n")
+  docs = map(lambda d: d.split("|"), docs)
+
+  model = ModelWrapper(docs, eval("models." + model_name))
+  for topic in model.topics():
+    print topic.encode("utf-8")

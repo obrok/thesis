@@ -1,0 +1,25 @@
+#! /usr/bin/python
+# -*- coding: utf-8 -*-
+
+test = 'NUMBER|rosyjski|okręt|podwodny|napęd|jądrowy|"|Kursk|"|ulec|awaria|morze|Barents|-|szelfowy|morze|Europa|północny|a|nowy|ziemia|.|rosyjski|okręt|ratowniczy|zdołać|opuścić|dna|kapsuła|ratunkowy|-|przekazać|agencja|ITA|-|TASS|,|powołując|służba|prasowy|rosyjski|marynarka|wojenny|.|być|jasny|,|ratownik|kapsuła|nawiązać|kontakt|"|Kursk|"|.|rosyjski|agencja|podać|,|przeszkadzać|słaby|widoczność|,|przekraczający|NUMBER|metr|.|zdanie|dowódca|rosyjski|marynarka|wojenny|,|admirał|Władimir|Kurojedowy|,|załoga|"|Kursk|"|tlen|starczyć|piątek|.|kapsuła|opuszczony|dna|morze|okręt|ratowniczy|można|jednorazowy|ewakuować|NUMBER|osoba|.|cykl|trwać|siedem|godzina|.|zatopiony|okręt|podwodny|znajdować|NUMBER|członek|załoga|.|wiadomo|,|okręt|leżeć|dna|podniesiony|peryskop|.|uszkodzić|mostek|nawigacyjny|rozerwany|przedni|część|kadłub|.|dwa|wyrzutnia|rakietowy|prawy|burta|brakować|pokrywa|.|wypadek|,|unieruchomić|dna|morze|Barents|rosyjski|atomowy|okręt|podwodny|"|Kursk|"|,|wydarzyć|sobota|-|podać|norweski|ministerstwo|sprawa|zagraniczny|.|według|władza|rosyjski|awaria|"|Kursk|"|nastąpić|próbny|strzelanie|torpedowy|.|"|Kursk|"|osiąść|dna|około|NUMBER|mila|morski|baza|Siewieromorsek|Murmańsk|.|wyłączenie|reaktor|napędowy|"|Kursk|"|dysponować|źródło|energia|być|całkowity|zdać|pomoc|zewnątr|.|dziać|dźwiękowy|telefon|podwodny|,|a|jedyne|sposób|porozumiewać|uwięziony|marynarz|ratownik|być|stukanie|kadłub|.|okręt|"|Kursk|"|zostać|zwodować|NUMBER|rok|pełnia|służba|NUMBER|rok|być|uważać|jeden|najnowocześniejszy|jednostka|rosyjski|marynarka|wojenny|.|'
+test = test.split("|")
+
+import sys
+import codecs
+sys.path += ":.."
+
+from gensim import models
+from thesis.model.lsa_model import ModelWrapper
+
+filename = sys.argv[1]
+model_name = sys.argv[2]
+
+with codecs.open(filename, "r", "utf-8") as file:
+  docs = file.read().rsplit("\n")
+  docs = map(lambda d: d.split("|"), docs)
+
+  model = ModelWrapper(docs, eval("models." + model_name))
+  for result in model.similar(test)[0:200]:
+    print " ".join(result).encode("utf-8")
+
+
