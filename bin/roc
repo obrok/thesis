@@ -32,6 +32,4 @@ with codecs.open(filename, "r", "utf-8") as file:
     false_positives = count - found
     all_negatives = len(docs) - len(gold)
     print "{0} {1}".format(float(false_positives) / all_negatives, float(found) / len(gold))
-    if found == len(gold):
-      break
     sys.stdout.flush()
