@@ -29,4 +29,6 @@ with codecs.open(filename, "r", "utf-8") as file:
     if item in gold:
       found += 1
     print "{0} {1}".format(float(found) / count, float(found) / len(gold))
+    if found == len(gold):
+      break
     sys.stdout.flush()
