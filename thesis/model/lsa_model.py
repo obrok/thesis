@@ -31,7 +31,7 @@ class ModelWrapper:
   def similar(self, doc):
     doc = self.vectorize(doc)
     vector = self.logmodel[doc]
-    vector = self.model[doc]
+    vector = self.model[vector]
     sims = self.index[vector]
     sims = sorted(enumerate(sims), key=lambda x: -x[1])
     return map(lambda x: x[0], sims)
