@@ -25,13 +25,15 @@ class ModelWrapper:
   def vectorize(self, doc):
     return self.dictionary.doc2bow(doc)
 
+  def process(self, doc):
+    vector = self.vectorize(doc)
+    vector = self.logmodel[vector]
+    return self.model[vector]
+
   def topics(self):
     return self.model.show_topics(-1, 10)
 
   def similar(self, doc):
-    doc = self.vectorize(doc)
-    vector = self.logmodel[doc]
-    vector = self.model[vector]
-    sims = self.index[vector]
+    sims = self.index[self.process(doc)]
     sims = sorted(enumerate(sims), key=lambda x: -x[1])
     return map(lambda x: x[0], sims)
