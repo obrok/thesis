@@ -1,3 +1,6 @@
 data
 results/without_preprocessing
 *.pyc
+*.log
+*.aux
+*.toc
