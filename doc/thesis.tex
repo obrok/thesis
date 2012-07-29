@@ -6,6 +6,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{color}
+\usepackage{placeins}
 \frenchspacing
 
 \newcommand{\todo}[1]{\colorbox{yellow}{#1}}
@@ -22,7 +23,7 @@
 \pagebreak
 
 \section{Wstęp}
-\section{Wstęp teoretyczny}
+\section{Podstawy teoretyczne}
 \section{Procedura badawcza}
 \section{Opis danych}
 \section{Wyniki i analiza}
@@ -39,12 +40,24 @@ danych.
 
 \subsubsection{Ranking dokumentów}
 
-Wykresy poniżej przedstawiają sumę kwadratów ranków dokumentów z wzorca przygotowanego
-ręcznie dla danego zapytania w wynikach działania odpowiednio algorytmów LDA i LSI
-dla różnej liczby tematów.
+Wykresy \ref{ranks_stemming_comparison}, \ref{ranks_no_stemming_comparison}
+przedstawiają sumę kwadratów ranków dokumentów z wzorca przygotowanego ręcznie
+dla danego zapytania w wynikach działania odpowiednio algorytmów LDA i LSI dla
+różnej liczby tematów.
 
+\begin{figure}
+\caption{Suma kwadratów ranków dokumentów ze wzorca dla testowego zapytania (z wykorzystanie stemmingu)}
+\label{ranks_stemming_comparison}
+\includegraphics[width=\linewidth]{gfx/ranks_stemming.png}
+\end{figure}
+
+\begin{figure}
+\caption{Suma kwadratów ranków dokumentów ze wzorca dla testowego zapytania (bez wykorzystania stemmingu)}
+\label{ranks_no_stemming_comparison}
 \todo{Wykres bez stemmingu}
-\todo{Wykres ze stemmingiem}
+\end{figure}
+
+\FloatBarrier
 
 \subsection{Krzywe ROC}
 
