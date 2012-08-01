@@ -1,4 +1,7 @@
 data
+*.blg
+*.bbl
+*.dvi
 results/without_preprocessing
 *.pyc
 *.log

@@ -8,6 +8,7 @@
 \usepackage{color}
 \usepackage{placeins}
 \usepackage[math]{anttor}
+\usepackage{natbib}
 \frenchspacing
 
 \newcommand{\todo}[1]{\colorbox{yellow}{#1}}
@@ -42,12 +43,15 @@ tabeli zawiera jeden temat - liczby przy tokenach oznaczają wagi poszczególnyc
 słów w danym temacie.
 
 Tematy uzyskane przy pomocy LDA wydają się bardziej odpowiadać postrzeganiu
-tekstu przez człowieka.  Przykładowo temat numer 4 w tabeli
-\ref{fig:lsi_topics} można interpretować jako ,,nie o pogodzie`` - trudno sobie
-wyobrazić scenariusz w którym takie podsumowanie tekstu byłoby człowiekowi
-przydatne.
+tekstu przez człowieka niż te wygenerowane przez LSI.  Przykładowo temat numer 4 w tabeli
+\ref{fig:lsi_topics} można interpretować jako ,,nie pogoda i finanse`` ---
+możliwość złożenia dwóch tematów postrzeganych przez człowieka w jeden, ale z
+przeciwnymi znakami powoduje powstawanie tego typu kombinacji. Tematy wygenerowane
+przez LSI bywają złożeniami dwóch różnych konceptów, jednak zawsze mają ten sam znak,
+jak na przykład temat numer 5 w tabeli \ref{fig:lda_topics}, który wydaje się łączyć
+koncepty ,,muzeum`` i ,,przestępstwo``.
 
-\begin{table}
+\begin{table}[h]
 \label{fig:lsi_topics}
 \caption{Tematy wyekstrahowane przez algorytm LSI}
 \begin{tabular}{|c|p{\linewidth}|}
@@ -66,7 +70,7 @@ Lp. & Temat \\\hline
 \end{tabular}
 \end{table}
 
-\begin{table}
+\begin{table}[h]
 \label{fig:lda_topics}
 \caption{Tematy wyekstrahowane przez algorytm LDA}
 \begin{tabular}{|c|p{\linewidth}|}
@@ -98,13 +102,13 @@ przedstawiają sumę kwadratów ranków dokumentów z wzorca przygotowanego ręc
 dla danego zapytania w wynikach działania odpowiednio algorytmów LDA i LSI dla
 różnej liczby tematów.
 
-\begin{figure}
+\begin{figure}[h]
 \caption{Suma kwadratów ranków dokumentów ze wzorca dla testowego zapytania (z wykorzystanie stemmingu)}
 \label{ranks_stemming_comparison}
 \includegraphics[width=\linewidth]{gfx/ranks_stemming.png}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \caption{Suma kwadratów ranków dokumentów ze wzorca dla testowego zapytania (bez wykorzystania stemmingu)}
 \label{ranks_no_stemming_comparison}
 \todo{Wykres bez stemmingu}
@@ -114,13 +118,19 @@ różnej liczby tematów.
 
 \subsection{Krzywe ROC}
 
-Krzywa ROC (Receiver Operation Characteristic) to wykres przedstawiający dla
+Krzywa ROC \cite{roc-article1} (Receiver Operation Characteristic) to wykres przedstawiający dla
 danego klasyfikatora stosunek odsetka poprawnie odnalezionych dokumentów wśród
 wszystkich dokumentów, które miały zostać odnalezione do odsetka odrzuconych
 dokumentów wśród wszystkich dokumentów, które miały zostać odrzucone w miarę
 zmiany progu detekcji. W tym wypadku ten zmienny próg to po prostu liczba $n$ -
 pierwszych $n$ dokumentów jest traktowane jako odnalezione, a pozostałe jako
 odrzucone.
+
+Lepsze klasyfikatory charakteryzują się krzywymi ROC położonymi dalej od linii
+$x = y$.  Klasyfikatory blisko, lub na tej linii nie wykonują żadnej użytecznej
+pracy. Analiza odległości krzywej ROC od linii $x = y$ w różnych miejscach
+wykresu może dać wskazówkę co do najlepszego dobrania progu detekcji dla danego
+problemu.
 
 Poniższe wykresy przedstawiają krzywe ROC dla algorytmów LDA i LSI dla różnych
 liczb tematów.
@@ -133,5 +143,8 @@ liczb tematów.
 \subsection{Wnioski}
 
 \section{Podsumowanie}
+
+\bibliographystyle{abbrv}
+\bibliography{thesis}
 
 \enddocument
