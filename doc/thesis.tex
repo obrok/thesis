@@ -102,6 +102,14 @@ przedstawiają sumę kwadratów ranków dokumentów z wzorca przygotowanego ręc
 dla danego zapytania w wynikach działania odpowiednio algorytmów LDA i LSI dla
 różnej liczby tematów.
 
+Polepszenie wyników dzięki zastosowaniu stemmingu jest widoczne na pierwszy rzut oka ---
+polski jako język silnie fleksyjny jest znakomitym kandydatem do zastosowania tego
+typu techniki. W \cite{manning-schuetze} zasugerowano, że ze stemmingu można zrezygnować dyponując
+odpowiednio dużym zbiorem danych jednak wyniki te uzyskano dla języka angielskiego, którego
+fleksja jest znacznie mniej rozbudowana. W tym wypadku zebranie tak dużej ilości danych
+może być mniej praktyczne niż skonstruowanie słownika fleksyjnego takiego jak na przykład
+ten opisany w \cite{pisarek-slownik}.
+
 \begin{figure}[h]
 \caption{Suma kwadratów ranków dokumentów ze wzorca dla testowego zapytania (z wykorzystanie stemmingu)}
 \label{ranks_stemming_comparison}
@@ -111,7 +119,7 @@ różnej liczby tematów.
 \begin{figure}[h]
 \caption{Suma kwadratów ranków dokumentów ze wzorca dla testowego zapytania (bez wykorzystania stemmingu)}
 \label{ranks_no_stemming_comparison}
-\todo{Wykres bez stemmingu}
+\includegraphics[width=\linewidth]{gfx/ranks_no_stemming.png}
 \end{figure}
 
 \FloatBarrier
