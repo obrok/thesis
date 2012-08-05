@@ -47,7 +47,7 @@ tekstu przez człowieka niż te wygenerowane przez LSI.  Przykładowo temat nume
 \ref{fig:lsi_topics} można interpretować jako ,,nie pogoda i finanse`` ---
 możliwość złożenia dwóch tematów postrzeganych przez człowieka w jeden, ale z
 przeciwnymi znakami powoduje powstawanie tego typu kombinacji. Tematy wygenerowane
-przez LSI bywają złożeniami dwóch różnych konceptów, jednak zawsze mają ten sam znak,
+przez LDA bywają złożeniami dwóch różnych konceptów, jednak zawsze mają ten sam znak,
 jak na przykład temat numer 5 w tabeli \ref{fig:lda_topics}, który wydaje się łączyć
 koncepty ,,muzeum`` i ,,przestępstwo``.
 
@@ -124,7 +124,7 @@ ten opisany w \cite{pisarek-slownik}.
 
 \FloatBarrier
 
-\subsection{Krzywe ROC}
+\subsubsection{Krzywe ROC}
 
 Krzywa ROC \cite{roc-article1} (Receiver Operation Characteristic) to wykres
 przedstawiający dla danego klasyfikatora zależność między stosunkiem liczby
@@ -145,18 +145,20 @@ Wykresy \ref{roc_lsi} i \ref{roc_lda} przedstawiają krzywe ROC dla algorytmów
 LDA i LSI dla różnych liczb tematów.
 
 \begin{figure}[h]
-\label{roc_lsi}
 \caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów}
 \includegraphics[width=\linewidth]{gfx/lsi_roc.png}
+\label{roc_lsi}
 \end{figure}
 
 \begin{figure}[h]
+\caption{Krzywe ROC dla algorytmu LDA dla wybranych liczb tematów}
+\includegraphics[width=\linewidth]{gfx/lda_roc.png}
 \label{roc_lda}
-\caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów}
-\todo{Wykres LDA}
 \end{figure}
 
 \todo{Wykresy bez stemmingu - 20, 100, 300}
+
+\FloatBarrier
 
 \subsection{Metryki bez nadzoru}
 
