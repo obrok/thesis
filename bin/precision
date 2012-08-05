@@ -1,0 +1,34 @@
+#!/usr/bin/python
+
+import sys
+import codecs
+import operator
+sys.path += ":.."
+
+from gensim import models
+from thesis.model.lsa_model import ModelWrapper
+
+filename = sys.argv[1]
+model_name = sys.argv[2]
+topics = int(sys.argv[3])
+
+query = 423
+gold = [423, 515, 9927, 11188, 8778, 5661, 468, 5854, 10676, 7319, 7871, 12192]
+
+with codecs.open(filename, "r", "utf-8") as file:
+  docs = file.read().rsplit("\n")
+  docs = map(lambda d: d.split("|"), docs)
+
+  model = ModelWrapper(docs, eval("models." + model_name), topics)
+  result = model.similar(docs[query])
+
+  count = 0
+  found = 0
+  for item in result:
+    count += 1
+    if item in gold:
+      found += 1
+      precision = float(found) / float(count)
+      recall = float(found) / float(len(gold))
+      print "{0} {1}".format(recall, precision)
+      sys.stdout.flush()
