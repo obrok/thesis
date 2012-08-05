@@ -126,13 +126,14 @@ ten opisany w \cite{pisarek-slownik}.
 
 \subsection{Krzywe ROC}
 
-Krzywa ROC \cite{roc-article1} (Receiver Operation Characteristic) to wykres przedstawiający dla
-danego klasyfikatora stosunek odsetka poprawnie odnalezionych dokumentów wśród
-wszystkich dokumentów, które miały zostać odnalezione do odsetka odrzuconych
-dokumentów wśród wszystkich dokumentów, które miały zostać odrzucone w miarę
-zmiany progu detekcji. W tym wypadku ten zmienny próg to po prostu liczba $n$ -
-pierwszych $n$ dokumentów jest traktowane jako odnalezione, a pozostałe jako
-odrzucone.
+Krzywa ROC \cite{roc-article1} (Receiver Operation Characteristic) to wykres
+przedstawiający dla danego klasyfikatora zależność między stosunkiem liczby
+znalezionych dokumentów relewantnych do liczby wszystkich zwróconych dokumentów
+(TPR --- True Positive Rate), a stosunkiem liczby odrzuconych dokumentów
+relewantnych do liczby wszystkich odrzuconych dokumentów (FPR - False Positive
+Rate) w miarę zmiany progu detekcji. W tym wypadku ten zmienny próg to po
+prostu liczba $n$ - pierwszych $n$ dokumentów jest traktowane jako odnalezione,
+a pozostałe jako odrzucone.
 
 Lepsze klasyfikatory charakteryzują się krzywymi ROC położonymi dalej od linii
 $x = y$.  Klasyfikatory blisko, lub na tej linii nie wykonują żadnej użytecznej
@@ -140,11 +141,22 @@ pracy. Analiza odległości krzywej ROC od linii $x = y$ w różnych miejscach
 wykresu może dać wskazówkę co do najlepszego dobrania progu detekcji dla danego
 problemu.
 
-Poniższe wykresy przedstawiają krzywe ROC dla algorytmów LDA i LSI dla różnych
-liczb tematów.
+Wykresy \ref{roc_lsi} i \ref{roc_lda} przedstawiają krzywe ROC dla algorytmów
+LDA i LSI dla różnych liczb tematów.
+
+\begin{figure}[h]
+\label{roc_lsi}
+\caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów}
+\includegraphics[width=\linewidth]{gfx/lsi_roc.png}
+\end{figure}
+
+\begin{figure}[h]
+\label{roc_lda}
+\caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów}
+\todo{Wykres LDA}
+\end{figure}
 
 \todo{Wykresy bez stemmingu - 20, 100, 300}
-\todo{Wykresy ze stemmingiem - 20, 100, 300}
 
 \subsection{Metryki bez nadzoru}
 
