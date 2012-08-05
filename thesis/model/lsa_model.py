@@ -25,6 +25,7 @@ class ModelWrapper:
     self.index = self.index = similarities.MatrixSimilarity(self.vectors)
     self.topics = {}
     self.topic_no = topics
+    self.probabilities = {}
 
   def vectorize(self, doc):
     return self.dictionary.doc2bow(doc)
@@ -47,6 +48,22 @@ class ModelWrapper:
       self.topics[topic_index] = self.model.show_topic(topic_index, len(self.dictionary))
     return self.topics[topic_index]
 
+  def probability(self, topic_index, word):
+    if not topic_index in self.probabilities:
+      self.probabilities[topic_index] = {}
+    if not word in self.probabilities[topic_index]:
+      topic = self.get_topic(topic_index)
+      topic_total = sum(map(itemgetter(0), topic))
+      word_entry = filter(lambda x: x[1] == word, topic)
+      if len(word_entry) > 0:
+        weight = word_entry[0][0]
+        self.probabilities[topic_index][word] = weight / topic_total
+      else:
+        self.probabilities[topic_index][word] = 0
+
+    return self.probabilities[topic_index][word]
+
+
   def perplexity(self, docs):
     perplexity = 0.0
 
@@ -59,14 +76,9 @@ class ModelWrapper:
         word_prob = 0.0
         word_vector = self.process([word])
         for (topic_index, weight) in word_vector:
-          topic = self.get_topic(topic_index)
-          topic_total = sum(map(itemgetter(0), topic))
           topic_entry = filter(lambda x: x[0] == topic_index, vector)
-          word_entry = filter(lambda x: x[1] == word, topic)
-          if len(word_entry) > 0 and len(topic_entry) > 0:
-            weight = word_entry[0][0]
-            topic_weight = topic_entry[0][1]
-            word_prob += topic_weight / total * weight / topic_total
+          if len(topic_entry) > 0:
+            word_prob += self.probability(topic_index, word) * topic_entry[0][1] / total
 
         if word_prob > 0:
           doc_logprob += math.log(word_prob)
