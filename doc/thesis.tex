@@ -97,18 +97,31 @@ Lp. & Temat \\\hline
 
 \subsubsection{Ranking dokumentów}
 
-Wykresy \ref{ranks_stemming_comparison}, \ref{ranks_no_stemming_comparison}
+Wykresy \ref{ranks_stemming_comparison} i \ref{ranks_no_stemming_comparison}
 przedstawiają sumę kwadratów ranków dokumentów z wzorca przygotowanego ręcznie
 dla danego zapytania w wynikach działania odpowiednio algorytmów LDA i LSI dla
 różnej liczby tematów.
 
-Polepszenie wyników dzięki zastosowaniu stemmingu jest widoczne na pierwszy rzut oka ---
-polski jako język silnie fleksyjny jest znakomitym kandydatem do zastosowania tego
-typu techniki. W \cite{manning-schuetze} zasugerowano, że ze stemmingu można zrezygnować dyponując
-odpowiednio dużym zbiorem danych jednak wyniki te uzyskano dla języka angielskiego, którego
-fleksja jest znacznie mniej rozbudowana. W tym wypadku zebranie tak dużej ilości danych
-może być mniej praktyczne niż skonstruowanie słownika fleksyjnego takiego jak na przykład
-ten opisany w \cite{pisarek-slownik}.
+Algorytm LDA osiąga ogólnie gorsze wyniki niż LSI - poza przedziałem $50 - 100$
+tematów. Gorszy jest też (aczkolwiek niewiele) najlepszy wynik jaki udałoby się
+osiągnąć odpowiednio dobierając liczbę tematów. Na wykresie daje się także
+zauważyć stochastyczna natura LDA - podczas gdy dla LSI wyniki niemal
+monotonicznie poprawiają się wraz ze wzrostem liczby tematów dla LDA zdarza się
+znaczne pogorszenie wyników przy zwiększeniu tej liczby.
+
+Polepszenie wyników dzięki zastosowaniu stemmingu jest widoczne na pierwszy
+rzut oka --- polski jako język silnie fleksyjny jest znakomitym kandydatem do
+zastosowania tego typu techniki. W \cite{manning-schuetze} zasugerowano, że ze
+stemmingu można zrezygnować dyponując odpowiednio dużym zbiorem danych jednak
+wyniki te uzyskano dla języka angielskiego, którego fleksja jest znacznie mniej
+rozbudowana. W tym wypadku zebranie tak dużej ilości danych może być mniej
+praktyczne niż skonstruowanie słownika fleksyjnego takiego jak na przykład ten
+opisany w \cite{pisarek-slownik}.
+
+Co ciekawe algorytm LDA radzi sobie znacznie lepiej od LSI bez wykorzystania
+stemmingu.  Może to być spowodowane trudnością w przypadku LSI połączenia ze
+sobą słów, które różnią się formą fleksyjną i są w tym wypadku traktownae
+całkowicie osobno.
 
 \begin{figure}[h]
 \caption{Suma kwadratów ranków dokumentów ze wzorca dla testowego zapytania (z wykorzystanie stemmingu)}
@@ -143,6 +156,10 @@ problemu.
 
 Wykresy \ref{roc_lsi} i \ref{roc_lda} przedstawiają krzywe ROC dla algorytmów
 LDA i LSI dla różnych liczb tematów.
+
+Dla dużych liczb tematów algorytm LDA spisuje się gorzej, jednal można
+zauważyć, że klasyfikator uzyskany dla 30 tematów jest podobnej jakości lub
+lepszy jak ten uzyskany przy użyciu LSI dla 100 tematów.
 
 \begin{figure}[h]
 \caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów}
