@@ -16,11 +16,11 @@ with codecs.open(filename, "r", "utf-8") as file:
   docs = file.read().rsplit("\n")
   docs = map(lambda d: d.split("|"), docs)
 
-  learn = docs[:-100]
-  test = docs[-100:]
+  learn = docs[:1000]
+  test = docs[1000:1100]
 
-  for topics in range(1,10) + range(10, 100, 10) + range(100, 1000, 100):
+  for topics in range(20, 100, 10) + range(100, 1000, 100):
     model = ModelWrapper(learn, eval("models." + model_name), topics)
 
-    print "{0} {1}".format(topics, model.perplexity(test))
+    print "{0} {1}".format(topics, model.cosine_perplexity(test))
     sys.stdout.flush()
