@@ -28,6 +28,8 @@
 \section{Podstawy teoretyczne}
 \section{Procedura badawcza}
 \section{Opis danych}
+\subsection{Przykładowy problem}
+\label{sec:example}
 \section{Wyniki i analiza}
 
 Niniejszy rozdział zawiera porównanie różnych aspektów działania algorytmów LDA
@@ -94,6 +96,13 @@ Lp. & Temat \\\hline
 \subsection{Czas działania}
 
 \subsection{Metryki z nadzorem}
+
+Niniejszy rozdział zawiera omówienie wyników otrzymanych za pomocą algorytmów
+LDA i LSI dla przykładowego problemu opisanego w \ref{sec:example}. Należy
+zauważyć, że tego rodzaju ewaluacja wymaga ręcznego przygotowania danych
+testowych przez człowieka, co może być nieprakyczne dla dużych zbiorów danych.
+Jej zaletą jest fakt, że mierzy ona faktyczne osiągi danego rozwiązania w
+rzeczywistych problemach.
 
 \subsubsection{Ranking dokumentów}
 
@@ -174,6 +183,38 @@ lepszy jak ten uzyskany przy użyciu LSI dla 100 tematów.
 \end{figure}
 
 \todo{Wykresy bez stemmingu - 20, 100, 300}
+
+\FloatBarrier
+
+\subsubsection{Przywołanie i precyzja}
+
+Przywołanie (stosunek liczby zwróconych relewantnych dokumentów do liczby
+wszystkich relewantncyh dokumentów) i prezycja (stosunek liczby zwróconych
+relewantncyh dokumentów do liczby wszystkich zwróconych dokumentów) to częste
+metryki w zadaniach typu information retrieval. Wybranie jakiegoś poziomu
+przywołania reprezentuje pewien kompromis między kompletnością zwróconych
+danych, a częstością występowania w nich danych relewantnych, a więc ilością
+czasu, które musi poświęcić operator systemu na ich dalsze przetworzenie.
+
+Wykresy \ref{fig:lsi_precision} i \ref{fig:lda_precision} prezentują precyzę
+osiąganą przez algorytmy LDA i LSI na różnych poziomach przywołania dla
+przykładowego problemu.
+
+Można zauważyć, że LDA daje znacznie gorszą precyzję niż LSI. Nawet najlepiej
+dobrana liczba tematów (w tym wypadku 300) pozwala osiągać precyzję
+porównywalną jedynie z LSI dla 30 tematów.
+
+\begin{figure}[h]
+\caption{Precyzja na różnych poziomach przywołania dla algorytmu LSI}
+\includegraphics[width=\linewidth]{gfx/lsi_precision.png}
+\label{fig:lsi_precision}
+\end{figure}
+
+\begin{figure}[h]
+\caption{Precyzja na różnych poziomach przywołania dla algorytmu LDA}
+\includegraphics[width=\linewidth]{gfx/lda_precision.png}
+\label{fig:lda_precision}
+\end{figure}
 
 \FloatBarrier
 
