@@ -157,7 +157,7 @@ problemu.
 Wykresy \ref{roc_lsi} i \ref{roc_lda} przedstawiają krzywe ROC dla algorytmów
 LDA i LSI dla różnych liczb tematów.
 
-Dla dużych liczb tematów algorytm LDA spisuje się gorzej, jednal można
+Dla dużych liczb tematów algorytm LDA spisuje się gorzej, jednak można
 zauważyć, że klasyfikator uzyskany dla 30 tematów jest podobnej jakości lub
 lepszy jak ten uzyskany przy użyciu LSI dla 100 tematów.
 
@@ -177,7 +177,30 @@ lepszy jak ten uzyskany przy użyciu LSI dla 100 tematów.
 
 \FloatBarrier
 
-\subsection{Metryki bez nadzoru}
+\subsection{Metryki bez nadzoru (perplexity)}
+
+Współczynnik perplexity, którego wartości w zależności od liczby tematów są
+przedstawione na wykresie \ref{fig:perplexity}, daje pewne pojęcie o tym jak
+dobrze model jest w stanie przewidzieć nowe dane. Wysokie wartości
+współczynnika mogą wskazywać, że model jest przeuczony i będze słabo uogólniał
+swoje działania na nieznane dane. Jest on dobrym wskaźnikiem jak dobrze dany
+model będzie sobie radził z klastrowaniem danego zbioru danych.
+
+Wykres demonstruje, że optymalne wartości współczynnika perplexity zostają
+osiągnięte w okolicach 50 tematów. W tym wypadku może to sugerować, że mniej
+więcej na tyle właśnie grup tematycznych należałoby podzielić ten zbiór danych.
+
+Algorytm LDA zachowuje niski współczynnik perplexity tylko stosunkowo blisko
+optymalnej liczby tematów. Takie zachowanie może wymagać dokładnego strojenia
+algorytmu do każdego zastosowania, co bywa uciążliwe i czasochłonne.
+
+\begin{figure}[h]
+\caption{Współczynnik perplexity dla LDA i LSI w zależności od liczby tematów}
+\includegraphics[width=\linewidth]{gfx/perplexity.png}
+\label{fig:perplexity}
+\end{figure}
+
+\FloatBarrier
 
 \subsection{Wnioski}
 
