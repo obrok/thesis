@@ -131,6 +131,10 @@ class ModelWrapper:
       if other_index < len(vector2) and index == other_index:
         result += value * vector2[other_index][1] / norm1 / norm2
 
+    if result > 1:
+      result = 1
+    elif result < -1:
+      result = -1
     return result
 
   def norm(self, vector):
