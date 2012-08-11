@@ -164,11 +164,10 @@ wykresu może dać wskazówkę co do najlepszego dobrania progu detekcji dla dan
 problemu.
 
 Wykresy \ref{roc_lsi} i \ref{roc_lda} przedstawiają krzywe ROC dla algorytmów
-LDA i LSI dla różnych liczb tematów.
-
-Dla dużych liczb tematów algorytm LDA spisuje się gorzej, jednak można
-zauważyć, że klasyfikator uzyskany dla 30 tematów jest podobnej jakości lub
-lepszy jak ten uzyskany przy użyciu LSI dla 100 tematów.
+LDA i LSI dla różnych liczb tematów. Dla dużych liczb tematów algorytm LDA
+spisuje się gorzej, jednak można zauważyć, że klasyfikator uzyskany dla 30
+tematów jest podobnej jakości lub lepszy jak ten uzyskany przy użyciu LSI dla
+100 tematów.
 
 \begin{figure}[h]
 \caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów}
@@ -182,7 +181,23 @@ lepszy jak ten uzyskany przy użyciu LSI dla 100 tematów.
 \label{roc_lda}
 \end{figure}
 
-\todo{Wykresy bez stemmingu - 20, 100, 300}
+Na wykresach \ref{roc_lsi_untagged} i \ref{roc_lda_untagged} przedstawione
+zostały krzywe ROC dla algorytmów LSI i LDA bez wykorzystania stemmingu.
+Ponownie daje się zauważyć lepsze działanie algorytmu LDA w tym wypadku -
+klasyfikator uzyskany dla 300 tematów jest znacznie lepszy od tego uzyskanego
+przy pomocy LSI.
+
+\begin{figure}[h]
+\caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów bez wykorzystania stemmingu}
+\includegraphics[width=\linewidth]{gfx/lsi_roc_untagged.png}
+\label{roc_lsi_untagged}
+\end{figure}
+
+\begin{figure}[h]
+\caption{Krzywe ROC dla algorytmu LDA dla wybranych liczb tematów bez wykorzystania stemmingu}
+\includegraphics[width=\linewidth]{gfx/lda_roc_untagged.png}
+\label{roc_lda_untagged}
+\end{figure}
 
 \FloatBarrier
 
