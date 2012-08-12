@@ -95,14 +95,16 @@ Lp. & Temat \\\hline
 
 \subsection{Czas działania}
 
+\todo{Czy to ma sens?}
+
 \subsection{Metryki z nadzorem}
 
-Niniejszy rozdział zawiera omówienie wyników otrzymanych za pomocą algorytmów
-LDA i LSI dla przykładowego problemu opisanego w \ref{sec:example}. Należy
-zauważyć, że tego rodzaju ewaluacja wymaga ręcznego przygotowania danych
-testowych przez człowieka, co może być nieprakyczne dla dużych zbiorów danych.
-Jej zaletą jest fakt, że mierzy ona faktyczne osiągi danego rozwiązania w
-rzeczywistych problemach.
+W tym rozdziale omówiono wyniki otrzymane za pomocą algorytmów LDA i LSI dla
+przykładowego problemu opisanego w \ref{sec:example}. Należy zauważyć, że tego
+rodzaju ewaluacja wymaga ręcznego przygotowania danych testowych przez
+człowieka, co może być nieprakyczne dla dużych zbiorów danych.  Jej zaletą jest
+fakt, że mierzy ona faktyczne osiągi danego rozwiązania w rzeczywistych
+problemach.
 
 \subsubsection{Ranking dokumentów}
 
@@ -259,6 +261,21 @@ algorytmu do każdego zastosowania, co bywa uciążliwe i czasochłonne.
 \FloatBarrier
 
 \subsection{Wnioski}
+
+Algorytm LDA daje gorszej jakości (a przynajmniej mniej stabilne) wyniki dla
+typowych problemów klasyfikacji i wyszukiwania informacji spotykanych w
+codziennej praktyce. Wydaje się za to być w stanie działać w sytuacji, gdy
+wiele różnych tokenów oznacza to samo (przypadek bez wykorzystania stemmingu),
+w odróżnieniu od LSI, którego wyniki są wtedy całkowicie nieprzydatne. To
+bardzo porządana cecha w przypadku braku odpowiedniego słownika fleksyjnego dla
+danego języka.
+
+Przewagą LDA wydaje się być jakość generowanych tematów --- przez wymuszenie
+dodatnich wag otrzymujemy na najbardziej znaczących pozycjach (z najwyższymi
+wagami) słowa opisujące dany dokument/temat, podczas gdy w przypadku LSI mogą
+to być słowa najodleglejsze. Takie zachowanie może okazać się korzystne w
+zastosowaniach typu tagowanie dokumentów lub automatyczne generowanie
+podsumowań czy słów kluczowych.
 
 \section{Podsumowanie}
 
