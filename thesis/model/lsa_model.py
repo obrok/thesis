@@ -10,6 +10,22 @@ NUM_TOPICS = 200
 NO_BELOW = 2
 NO_ABOVE = 0.7
 
+def best_of(docs, model, topics, no):
+  train = docs[:-100]
+  validate = docs[-100:]
+
+  model1 = ModelWrapper(train, model, topics)
+  perplexity1 = model1.cosine_perplexity(validate)
+  for i in range(1, no):
+    model2 = ModelWrapper(train, model, topics)
+    perplexity2 = model2.cosine_perplexity(validate)
+    if perplexity2 < perplexity1:
+      model1 = model2
+      perplexity1 = perplexity2
+
+  return model1
+
+
 class ModelWrapper:
   def __init__(self, docs, model, topics=None):
     if(topics == None): topics = NUM_TOPICS
@@ -22,7 +38,7 @@ class ModelWrapper:
     self.vectors = self.logmodel[self.vectors]
     self.model = model(self.vectors, id2word=self.dictionary, num_topics=topics)
     self.vectors = self.model[self.vectors]
-    # self.index = similarities.MatrixSimilarity(self.vectors)
+    self.index = similarities.MatrixSimilarity(self.vectors)
     self.topics = {}
     self.topic_no = topics
     self.probabilities = {}
