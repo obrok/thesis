@@ -27,9 +27,138 @@
 \section{Wstęp}
 \section{Podstawy teoretyczne}
 \section{Procedura badawcza}
+
+\subsection{Dobór schematu wagowego}
+
+Aby przekształcić dokument tekstowy w wektor, na którym mogą operować algorytmy
+macierzowe konieczne jest zdefiniowanie procedury tego przekształcenia. W tym
+przypadku zastosowano podejście bag-of-words, czyli dla każdego dokumentu
+obliczono jedynie liczbę wystąpień każdego wyrazu z pominięciem jego miejsca
+wystąpienia w tekście. Zastosowano następnie schemat wagowy log-entr, aby
+odzwierciedlić nie tylko wagę danego wyrazu w danym tekście, ale również jego
+ładunek znaczeniowy ogólnie --- przykładowo słowa w rodzaju ``w'', ``na'' czy
+``który'' będą pojawiać się bardzo często niezależnie od tematu tekstu --- stąd
+ich waga powinna być niska.
+
+Obliczenie wagi danego słowa $w_i$ odbywa się według wzoru \ref{eq:log-entr}.
+
+\begin{equation}
+  \label{eq:log-entr}
+  w_i 1 - \sum_{j=1}^n \frac{p_{ij} log(p_{ij})}{log(n)}
+  \todo{Naprawić to}
+\end{equation}
+
+Drobiazgowe omówienie różnych schematów wagowych znaleźć moż\-na w \cite{figiel}.
+
 \section{Opis danych}
+
+Działanie algorytmów LDA i LSI analizowane było na zbiorze około 50 tysięcy
+notatek Polskiej Agencji Prasowej. Notatki te to krótkie wiadomości tekstowe, z
+których większość dotyczy pojedynczego wydarzenia. Dotyczą one różnyc dziedzin
+życia, co nadaje temu zbiorowi dodatkową różnorodność i pozwala oczekiwać, że
+osiągnięte wyniki będą miarodajne dla efektywności algorytmów w prawdziwych
+zastosowaniach.
+
 \subsection{Przykładowy problem}
 \label{sec:example}
+
+Aby przetestować działanie obu algorytmów przygotowane zostało przykładowe
+zapytanie do systemu wyszukiwania informacji dla zbioru notatek prasowych PAP.
+Problem polega na znalezieniu dokumentów podobnych do pojedynczej wybranej
+notatki na temat bliźniaczek syjamski. Została przygotowana modelowa odpowiedź
+systemu dla porównania z faktycznymi odpowiedziami.
+
+Zapytanie:
+
+\begin{quote} ***** \#000424 *****\\ W sobotę polskie bliźniaczki syjamskie
+Weronika i Wiktoria przylecą do Polski rejsem Newark-Kraków - poinformował PAP
+oddział LOT-u na nowojorskim lotnisku.  Bliźniaczki syjamskie Weronika i
+Wiktora urodziły się 26 maja 1999 w szpitalu Akademii Medycznej w Lublinie. Od
+16 sierpnia przebywają w Filadelfii. W listopadzie przeszły udaną operację
+rozdzielenia. Pierwszy termin wypisania dziewczynek wyznaczono na 11 lutego.
+Został jednak przesunięty o tydzień z uwagi na gorączkę Weroniki.  \end{quote}
+
+Najbardziej podobne dokumenty wybrane ręcznie:
+
+\begin{quote} ***** \#000516 *****\\ Wiktoria i Weronika, siostry syjamskie
+rozdzielone w listopadzie w Filadelfii, przyleciały z mamą w sobotę rano do
+Krakowa. Na lotnisku w Balicach żonę i córki przywitał ojciec dziewczynek,
+Edward Paleń. Byli też trzej bracia dziewczynek.  "Dziewczynki przyjechały w
+dobrym stanie, są zdrowe" - powiedziała na lotnisku w Balicach mama
+rozdzielonych bliźniaczek pani Krystyna Paleń. "Lekarze amerykańscy twierdzili,
+że gdyby dziewczynki miały po powrocie do kraju trafić do polskiego szpitala,
+to oni by je przytrzymali dłużej u siebie. Wypisali dziewczynki w takim stanie,
+że mogą iść do domu" - powiedziała dziennikarzom. Dodała, że Wiktoria i
+Weronika będą znajdowały się pod opieką lekarza pediatry w Stalowej Woli.
+\end{quote}
+
+\begin{quote} ***** \#009928 *****\\ W klasztorze Ojców Kapucynów w Stalowej Woli
+(Podkarpacie) ochrzczone zostały w niedzielę syjamskie bliźniaczki - Weronika i
+Wiktora Paleniówny, które urodziły się 26 maja ub. roku częściowo zrośnięte
+klatkami piersiowymi i brzuszkami. Pomoc w rozdzieleniu dzieci zaoferował
+Szpital Dziecięcy w Filadelfii w USA.  Rozdzielenia dokonano 3 listopada, po
+kilkunastogodzinnej operacji, w której udział wzięło 45 lekarzy.  \end{quote}
+
+\begin{quote} ***** \#011189 *****\\ Powoli stabilizuje się stan zdrowia
+9-miesięcznego Kamila, jednego z rozdzielonych w Krakowie braci syjamskich.
+Drugi z braci - Patryk - nadal jest w ciężkim stanie - poinformował w
+poniedziałek PAP opiekujący się braćmi docent Adam Bysiek.  Stan zdrowia Kamila
+docent Bysiek określił jako "rokujący nadzieję". Obaj bracia nadal przebywają
+na oddziale intensywnej terapii Polsko-Amerykańskiego Instytutu Pediatrii
+Uniwersytetu Jagiellońskiego w Krakowie Prokocimiu.  Bracia zostali rozdzieleni
+tydzień temu. O terminie operacji zadecydowało nagłe pogorszenie się stanu
+zdrowia jednego z nich.  Początkowo operacja rozdzielenia była planowana na
+wrzesień. Na początku czerwca braciom wszczepiono ekspandery, mające za zadanie
+namnożyć tkankę skórną potrzebną po operacji.  Operacja trwała 8 godzin,
+uczestniczyło w niej 14 lekarzy oraz zespół anestezjologów i pielęgniarek. Jej
+pierwszą część zajęło rozdzielenie braci, w drugiej lekarze zajęli się
+rekonstrukcją rozdzielonych narządów. Bracia byli zrośnięci powłokami
+piersiowo-brzusznymi, mieli wspólną przeponę, worek osierdziowy i wątrobę.
+Była to siódma operacja rozdzielenia bliźniaków syjamskich dokonana w
+Instytucie w Prokocimiu.  \end{quote}
+
+\begin{quote} ***** \#008779 *****\\ Bracia syjamscy Kamil i Patryk przeszli w
+poniedziałek pierwszy zabieg przygotowujący ich do operacji rozdzielenia,
+planowanej za trzy miesiące w Polsko-Amerykańskim  Instytucie Pediatrii UJ w
+Krakowie-Prokocimiu.  \end{quote}
+
+\begin{quote} ***** \#005662 *****\\ W Polsko-Amerykańskim Instytucie Pediatrii w
+Krakowie-Prokocimiu zmarły siostry syjamskie, które urodziły się przed
+tygodniem w Wejherowie.  \end{quote}
+
+\begin{quote} ***** \#000469 *****\\ Bliźniaczki syjamskie z Poznania - Małgosia i
+Dorota - przeszły już pierwsze badania w Polsko-Amerykańskim Instytucie
+Pediatrii UJ w Krakowie-Prokocimiu." Z przeprowadzonych badań wynika, że
+siostry mają wspólną watrobę i przeponę oraz prawdopodobnie wspólne drogi
+żółciowe i serce" - powiedział PAP opiekujący się bliźniaczkami dr Adam Bysiek
+z Instytutu. Siostry urodziły się 11 lutego w poznańskiej klinice św. Rodziny.
+Dziewczynki zrośnięte są brzuszkami i klatkami piersiowymi.  \end{quote}
+
+\begin{quote} ***** \#005855 *****\\ Liczba urodzeń bliźniąt syjamskich nie
+odbiega w Polsce od statystycznej normy - powiedział PAP prof. Jan Grochowski,
+dyrektor Polsko-Amerykańskiego Instytutu Pediatrii UJ, w którym przebywają dwie
+pary bliźniąt syjamskich.  \end{quote}
+
+\begin{quote} ***** \#010677 *****\\ Lekarze z Polsko-Amerykańskiego Instytutu
+Pediatrii UJ w Krakowie Prokocimiu rozdzielili 9-miesięcznych braci syjamskich
+Kamila i Patryka - poinformował PAP doc. Adam Bysiek, szef zespołu opiekującego
+się bliźniętami.  \end{quote}
+
+\begin{quote} ***** \#007320 *****\\ Prof. Louis Gerald Keith, który w ubiegłym
+roku przeprowadził operację rozdzielenia polskich bliźniaczek syjamskich
+Weroniki i Wiktorii, został odznaczony przez prezydenta Aleksandra
+Kwaśniewskiego Krzyżem Oficerskim Zasługi RP.  \end{quote}
+
+\begin{quote} ***** \#007872 *****\\ Komitet etyki szpitala w Palermo na Sycylii
+wydał zgodę na operację peruwiańskich bliźniaczek syjamskich, w wyniku której
+jedna z nich ma szansę na ocalenie kosztem życia drugiej - doniosła prasa
+włoska.  \end{quote}
+
+\begin{quote} ***** \#012193 *****\\ Jeden z 9-miesięcznych braci syjamskich,
+rozdzielonych przez lekarzy w Krakowie pod koniec czerwca, zmarł w środę
+wieczorem z powodu niewydolności krążenia - poinformował PAP docent Adam
+Bysiek.  \end{quote}
+
 \section{Wyniki i analiza}
 
 Niniejszy rozdział zawiera porównanie różnych aspektów działania algorytmów LDA
