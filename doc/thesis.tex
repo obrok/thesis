@@ -9,6 +9,7 @@
 \usepackage{placeins}
 \usepackage[math]{anttor}
 \usepackage{natbib}
+\usepackage{url}
 \frenchspacing
 
 \newcommand{\todo}[1]{\colorbox{yellow}{#1}}
@@ -28,33 +29,89 @@
 \section{Podstawy teoretyczne}
 \section{Procedura badawcza}
 
+Do badań wykorzystano pakiet gensim \cite{gensim}. Jest to biblioteka napisana
+w języku Python udostępniająca szereg narzędzi użytecznych w zadaniach
+dotyczących przetwarzania języka naturalnego, w tym implementacje algorytmów
+LDA i LSI. Biblioteka pozwala także zarządzać korpusami dokumentów i pozwala na
+zapisywanie i późniejsze odczytywanie wyliczonych modeli. Posiada również
+roproszone implementacje niektórych bardziej czasochłonnych operacji jak
+chociażby wyliczenia modelu LSI.
+
+\subsection{Słownik fleksyjny}
+
+Do sprowadzenia wyrazów występujących w tekście do form podstawowych
+zastosowany został słownik fleksyjny języka polskiego CLP
+\cite{gajecki-slownik} rozwijany w Zespole Przetwarzania Języka Naturalnego
+Instytutu Informatyki AGH. Jest to biblioteka napisana w języku C, która
+pozwala na sprowadzenie danego wyrazu do formy podstawowej, znalezienie
+etykiety fleksyjnej opisującej rodzaj wyrazu oraz formę, w której występuje a
+także znalezienie dla danej formy podstawowej możliwych schematów odmiany.
+Słownik obejmuje obecnie ponad 150 tysięcy wpisów co pokrywa niemal całkowicie
+zbiór polskich wyrazów pospolitych. Zawiera on także najczęściej występujące
+nazwy własne i skróty.
+
+\todo{Przykład działania słownika?}
+
+\subsection{Preprocessing}
+
+Aby zmniejszyć rozmiar przetwarzanych danych i poprawić ich uwarukowanie
+zastosowano dodatkowy preprocessing polegający na odrzuceniu wyrazów
+występujących w więcej niż 70\% dokumentów i takich, które wystąpiły w co
+najwyżej jednym dokumencie. Te pierwsze nie niosą żadnej informacji o rodzaju
+tekstu, w którym występują ze względu na swoją pospolitość. Powiązania tych
+drugich nie mogłyby być wychwycone przez algorytmy redukcji wymiaru macierzy.
+
 \subsection{Dobór schematu wagowego}
 
-Aby przekształcić dokument tekstowy w wektor, na którym mogą operować algorytmy
-macierzowe konieczne jest zdefiniowanie procedury tego przekształcenia. W tym
-przypadku zastosowano podejście bag-of-words, czyli dla każdego dokumentu
-obliczono jedynie liczbę wystąpień każdego wyrazu z pominięciem jego miejsca
-wystąpienia w tekście. Zastosowano następnie schemat wagowy log-entr, aby
-odzwierciedlić nie tylko wagę danego wyrazu w danym tekście, ale również jego
-ładunek znaczeniowy ogólnie --- przykładowo słowa w rodzaju ``w'', ``na'' czy
-``który'' będą pojawiać się bardzo często niezależnie od tematu tekstu --- stąd
-ich waga powinna być niska.
+Bezpośrednie zastosowanie podejścia bag-of-words może dawać mylny obraz
+dokumentu --- pewne wyrazy mogą pojawiać się bardzo często a mimo to nie
+dostarczać żadnej pożytecznej informacji o danym dokumencie ze względu na fakt
+występowania bardzo często w danym korpusie. Innym problemem może być
+przecenianie wielokrotnego występowania danego wyrazu --- trzykrotne pojawienie
+się pewnego wyrazu raczej nie sugeruje trzykrotnie większego prawdopodobieństa,
+że jest on kluczowy dla tekstu. Aby rozwiązać pierwszy z tych problemów stosuje
+się normalizowanie wag wyrazów w danym dokumencie przez jakiś współczynnik
+charakteryzujący częstość występowania tego wyrazu w całym korpusie. Drugi z
+nich można rozwiązać przez zastosowanie funkcji typu logarytm czy pierwiastek.
+Dokładny dobór zastosowanych na tym etapie przekształceń nazywamy schematem
+wagowym.
 
-Obliczenie wagi danego słowa $w_i$ odbywa się według wzoru \ref{eq:log-entr}.
+W tej pracy zastosowano schemat wagowy nazywany ''Log Entropy``.  Intuicyjnie
+polega on na wykorzystaniu ilości informacji w sensie Shannona niesionej przez
+dany wyraz jako czynnika normalizacyjnego (dla często spotykanych wyrazów
+będzie on niski) i zastosowaniu logarytmu jako funkcji wygładzającej.
+
+Mając daną macierz $w_{ij}$, której $j$-ty wiersz odpowiada $j$-temu
+dokumentowi, a jego $i$-ta pozycja zawiera liczbę wystąpień $i$-tego wyrazu w
+tym dokumecie dokonujemy przeształcenia opisanego równaniami
+\ref{eq:log-entr-beg}--\ref{eq:log-entr-end} uzyskując macierz $a_{ij}$
+zawierającą nowe wagi wyrazów.
 
 \begin{equation}
-  \label{eq:log-entr}
-  w_i 1 - \sum_{j=1}^n \frac{p_{ij} log(p_{ij})}{log(n)}
-  \todo{Naprawić to}
+  \label{eq:log-entr-beg}
+  p_{ij} = \frac{tf_{ij}}{gf_i}
 \end{equation}
 
-Drobiazgowe omówienie różnych schematów wagowych znaleźć moż\-na w \cite{figiel}.
+\begin{equation}
+  g_i = 1 + \sum_{j=1}^n \frac{p_{ij} log(p_{ij})}{log(n)}
+  \todo{$log(p_{ij}) = -\infty?$}
+\end{equation}
+
+\begin{equation}
+  \label{eq:log-entr-end}
+  a_{ij} = g_i log(tf_{ij} + 1)
+\end{equation}
+
+Drobiazgowe omówienie i porównanie różnych schematów wagowych znaleźć moż\-na w
+\cite{figiel}.
+
+\subsection{Obliczanie perplexity}
 
 \section{Opis danych}
 
 Działanie algorytmów LDA i LSI analizowane było na zbiorze około 50 tysięcy
 notatek Polskiej Agencji Prasowej. Notatki te to krótkie wiadomości tekstowe, z
-których większość dotyczy pojedynczego wydarzenia. Dotyczą one różnyc dziedzin
+których większość dotyczy pojedynczego wydarzenia. Dotyczą one różnych dziedzin
 życia, co nadaje temu zbiorowi dodatkową różnorodność i pozwala oczekiwać, że
 osiągnięte wyniki będą miarodajne dla efektywności algorytmów w prawdziwych
 zastosowaniach.
