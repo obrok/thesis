@@ -2,8 +2,8 @@ preview: build
 	open thesis.pdf
 
 build: thesis.tex thesis.bib
-	rm thesis.bbl
-	rm thesis.blg
+	rm -f thesis.bbl
+	rm -f thesis.blg
 	pdflatex thesis.tex
 	bibtex thesis
 	pdflatex thesis.tex

@@ -42,28 +42,42 @@ chociażby wyliczenia modelu LSI.
 Do sprowadzenia wyrazów występujących w tekście do form podstawowych
 zastosowany został słownik fleksyjny języka polskiego CLP
 \cite{gajecki-slownik} rozwijany w Zespole Przetwarzania Języka Naturalnego
-Instytutu Informatyki AGH. Jest to biblioteka napisana w języku C, która
-pozwala na sprowadzenie danego wyrazu do formy podstawowej, znalezienie
-etykiety fleksyjnej opisującej rodzaj wyrazu oraz formę, w której występuje a
-także znalezienie dla danej formy podstawowej możliwych schematów odmiany.
+Instytutu Informatyki AGH. Jest to biblioteka napisana w języku C,
+udostępniająca interfejs pozwalający przeszukiwać zawarte w słowniku dane.
 Słownik obejmuje obecnie ponad 150 tysięcy wpisów co pokrywa niemal całkowicie
 zbiór polskich wyrazów pospolitych. Zawiera on także najczęściej występujące
 nazwy własne i skróty.
 
-Przykładowo, dla wyrazu ``zamek'' zwrócone będą następujące wpisy:
+CLP oferuje następujące funkcjonalności:
+\begin{enumerate}
+\item Zwrócenie listy możliwych form podstawowych dla danego wyrazu
+\item Zwrócenie etykiety fleksyjnej, w której zawarty jest sposób odmiany
+danej formy podstawowej
+\item Znalezienie dla danego wyrazu wektora odmiany opisującego formę
+w jakiej występuje
+\end{enumerate}
 
-\begin{quote}
-ID: 286975040\\
-Forma podstawowa: zamek\\
-Formy: zamek, zamku, zamkowi, zamkiem, zamki, zamków, zamkom, zamkami,
-zamkach
-\end{quote}
+Przykładowo, dla wyrazu ``zamek'' uzyskać można następujące informacje:
 
 \begin{quote}
 ID: 286975056\\
 Forma podstawowa: zamek\\
 Formy: zamek, zamka, zamkowi, zamkiem, zamku, zamki, zamków, zamkom, zamkami,
-zamkach
+zamkach\\
+Etykieta: ACABBA\\
+Opis etykiety: rzeczownik / męski nieżyw. / M.Lp.-0 / M.Lm.-i / D.Lp.-a /
+D.Lm.-ów\\
+Wektor odmiany: [1, 4]\\
+\end{quote}
+
+\begin{quote}
+ID: 286975040\\
+Forma podstawowa: zamek\\
+Formy: zamek, zamku, zamkowi, zamkiem, zamki, zamków, zamkom, zamkami,
+zamkach\\
+Etykieta: ACABA\\
+Opis etykiety: rzeczownik / męski nieżyw. / M.Lp.-0 / M.Lm.-i / D.Lp.-u\\
+Wektor odmiany: [1, 4]\\
 \end{quote}
 
 \subsection{Preprocessing}
@@ -74,6 +88,28 @@ występujących w więcej niż 70\% dokumentów i takich, które wystąpiły w c
 najwyżej jednym dokumencie. Te pierwsze nie niosą żadnej informacji o rodzaju
 tekstu, w którym występują ze względu na swoją pospolitość. Powiązania tych
 drugich nie mogłyby być wychwycone przez algorytmy redukcji wymiaru macierzy.
+
+Zastosowano również kilka innych prostych operacji, jak na przykład
+zamienienie wszystkich liczb na token ``NUMBER'' a wyrażeń typ ``2:3''
+na token ``RATIO''.
+
+Przykładowy następujący dokument:
+
+\begin{quote}
+\#000064\\
+Drużyna Krzysztofa Oliwy - New Jersey Devils, mająca najlepszy 
+bilans w całej NHL, odniosła kolejne zwycięstwo, pokonując w 
+środę na własnym lodowisku New York Rangers 4:1. 
+\end{quote}
+
+po poddaniu preprocessingowi przyjmie postać:
+
+\begin{quote}
+NUMBER\\
+drużyna Krzysztof oliwa - new jersey devils , mający najlepszy bilans
+cały NHL , odnieść kolejny zwycięstwo , pokonując środa własny lodowisko new
+York rangers RATIO 
+\end{quote}
 
 \subsection{Dobór schematu wagowego}
 
@@ -119,14 +155,46 @@ zawierającą nowe wagi wyrazów.
 Drobiazgowe omówienie i porównanie różnych schematów wagowych znaleźć moż\-na w
 \cite{figiel}.
 
+\subsection{Przetwarzanie zapytania}
+\label{processing}
+\todo{Napisz mnie}
+
 \subsection{Obliczanie perplexity}
+
+Wspołczynnik perplexity który zaproponowany był do oceny modeli języka
+\todo{Odnośnik} ma oddawać niejako poziom ``zaskoczenia'' modelu niewidzianymi
+dotąd danymi. Jest on tak dobrany, że rzut symetryczną, $k$-ścienną kością
+będzie miał perplexity dokładnie $k$ - możemy co najwyżej przewidywać, że
+nastąpi jeden z $k$ rezultatów. Oczywiście jeżeli współczynnik ten się
+zmniejsza, to można powiedzieć, że model lepiej opisuje dane zjawisko.
+
+Jeżeli $p_i$ to prawdopodobieństwo przypisywane przez nasz model zdarzeniu
+polegającemu na wygenerowaniu $i$-tego wyrazu w danym dokumencie, znając temat
+lub tematy i ich wagi przyporządkowane danemu dokumentowi przez system, to
+znormalizowany współczynnik perplexity dla tego wyrazu opisany jest wzorem
+\ref{perplexity}.
+
+\begin{equation}
+  \label{perplexity}
+  \frac{2^{-\sum_{i/1}^n p_ilog_2(p_i)}}{n}
+\end{equation}
+
+Aby obliczyć prawdopodobieństwo $p_i$ obliczamy odległość kosinusową $d_i$
+między danym wyrazem, a dokumentem, zgodnie z \ref{processing}. Następnie
+dokonujemy transformacji \ref{to-probability}, gdzie $d_j$ to odległość
+kosinusowa $j$-tego wyrazu rozponawanego przez system od danego dokumentu.
+
+\begin{equation}
+  \label{to-probability}
+  p_i = \frac{\pi - arccos(d_i)}{\sum_j^N \pi - arccos(d_j)}
+\end{equation}
 
 \section{Opis danych}
 
-Działanie algorytmów LDA i LSI analizowane było na zbiorze około 50 tysięcy
-notatek Polskiej Agencji Prasowej. Notatki te to krótkie wiadomości tekstowe, z
-których większość dotyczy pojedynczego wydarzenia. Dotyczą one różnych dziedzin
-życia, co nadaje temu zbiorowi dodatkową różnorodność i pozwala oczekiwać, że
+Działanie algorytmów LDA i LSI analizowane było na zbiorze około 50000 notatek
+Polskiej Agencji Prasowej. Notatki te to krótkie wiadomości tekstowe, z których
+większość dotyczy pojedynczego wydarzenia. Dotyczą one różnych dziedzin życia,
+co nadaje temu zbiorowi dodatkową różnorodność i pozwala oczekiwać, że
 osiągnięte wyniki będą miarodajne dla efektywności algorytmów w prawdziwych
 zastosowaniach.
 
