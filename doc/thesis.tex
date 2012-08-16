@@ -93,7 +93,7 @@ Zastosowano również kilka innych prostych operacji, jak na przykład
 zamienienie wszystkich liczb na token ``NUMBER'' a wyrażeń typ ``2:3''
 na token ``RATIO''.
 
-Przykładowy następujący dokument:
+Przykładowo następujący dokument:
 
 \begin{quote}
 \#000064\\
@@ -157,16 +157,47 @@ Drobiazgowe omówienie i porównanie różnych schematów wagowych znaleźć mo�
 
 \subsection{Przetwarzanie zapytania}
 \label{processing}
-\todo{Napisz mnie}
+\todo{Transformacja do przestrzeni topicow}
+
+Mając dany model macierzowy dla pewnego korpusu pojawia się standardowy problem
+wykonania zapytania do modelu i uzyskania z niego informacji. Dla pewnego
+dokumentu stanowiącego zapytanie $d_q$ (może to być dokument, podobny do tych,
+które znajdują się w korpusie, albo po prostu zbitek wyrazów w rodzaju zapytań
+wprowadzanych zwykle w wyszukiwarce internetowej) chcielibyśmy uzyskać teksty z
+korpusu $d_i$ posortowane według malejącej oceny podobieństwa tych tekstów do
+$d_q$. W tym celu obliczamy dla każdego $d_i$ ranking $r_i$ według wzorów
+\ref{similarity-computation-beg}-\ref{similarity-computation-end}.
+
+\begin{equation}
+\label{similarity-computation-beg}
+  \langle d_i, d_j \rangle = \sum_k^n d_{ik}d_{jk}
+\end{equation}
+
+\begin{equation}
+  ||d|| = \langle d, d \rangle
+\end{equation}
+
+\begin{equation}
+  \label{similarity-computation-end}
+  r_i = cos(d_i, d_j) = \langle \frac{d_i}{||d_i||}, \frac{d_j}{||d_j||} \rangle
+\end{equation}
+
+Nietrudno zauważyć, że obliczone rankingi to po prostu odległość kosinusowa
+między wektorami reprezentującymi dokumenty.  Warto zauważyć, że same rankingi
+$r_i$ także mogą okazać się przydatne, gdyż zawierając informację o ocenie
+stopnia podobieństwa między dokumentami przez system. Można sobie wyobrazić
+sytuację, w której na ich podstawie obliczan i wyświetlane operatorowi będzie
+prawdopodobieństow, że dany dokument jest tym, czego szuka.
 
 \subsection{Obliczanie perplexity}
 
-Wspołczynnik perplexity który zaproponowany był do oceny modeli języka
-\todo{Odnośnik} ma oddawać niejako poziom ``zaskoczenia'' modelu niewidzianymi
-dotąd danymi. Jest on tak dobrany, że rzut symetryczną, $k$-ścienną kością
-będzie miał perplexity dokładnie $k$ - możemy co najwyżej przewidywać, że
-nastąpi jeden z $k$ rezultatów. Oczywiście jeżeli współczynnik ten się
-zmniejsza, to można powiedzieć, że model lepiej opisuje dane zjawisko.
+Współczynnik perplexity który zaproponowany był do oceny modeli języka
+\cite{bahl-perplexity} a oddawać niejako poziom ``zaskoczenia'' modelu
+niewidzianymi dotąd danymi. Jest on tak dobrany, że rzut symetryczną,
+$k$-ścienną kością będzie miał perplexity dokładnie $k$ - możemy co najwyżej
+przewidywać, że nastąpi jeden z $k$ rezultatów. Można też zdefiniować go jako
+eksponentę z entropii. Oczywiście jeżeli współczynnik ten się zmniejsza, to
+można powiedzieć, że model lepiej opisuje dane zjawisko.
 
 Jeżeli $p_i$ to prawdopodobieństwo przypisywane przez nasz model zdarzeniu
 polegającemu na wygenerowaniu $i$-tego wyrazu w danym dokumencie, znając temat
