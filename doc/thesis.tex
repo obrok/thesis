@@ -30,12 +30,22 @@
 \section{Procedura badawcza}
 
 Do badań wykorzystano pakiet gensim \cite{gensim}. Jest to biblioteka napisana
-w języku Python udostępniająca szereg narzędzi użytecznych w zadaniach
-dotyczących przetwarzania języka naturalnego, w tym implementacje algorytmów
-LDA i LSI. Biblioteka pozwala także zarządzać korpusami dokumentów i pozwala na
-zapisywanie i późniejsze odczytywanie wyliczonych modeli. Posiada również
-roproszone implementacje niektórych bardziej czasochłonnych operacji jak
-chociażby wyliczenia modelu LSI.
+w języku Python tworzoan przez Radima Řehůřeka i stawiająca sobie za cel
+udostępnienie narzędzi do łatwego i wydajnego przetwarzania tesktów w językach
+naturalych. Zawiera ona szereg funkcjonalności użytecznych w zadaniach
+dotyczących przetwarzania języka naturalnego takich jak:
+
+\begin{itemize}
+\item Implementacje algorytmów LDA i LSI wraz z wersjami roproszonymi
+\item Implementacje kilku popularnych schematów wagowych (patrz \ref{weighting})
+\item Zarządzanie korpusami tekstów i obsługa formatów stosowanych przez SVMlight \cite{svmlight},
+LDA-C \cite{lda-c} i GibbsLDA++ \cite{gibbs-lda}
+\item Wydajne obliczanie podobieństwa między dokumentami w sensie danego modelu
+\item Wyszukiwanie kolokacji
+\end{itemize}
+
+Algorytm stosowany w pakiecie gensim do estymacji parametrów LDA opisany jest
+w pełni w \cite{gensim-algorithm}.
 
 \subsection{Słownik fleksyjny}
 
@@ -82,7 +92,8 @@ Wektor odmiany: [1, 4]\\
 
 \subsection{Preprocessing}
 
-Aby zmniejszyć rozmiar przetwarzanych danych i poprawić ich uwarukowanie
+Aby zmniejszyć rozmiar przetwarzanych danych i poprawić ich uwarukowanie po
+sprowadzeniu wszystkich wyrazów danego dokumentu do form podstawowych
 zastosowano dodatkowy preprocessing polegający na odrzuceniu wyrazów
 występujących w więcej niż 70\% dokumentów i takich, które wystąpiły w co
 najwyżej jednym dokumencie. Te pierwsze nie niosą żadnej informacji o rodzaju
@@ -112,6 +123,7 @@ York rangers RATIO
 \end{quote}
 
 \subsection{Dobór schematu wagowego}
+\label{weighting}
 
 Bezpośrednie zastosowanie podejścia bag-of-words może dawać mylny obraz
 dokumentu --- pewne wyrazy mogą pojawiać się bardzo często a mimo to nie
@@ -437,9 +449,7 @@ całkowicie osobno.
 \caption{Suma kwadratów ranków dokumentów ze wzorca dla testowego zapytania (z wykorzystaniem stemmingu)}
 \label{ranks_stemming_comparison}
 \includegraphics[width=\linewidth]{gfx/ranks_stemming.png}
-\end{figure}
 
-\begin{figure}[h]
 \caption{Suma kwadratów ranków dokumentów ze wzorca dla testowego zapytania (bez wykorzystania stemmingu)}
 \label{ranks_no_stemming_comparison}
 \includegraphics[width=\linewidth]{gfx/ranks_no_stemming.png}
@@ -474,9 +484,7 @@ tematów jest podobnej jakości lub lepszy jak ten uzyskany przy użyciu LSI dla
 \caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów}
 \includegraphics[width=\linewidth]{gfx/lsi_roc.png}
 \label{roc_lsi}
-\end{figure}
 
-\begin{figure}[h]
 \caption{Krzywe ROC dla algorytmu LDA dla wybranych liczb tematów}
 \includegraphics[width=\linewidth]{gfx/lda_roc.png}
 \label{roc_lda}
@@ -492,9 +500,7 @@ przy pomocy LSI.
 \caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów bez wykorzystania stemmingu}
 \includegraphics[width=\linewidth]{gfx/lsi_roc_untagged.png}
 \label{roc_lsi_untagged}
-\end{figure}
 
-\begin{figure}[h]
 \caption{Krzywe ROC dla algorytmu LDA dla wybranych liczb tematów bez wykorzystania stemmingu}
 \includegraphics[width=\linewidth]{gfx/lda_roc_untagged.png}
 \label{roc_lda_untagged}
