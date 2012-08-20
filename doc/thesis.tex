@@ -27,6 +27,9 @@
 
 \section{Wstęp}
 \section{Podstawy teoretyczne}
+\subsection{Latent Semantic Indexing}
+\subsection{Latent Dirichlet Allocation}
+\label{sec:lda}
 \section{Procedura badawcza}
 
 Do badań wykorzystano pakiet gensim \cite{gensim}. Jest to biblioteka napisana
@@ -169,7 +172,6 @@ Drobiazgowe omówienie i porównanie różnych schematów wagowych znaleźć mo�
 
 \subsection{Przetwarzanie zapytania}
 \label{processing}
-\todo{Transformacja do przestrzeni topicow}
 
 Mając dany model macierzowy dla pewnego korpusu pojawia się standardowy problem
 wykonania zapytania do modelu i uzyskania z niego informacji. Dla pewnego
@@ -204,7 +206,7 @@ prawdopodobieństow, że dany dokument jest tym, czego szuka.
 \subsection{Obliczanie perplexity}
 
 Współczynnik perplexity który zaproponowany był do oceny modeli języka
-\cite{bahl-perplexity} a oddawać niejako poziom ``zaskoczenia'' modelu
+\cite{bahl-perplexity} ma oddawać niejako poziom ``zaskoczenia'' modelu
 niewidzianymi dotąd danymi. Jest on tak dobrany, że rzut symetryczną,
 $k$-ścienną kością będzie miał perplexity dokładnie $k$ - możemy co najwyżej
 przewidywać, że nastąpi jeden z $k$ rezultatów. Można też zdefiniować go jako
@@ -230,6 +232,30 @@ kosinusowa $j$-tego wyrazu rozponawanego przez system od danego dokumentu.
 \begin{equation}
   \label{to-probability}
   p_i = \frac{\pi - arccos(d_i)}{\sum_j^N \pi - arccos(d_j)}
+\end{equation}
+
+\subsection{Ocena uszeregowania zwracanych dokumentów}
+\label{sec:ranking}
+
+W celu obiektywnego porównania odpowiedzi systemu na zapytanie, która ma postać
+listy dokumentów uporządkowanych według malejącego podobieństwa do tego
+zapytania wprowadzamy metrykę mającą opisywać jakość takiej odpowiedzi. Jako,
+że głównym celem jest ocena jak wysoko w wynikach wyszukiwania znalazły się
+dokumenty relewantne możemy do takiej oceny zastosować sumę ich ranków lub ---
+jak ostatecznie zrobiono --- sumę kwadratów ranków, aby lepiej oddać sposób
+korzystania z tego typu systemów przez jego potencjalnych użykowników, któży
+zwykle zwracają znacznie mniejszą uwagę na dokumenty nie znajdujące się w
+ścisłej czołówce zwróconego rankingu.
+
+W przedstawionych wynikach metryka została znormalizowana przez wynik dla
+idealnego uszeregowania dokumentów, to znaczy takiego, gdzie wszystkie $n$
+relewantnych dokumentów znajduje się na pierwszych $n$ pozycjach rankingu. Wzór
+\ref{eq:rating} podsumowuje te obliczenia --- $r_i$ oznacza pozycję $i$-tego
+dokumentu w odpowiedzi systemu.
+
+\begin{equation}
+  \label{eq:rating}
+  \mathrm{M} = \frac{\sqrt{\sum_i^n r_i^2}}{\sqrt{\sum_i^n i^2}}
 \end{equation}
 
 \section{Opis danych}
@@ -420,9 +446,9 @@ problemach.
 \subsubsection{Ranking dokumentów}
 
 Wykresy \ref{ranks_stemming_comparison} i \ref{ranks_no_stemming_comparison}
-przedstawiają sumę kwadratów ranków dokumentów z wzorca przygotowanego ręcznie
-dla danego zapytania w wynikach działania odpowiednio algorytmów LDA i LSI dla
-różnej liczby tematów.
+przedstawiają sumę kwadratów ranków dokumentów (patrz \ref{sec:ranking}) z
+wzorca przygotowanego ręcznie dla danego zapytania w wynikach działania
+odpowiednio algorytmów LDA i LSI dla różnej liczby tematów.
 
 Algorytm LDA osiąga ogólnie gorsze wyniki niż LSI - poza przedziałem $50 - 100$
 tematów. Gorszy jest też (aczkolwiek niewiele) najlepszy wynik jaki udałoby się
