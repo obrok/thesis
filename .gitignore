@@ -8,3 +8,5 @@ results/without_preprocessing
 *.aux
 *.toc
 .DS_Store
+*.lot
+*.lof

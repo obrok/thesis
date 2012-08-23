@@ -10,6 +10,8 @@
 \usepackage[math]{anttor}
 \usepackage{natbib}
 \usepackage{url}
+\usepackage{float}
+\usepackage[font=small,labelfont=bf]{caption}
 \frenchspacing
 
 \newcommand{\todo}[1]{\colorbox{yellow}{#1}}
@@ -70,7 +72,7 @@ danej formy podstawowej
 w jakiej występuje
 \end{enumerate}
 
-Przykładowo, dla wyrazu ``zamek'' uzyskać można następujące informacje:
+Przykładowo, dla wyrazu ''zamek'' uzyskać można następujące informacje:
 
 \begin{quote}
 ID: 286975056\\
@@ -104,8 +106,8 @@ tekstu, w którym występują ze względu na swoją pospolitość. Powiązania t
 drugich nie mogłyby być wychwycone przez algorytmy redukcji wymiaru macierzy.
 
 Zastosowano również kilka innych prostych operacji, jak na przykład
-zamienienie wszystkich liczb na token ``NUMBER'' a wyrażeń typ ``2:3''
-na token ``RATIO''.
+zamienienie wszystkich liczb na token ''NUMBER'' a wyrażeń typ ''2:3''
+na token ''RATIO''.
 
 Przykładowo następujący dokument:
 
@@ -141,7 +143,7 @@ nich można rozwiązać przez zastosowanie funkcji typu logarytm czy pierwiastek
 Dokładny dobór zastosowanych na tym etapie przekształceń nazywamy schematem
 wagowym.
 
-W tej pracy zastosowano schemat wagowy nazywany ''Log Entropy``.  Intuicyjnie
+W tej pracy zastosowano schemat wagowy nazywany ''Log Entropy''.  Intuicyjnie
 polega on na wykorzystaniu ilości informacji w sensie Shannona niesionej przez
 dany wyraz jako czynnika normalizacyjnego (dla często spotykanych wyrazów
 będzie on niski) i zastosowaniu logarytmu jako funkcji wygładzającej.
@@ -206,7 +208,7 @@ prawdopodobieństow, że dany dokument jest tym, czego szuka.
 \subsection{Obliczanie perplexity}
 
 Współczynnik perplexity który zaproponowany był do oceny modeli języka
-\cite{bahl-perplexity} ma oddawać niejako poziom ``zaskoczenia'' modelu
+\cite{bahl-perplexity} ma oddawać niejako poziom ''zaskoczenia'' modelu
 niewidzianymi dotąd danymi. Jest on tak dobrany, że rzut symetryczną,
 $k$-ścienną kością będzie miał perplexity dokładnie $k$ - możemy co najwyżej
 przewidywać, że nastąpi jeden z $k$ rezultatów. Można też zdefiniować go jako
@@ -369,13 +371,20 @@ Bysiek.  \end{quote}
 
 \section{Wyniki i analiza}
 
-Niniejszy rozdział zawiera porównanie różnych aspektów działania algorytmów LDA
-i LSI. Na jego końcu znajdują się wnioski jakie można wyciągnąć z zebranych
-danych.
+Niniejszy rozdział zawiera porównanie algorytmów LDA i LSI pod kątem jakości
+otrzymywanych wyników. Zawarte w nim zostały zarówno porównanie ich przez
+pryzmat metryk z nadzorem (metryka $M$, dokładność, kompletność), które dobrze
+odpowiadają prawdziwym zastosowaniom tego typu rozwiązań jak i współczynnika
+perplexity, który może dawać sugestie na temat zdolności danej metody do
+uogólniania na nienznane dane (na przykład przy zastosowaniu do generowania
+automatycznych podsumowań) i odporności na przeuczenie.
+
+Rozdział zawiera także porównanie czasu działania obydwu metod. Na jego końcu
+znajdują się wnioski jakie można wyciągnąć z zebranych danych.
 
 \subsection{Tematy}
 
-Tabele \ref{fig:lsi_topics} i \ref{fig:lda_topics} zawierają niektóre tematy
+Tabele \ref{lsi_topics} i \ref{lda_topics} zawierają niektóre tematy
 wygenerowane przez algorytmy LSI i LDA skonfigurowane na 100 tematów (po
 dziesięć najbardziej znaczących słów w każdym temacie). Pojedynczy wiersz
 tabeli zawiera jeden temat - liczby przy tokenach oznaczają wagi poszczególnych
@@ -383,15 +392,15 @@ słów w danym temacie.
 
 Tematy uzyskane przy pomocy LDA wydają się bardziej odpowiadać postrzeganiu
 tekstu przez człowieka niż te wygenerowane przez LSI.  Przykładowo temat numer 4 w tabeli
-\ref{fig:lsi_topics} można interpretować jako ,,nie pogoda i finanse`` ---
+\ref{lsi_topics} można interpretować jako ,,nie pogoda i finanse'' ---
 możliwość złożenia dwóch tematów postrzeganych przez człowieka w jeden, ale z
 przeciwnymi znakami powoduje powstawanie tego typu kombinacji. Tematy wygenerowane
 przez LDA bywają złożeniami dwóch różnych konceptów, jednak zawsze mają ten sam znak,
-jak na przykład temat numer 5 w tabeli \ref{fig:lda_topics}, który wydaje się łączyć
-koncepty ,,muzeum`` i ,,przestępstwo``.
+jak na przykład temat numer 5 w tabeli \ref{lda_topics}, który wydaje się łączyć
+koncepty ,,muzeum'' i ,,przestępstwo''.
 
 \begin{table}[h]
-\label{fig:lsi_topics}
+\label{lsi_topics}
 \caption{Tematy wyekstrahowane przez algorytm LSI}
 \begin{tabular}{|c|p{\linewidth}|}
 \hline
@@ -410,7 +419,7 @@ Lp. & Temat \\\hline
 \end{table}
 
 \begin{table}[h]
-\label{fig:lda_topics}
+\label{lda_topics}
 \caption{Tematy wyekstrahowane przez algorytm LDA}
 \begin{tabular}{|c|p{\linewidth}|}
 \hline
@@ -610,6 +619,8 @@ podsumowań czy słów kluczowych.
 
 \section{Podsumowanie}
 
+\listoftables
+\listoffigures
 \bibliographystyle{abbrv}
 \bibliography{thesis}
 
