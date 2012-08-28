@@ -5,7 +5,8 @@ import math
 from operator import itemgetter
 from gensim import corpora, models, similarities
 
-STOPLIST = set(["NUMBER", ".", "", ",", "-", ")", "(", "\"", u"być", "a"])
+STOPLIST = set(["*", "NUMBER", ".", "", ",", "-", ")", "(", "\"", u"być", "a"])
+
 NUM_TOPICS = 200
 NO_BELOW = 2
 NO_ABOVE = 0.7
@@ -22,12 +23,13 @@ class ModelWrapper:
     self.vectors = self.logmodel[self.vectors]
     self.model = model(self.vectors, id2word=self.dictionary, num_topics=topics)
     self.vectors = self.model[self.vectors]
-    # self.index = similarities.MatrixSimilarity(self.vectors)
+    self.index = similarities.MatrixSimilarity(self.vectors)
     self.topics = {}
     self.topic_no = topics
     self.probabilities = {}
 
   def vectorize(self, doc):
+    doc = filter(lambda x: not x in STOPLIST, doc)
     return self.dictionary.doc2bow(doc)
 
   def process(self, doc):
@@ -35,7 +37,7 @@ class ModelWrapper:
     vector = self.logmodel[vector]
     return self.model[vector]
 
-  def topics(self):
+  def get_topics(self):
     return self.model.show_topics(-1, 10)
 
   def similar(self, doc):

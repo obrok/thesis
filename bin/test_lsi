@@ -15,5 +15,5 @@ with codecs.open(filename, "r", "utf-8") as file:
   docs = map(lambda d: d.split("|"), docs)
 
   model = ModelWrapper(docs, eval("models." + model_name), 100)
-  for topic in model.topics():
+  for topic in model.get_topics():
     print topic.encode("utf-8")
