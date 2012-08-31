@@ -5,7 +5,7 @@ import math
 from operator import itemgetter
 from gensim import corpora, models, similarities
 
-STOPLIST = set(["*", "NUMBER", ".", "", ",", "-", ")", "(", "\"", u"być", "a"])
+STOPLIST = set([":", ";", "?", "!", "*", "NUMBER", ".", "", ",", "-", ")", "(", "\"", u"być", "a"])
 
 NUM_TOPICS = 200
 NO_BELOW = 2
