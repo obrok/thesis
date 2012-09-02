@@ -424,7 +424,6 @@ działania obydwu metod. Na jego końcu znajdują się wnioski jakie można
 wyciągnąć z zebranych danych.
 
 \subsection{Tematy}
-\todo{Make references work here}
 Tabele \ref{lsi_topics} i \ref{lda_topics} zawierają niektóre tematy
 wygenerowane przez algorytmy LSI i LDA skonfigurowane na 100 tematów (po
 dziesięć najbardziej znaczących słów w każdym temacie). Pojedynczy wiersz
@@ -432,49 +431,62 @@ tabeli zawiera jeden temat - liczby przy tokenach oznaczają wagi poszczególnyc
 słów w danym temacie.
 
 Tematy uzyskane przy pomocy LDA wydają się bardziej odpowiadać postrzeganiu
-tekstu przez człowieka niż te wygenerowane przez LSI.  Przykładowo temat numer 4 w tabeli
-\ref{lsi_topics} można interpretować jako ,,nie pogoda i finanse'' ---
-możliwość złożenia dwóch tematów postrzeganych przez człowieka w jeden, ale z
-przeciwnymi znakami powoduje powstawanie tego typu kombinacji. Tematy wygenerowane
-przez LDA bywają złożeniami dwóch różnych konceptów, jednak zawsze mają ten sam znak,
-jak na przykład temat numer 5 w tabeli \ref{lda_topics}, który wydaje się łączyć
-koncepty ,,muzeum'' i ,,przestępstwo''.
+tekstu przez człowieka niż te wygenerowane przez LSI.  Przykładowo temat numer
+4 w tabeli \ref{lsi_topics} można interpretować jako ,,pogoda'', jednak ma on
+znak ujemy --- dokument, dla którego podobieństwo do tego tematu będzie duże z
+dużą pewnością nie traktuje o pogodzie. Temat numer 8 w tej samej tabeli
+prezentuje inne zachodzące zjawisko --- możliwość połączenie dwóch konceptów
+jednak z przeciwnymi znakami w jeden temat, w tym wypadku ,,policja'' ze
+znakiem dodatnim i ,,giełda'' ze znakiem uejmnym. Podobieństwo do tego tematu
+może wskazywać, że danych tekst traktuje o pracy policji, lecz łatwo je
+przecenić --- wiele tekstów, które zawierając co innego niż informacje giełdowe
+będzie wykazywało takie podobieństow.
+
+Tematy wygenerowane przez LDA bywają złożeniami dwóch różnych konceptów, jednak
+zawsze mają ten sam znak, jak na przykład temat numer 4 w tabeli
+\ref{lda_topics}, który wydaje się łączyć koncepty ,,sport'' i ,,giełda''. Tego
+typu tematy powodują podobny problem jak przy LSI, ale jeżeli na przykład
+stosować te metody do klastowania tekstów, to zbiór zawierający przemieszane
+teksty sportowe i giełdowe wydaj się bardziej przydatny niż taki, który zawiera
+różnorodne teksty, które akurat nie traktują o pogodzie.
 
 \begin{table}[h]
-\label{lsi_topics}
 \caption{Tematy wyekstrahowane przez algorytm LSI}
+\label{lsi_topics}
 \begin{tabular}{|c|p{\linewidth}|}
 \hline
 Lp. & Temat \\\hline
-1 & 0.269*" + 0.181*- + 0.171*być + 0.161*procent + 0.144*polski + 0.138*rok + 0.119*) + 0.118*złoty + 0.111*( + 0.102*a \\\hline
-2 & -0.304*procent + -0.265*wzróść + -0.254*punkt + -0.211*WIG + -0.192*wynieść + -0.191*spaść + -0.180*złoty + -0.165*spółka + -0.158*akcja + 0.158*" \\\hline
-3 & 0.482*RATIO + 0.265*mecz + 0.234*: + 0.187*pokonać + 0.182*mistrzostwo + 0.149*) + 0.149*turniej + -0.142*" + 0.119*piłkarski + 0.117*wygrać \\\hline
-4 & -0.301*stopień + -0.250*temperatura + -0.240*maksymalny + -0.228*wiatr + -0.222*umiarkowany + -0.216*deszcz + -0.212*słaby + -0.208*opad + -0.181*południe + 0.164*złoty \\\hline
-5 & -0.390*złoty + -0.305*grosz + -0.262*dolar + -0.246*euro + 0.210*punkt + -0.195*osiągać + -0.170*milion + 0.159*WIG + -0.147*umocnić + 0.142*procent \\\hline
-6 & -0.355*spółka + -0.301*Akcyjna + 0.259*grosz + -0.223*milion + 0.215*zamknięcie + 0.185*euro + 0.180*osiągać + 0.170*punkt + 0.153*dolar + -0.148*bank \\\hline
-7 & -0.435*procent + 0.300*spółka + -0.232*rok + 0.212*akcja + -0.191*proca + 0.190*Akcyjna + 0.148*giełda + -0.133*milion + 0.127*zmienić + 0.124*kurs \\\hline
-8 & -0.227*RATIO + 0.192*sąd + -0.147*: + 0.147*( + -0.135*unia + -0.129*mecz + 0.127*policja + -0.125*spółka + 0.122*tysiąc + -0.122*AWS \\\hline
-9 & 0.313*( + 0.274*) + -0.258*RATIO + -0.165*mecz + -0.158*sąd + -0.144*: + 0.133*wyścig + 0.126*mistrzostwo + 0.120*spółka + 0.120*świat \\\hline
-10 & -0.230*sąd + 0.220*europejski + -0.187*AWS + 0.154*unia + -0.148*procent + 0.143*UE + -0.119*wyborczy + -0.118*okręgowy + 0.114*polski + 0.111*milion \\\hline
+
+1 & 0.208*procent + 0.160*rok + 0.153*złoty + 0.152*polski + 0.122*spółka + 0.121*milion + 0.111*wzróść + 0.110*punkt + 0.104*akcja + 0.099*powiedzieć\\\hline
+2 & -0.275*procent + -0.257*wzróść + -0.252*punkt + -0.213*WIG + -0.189*spaść + -0.182*wynieść + -0.153*sesja + -0.147*akcja + -0.146*złoty + -0.144*spółka\\\hline
+3 & 0.477*RATIO + 0.264*mecz + 0.186*pokonać + 0.181*mistrzostwo + 0.146*turniej + 0.117*piłkarski + 0.114*wygrać + 0.111*przegrać + 0.107*świat + 0.107*reprezentacja\\\hline
+4 & -0.281*stopień + -0.234*temperatura + -0.224*maksymalny + -0.213*wiatr + -0.208*umiarkowany + -0.202*deszcz + -0.198*słaby + -0.195*opad + 0.194*złoty + -0.170*południe\\\hline
+5 & -0.380*złoty + -0.307*grosz + -0.259*dolar + -0.248*euro + 0.200*punkt + -0.197*osiągać + -0.158*milion + 0.148*WIG + -0.148*umocnić + 0.139*procent\\\hline
+6 & -0.376*spółka + -0.315*Akcyjna + 0.241*grosz + -0.226*milion + 0.204*zamknięcie + 0.176*euro + 0.168*osiągać + 0.168*punkt + -0.152*bank + 0.143*dolar\\\hline
+7 & -0.444*procent + 0.271*spółka + -0.244*rok + 0.205*akcja + -0.186*proca + 0.165*Akcyjna + -0.156*milion + 0.152*giełda + 0.131*zmienić + -0.129*finanse\\\hline
+8 & 0.237*sąd + -0.169*RATIO + -0.163*spółka + 0.146*policja + -0.144*Akcyjna + -0.138*unia + -0.137*AWS + 0.135*lato + 0.129*więzienie + 0.126*tysiąc\\\hline
+9 & 0.222*europejski + -0.206*AWS + -0.195*sąd + -0.153*procent + 0.151*unia + 0.144*UE + -0.130*wyborczy + -0.120*wybór + 0.119*milion + -0.117*SLD\\\hline
+10 & -0.321*RATIO + 0.227*świat + 0.223*mistrzostwo + -0.160*sąd + -0.155*mecz + 0.149*wyścig + 0.131*medal + -0.127*milion + 0.120*miejsce + 0.119*procent\\\hline
 \end{tabular}
 \end{table}
 
 \begin{table}[h]
-\label{lda_topics}
 \caption{Tematy wyekstrahowane przez algorytm LDA}
+\label{lda_topics}
 \begin{tabular}{|c|p{\linewidth}|}
 \hline
 Lp. & Temat \\\hline
-1 & 0.027*open + 0.026*powodzianin + 0.021*podlaski + 0.018*Słowenia + 0.017*cukrownia + 0.017*najstarszy + 0.013*przedstawiony + 0.012*urodziny + 0.012*rata + 0.012*zrezygnować\\\hline
-2 & 0.021*europejski + 0.021*unia + 0.018*UE + 0.012*polski + 0.011*kraj + 0.010*" + 0.009*Litwa + 0.009*unijny + 0.008*państwo + 0.008*NATO\\\hline
-3 & 0.032*palestyński + 0.031*Izrael + 0.030*izraelski + 0.023*Palestyńczyk + 0.015*Arafat + 0.013*szaron + 0.013*świętokrzyski + 0.012*zawieszenie + 0.012*autonomia + 0.011*arabski\\\hline
-4 & 0.024*sąd + 0.015*aresztować + 0.015*podejrzany + 0.014*rejonowy + 0.013*okręgowy + 0.013*śledczy + 0.013*akt + 0.012*Gdynia + 0.012*oskarżenie + 0.012*Radom\\\hline
-5 & 0.016*wierzyciel + 0.013*muzeum + 0.013*wystawa + 0.011*zbiór + 0.011*śląski + 0.011*Brazylijczyk + 0.010*łączny + 0.010*zajmujący + 0.009*przestępczy + 0.009*łódzki\\\hline
-6 & 0.032*festiwal + 0.022*woj + 0.017*Białystok + 0.017*letni + 0.014*wielkopolski + 0.014*wrzesień + 0.014*kupno + 0.012*ogólnopolski + 0.012*usuwanie + 0.012*impreza\\\hline
-7 & 0.019*siatkarz + 0.011*obniżka + 0.009*noc + 0.007*postać + 0.006*Gorzów + 0.006*artystyczny + 0.006*bóg + 0.006*bandyta + 0.005*nieznany + 0.005*ZSRR\\\hline
-8 & 0.012*" + 0.011*general + 0.010*motors + 0.008*Jedwabne + 0.008*kardynał + 0.007*film + 0.007*weekend + 0.007*Józef + 0.007*rocznica + 0.006*odbyć\\\hline
-9 & 0.017*świat + 0.016*klasa + 0.016*TP + 0.015*metr + 0.015*( + 0.015*) + 0.014*mistrzostwo + 0.014*zająć + 0.013*AZS + 0.013*bieg\\\hline
-10 & 0.044*obligacja + 0.021*Artur + 0.018*włosek + 0.017*pomnik + 0.016*politechnika + 0.016*białostocki + 0.016*społeczność + 0.013*wyeliminować + 0.012*skorzystać + 0.011*wyemitować\\\hline
+
+1 & 0.040*PKB + 0.038*pieniężny + 0.025*polityka + 0.022*deficyt + 0.021*rada + 0.020*procent + 0.019*RPP + 0.018*analityk + 0.014*obrót + 0.014*sport\\\hline
+2 & 0.026*prokuratura + 0.019*sąd + 0.018*letni + 0.016*gang + 0.016*oskarżona + 0.016*okręgowy + 0.013*akt + 0.013*oskarżenie + 0.013*efekt + 0.013*przestępstwo\\\hline
+3 & 0.025*Bush + 0.020*ii + 0.019*papież + 0.015*Paweł + 0.014*Jan + 0.013*kościół + 0.012*wiek + 0.011*George + 0.011*święty + 0.009*kardynał\\\hline
+4 & 0.034*TechWI + 0.027*tour + 0.024*France + 0.022*de + 0.018*sportowy + 0.014*bankowy + 0.014*oszczędność + 0.013*Vivendi + 0.012*bank + 0.010*instancja\\\hline
+5 & 0.012*choroba + 0.009*of + 0.008*najnowszy + 0.008*zdrowie + 0.007*lek + 0.007*informować + 0.006*Ameryka + 0.006*naukowy + 0.006*obywatelski + 0.006*numer\\\hline
+6 & 0.048*kwartał + 0.027*Laden + 0.026*bin + 0.020*Osama + 0.017*zwierzę + 0.014*zadłużenie + 0.013*transakcja + 0.013*IV + 0.012*tom + 0.012*pies\\\hline
+7 & 0.052*spółka + 0.044*skarb + 0.044*Akcyjna + 0.030*akcja + 0.028*Spółka Akcyjna + 0.023*prywatyzacja + 0.023*oferta + 0.020*sprzedaż + 0.020*TP + 0.019*procent\\\hline
+8 & 0.032*NBP + 0.026*wczorajszy + 0.020*milion + 0.019*otwierać + 0.016*dolar + 0.016*dekada + 0.015*off + 0.015*podaż + 0.014*play + 0.014*uzgodnić\\\hline
+9 & 0.027*huta + 0.020*przejęcie + 0.016*energia + 0.016*belgijski + 0.013*Toruń + 0.012*domniemany + 0.012*gazociąg + 0.012*białostocki + 0.011*rolnik + 0.010*D\\\hline
+10 & 0.015*koncert + 0.015*muzyka + 0.010*www + 0.010*podlaski + 0.007*twórca + 0.007*zespół + 0.007*muzyczny + 0.007*festyn + 0.007*proponowany + 0.006*Stefan\\\hline
 \end{tabular}
 \end{table}
 
@@ -668,8 +680,14 @@ podsumowań czy słów kluczowych.
 
 \section{Podsumowanie}
 
+\appendix
+\section{Sposób użycia kodu}
+
+\addcontentsline{toc}{section}{Spis tablic}
 \listoftables
+\addcontentsline{toc}{section}{Spis rysunków}
 \listoffigures
+\addcontentsline{toc}{section}{Literatura}
 \bibliographystyle{abbrv}
 \bibliography{thesis}
 
