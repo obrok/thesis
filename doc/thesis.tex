@@ -28,6 +28,14 @@
 \pagebreak
 
 \section{Wstęp}
+\section{Terminy i oznaczenia}
+
+\begin{itemize}
+\item Dokument --- tekst lub fragment tekstu
+\item Korpus --- zbiór dokumentów
+\item Skojarzony --- (o dokumencie) zgodny z kryteriami wyszukiwania
+\end{itemize}
+
 \section{Podstawy teoretyczne}
 \subsection{Vector Space Model}
 \ref{weighting-theory}
@@ -54,6 +62,30 @@ prezentowane wyniki. Omawiane są zarówno operacje wykonywane na danych, wybór
 konkretnych możliwości w takich kwestiach jak schemat wagowy (patrz
 \ref{weighting-theory}), jak i sposób obliczania metryk jakości rozwiązania
 takich jak współczynnik perplexity.
+
+\subsubsection{Sprowadzenie do form podstawowych}
+
+Metody macierzowe zachowują się znacznie lepiej dla mniejszych rozmiarów
+leksykonu, a co za tym idzie mniejszych rozmiarów wektorowej reprezentacji
+dokumentów. Poza oczywistym zyskiem polegającym na krótszym czasie
+przetwarzania pomniejszenie leksykonu w stosunku do liczby i długości
+dokumentów sprawia także, że metody te mogą łatwiej wykrywać, które wyrazy są
+powiązane --- każdy wyraz występuje w większej liczbie kontekstów, umożliwiając
+zebrania na jego temat więcej informacji.
+
+W tym wypadku zastosowano słownik fleksyjny (patrz \ref{sec:clp}) do
+sprowadzenia wyrazów występujących w tekście do form podstawowych --- ta
+operacja nie tylko zmniejsza liczbę różnych tokenów, ale także umożliwia na
+dalszych etapach rozpoznanie faktu, że kilka różnych form jest w istocie tym
+samym wyrazem. Bez niej przykładowo wyrazy ,,bliźniak`` i ,,bliźniaka`` byłyby
+traktowane jako całkowicie różne i nie wnosiły by nic do oceny przez algorytm
+tekstów, w których występują.
+
+W \cite{manning} sugerowano, że tego typu krok można pominąc posiadając
+odpowiednio duży korpus danych, jednak uwaga ta dotyczy języka angielskiego, w
+którym liczba form wyrazów jest stosunkowo mała. Polski jako język silnie
+fleksyjny wymagałby w tym wypadku zapewne zbioru danych o dużo więksych
+rozmiarach, którego przetwarzanie mogłoby być niepraktyczne.
 
 \subsubsection{Preprocessing}
 
@@ -220,7 +252,7 @@ dokumentu w odpowiedzi systemu.
   \mathrm{M} = \frac{\sqrt{\sum_i^n r_i^2}}{\sqrt{\sum_i^n i^2}}
 \end{equation}
 
-\subsection{Wykorzystne rozwiącania/biblioteki}
+\subsection{Wykorzystne rozwiązania/biblioteki}
 
 Poniżej zawarto opisy najważniejszych bibliotek programistycznych
 wykorzystywanych w przeprowadzonych badaniach. Należy zauważyć, że dla
@@ -249,6 +281,7 @@ Algorytm stosowany w pakiecie gensim do estymacji parametrów LDA opisany jest
 w pełni w \cite{gensim-algorithm}.
 
 \subsubsection{Słownik fleksyjny CLP}
+\label{sec:clp}
 
 Do sprowadzenia wyrazów występujących w tekście do form podstawowych
 zastosowany został słownik fleksyjny języka polskiego CLP
