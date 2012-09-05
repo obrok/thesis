@@ -32,19 +32,59 @@
 
 \begin{itemize}
 \item Dokument --- tekst lub fragment tekstu
+\item FN (False Negatives) --- liczba odrzuconych dokumentów skojarzonych
+\item FP (False Positives) --- liczba zwróconych dokumentów skojarzonych
 \item Korpus --- zbiór dokumentów
+\item Schemat Wagowy --- sposób w jaki dokument jest transformowany do reprezentacji wektorowej
 \item Skojarzony --- (o dokumencie) zgodny z kryteriami wyszukiwania
+\item TN (True Negatives) --- liczba odrzuconych dokumentów nieskojarzonych
+\item TP (True Positives) --- liczba zwróconych dokumentów skojarzonych
 \end{itemize}
 
 \section{Podstawy teoretyczne}
 \subsection{Vector Space Model}
-\ref{weighting-theory}
+\label{weighting-theory}
 \subsubsection{Log-Entropy}
 \subsection{Latent Semantic Indexing}
 \subsection{Latent Dirichlet Allocation}
 \label{sec:lda}
 \subsection{Perplexity}
 \subsection{Dokładność i kompletność}
+
+\todo{Citation?}
+
+Aby ocenić i porównywać wyniki działania algorytmów wyszukujących dokumenty w
+korpusach należy wprowadzić formalne metryki opsisujące jakość wyników przez
+nie uzyskiwanych. Należy przy tym zauważyć, że znaczenie ma nie tylko fakt
+zwrócenia wielu czy nawet wszystkich dokumentów skojarzonych z zapytaniem, ale
+także liczba zwróconych dokumentów nieskojarzonych, gdyż stanowią one szum i
+wyniki zaweierające wiele takich dokumentów wymagają dalszego, ręcznego
+przetwarzania. Aby uchwycić te dwie interesujące nas cechy stosuje się
+zazwyczaj dwie metryki: dokładność i kompletność.
+
+Kompletność ma wyrażać jak dużo interesujących wyników zostało odnalezione przez
+algorytm, obliczana jest według wzoru:
+
+\begin{equation}
+  K = \frac{TP}{TP + FN}
+\end{equation}
+
+W tym wzorze licznik, to liczba poprawnie zwrócocnych dokumentów, a mianownik
+to po prostu liczba wszyskich dokumentów skojarzonych, które występują w danym
+korpusie.
+
+Dokładność opisuje udział skojarzonych dokumentów w zwróconych wynikach, formalnie
+opisuje ją wzór:
+
+\begin{equation}
+  D = \frac{TP}{TP + FP}
+\end{equation}
+
+Te dwie metryki stoją do siebie w pewnym sensie w opozycji --- w wielu
+systemach możliwe jest sterowanie progiem detekcji i zwiększenie kompletności
+kosztem dokładności lub odwrotnie. Z tego też powodu analizuje się je zwykle w
+tandemie i interesujące są nie tyle ich wartości jako takie, co zależność
+między nimi.
 
 \section{Architektura rozwiązania}
 
@@ -81,7 +121,7 @@ samym wyrazem. Bez niej przykładowo wyrazy ,,bliźniak`` i ,,bliźniaka`` były
 traktowane jako całkowicie różne i nie wnosiły by nic do oceny przez algorytm
 tekstów, w których występują.
 
-W \cite{manning} sugerowano, że tego typu krok można pominąc posiadając
+W \cite{manning-schuetze} sugerowano, że tego typu krok można pominąc posiadając
 odpowiednio duży korpus danych, jednak uwaga ta dotyczy języka angielskiego, w
 którym liczba form wyrazów jest stosunkowo mała. Polski jako język silnie
 fleksyjny wymagałby w tym wypadku zapewne zbioru danych o dużo więksych
