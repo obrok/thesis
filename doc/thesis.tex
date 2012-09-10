@@ -35,11 +35,12 @@
 \item FN (False Negatives) --- liczba odrzuconych dokumentów skojarzonych
 \item FP (False Positives) --- liczba zwróconych dokumentów skojarzonych
 \item Korpus --- zbiór dokumentów
+\item Przeuczenie --- zjawisko polegające na zbyt dokładnym odwzorowaniu danych treningowych przez model i utracie zdolności uogólniania
 \item Schemat Wagowy --- sposób w jaki dokument jest transformowany do reprezentacji wektorowej
 \item Skojarzony --- (o dokumencie) zgodny z kryteriami wyszukiwania, uznany za podobny do dokumentu wzorcowego
 \item TN (True Negatives) --- liczba odrzuconych dokumentów nieskojarzonych
-\item Token --- wyraz, znak interpunkcyjny lub grupa znaków traktowana jako całość (na przykład liczba)
 \item TP (True Positives) --- liczba zwróconych dokumentów skojarzonych
+\item Token --- wyraz, znak interpunkcyjny lub grupa znaków traktowana jako całość (na przykład liczba)
 \end{itemize}
 
 \section{Podstawy teoretyczne}
@@ -50,6 +51,50 @@
 \subsection{Latent Dirichlet Allocation}
 \label{sec:lda}
 \subsection{Perplexity}
+
+Współczynnik perplexity, który zaproponowany został do oceny modeli języka
+\cite{bahl-perplexity}, ma oddawać niejako poziom ''zaskoczenia'' niewidzianymi
+dotąd danymi. Dla rozkładu prawdopodobieństwa $p$ definiujemy go jako
+eksponentę entropii $p$, czyli:
+
+\begin{equation}
+  \label{perplexity-definition}
+  2^{H(p)} = 2^{-\sum_x p(x)log_2 p(x)}
+\end{equation}
+
+Dla dyskretnej dystrybucji o $n$ równoprawdopodonych możliwych wydarzeniach
+współczynnik perplexity wyniesie $n$ --- daje to możliwość porównania innego
+rodzaju dytrybucji (rónież ciągłych --- zamieniwszy sumę we wzorze
+\ref{perplexity-definition} na całkę) pod względem ich ,,rozstrzelenia'', a co
+więcej daje dodatkową intuicję, że dana dystrybucja będzie generować dane,
+które będą podobnie ,,zaskakujące'' jak rzut $n$-ścienną kostką.
+
+Jeżli chcemy wykorzystać perplexity do oceny modelu jakiegoś zjawiska $q$,
+który przypisuje zdarzeniom prawdopodobieństwa $q(x)$, to możemy obliczyć
+znormalizowany współczynnik perplexity dla pewnego zbioru obserwacji tego zjawiska
+$\{x_1, x_2, \ldots, x_N\}$ następująco:
+
+\begin{equation}
+  2^{H(q)} = 2^{-\frac{1}{N}\sum_i^N log_2 p(x_i)}
+\end{equation}
+
+Zaletą tego podejścia jest możliwość całkowicie automatycznej oceny jakości
+modelu --- modele lepiej opisujące dane zjawisko będą przyporządkowywać wyższe
+prawdopodobieństwa wydarzeniom, które rzeczywiście zachodzą i co za tym idzie
+będą miały niższy współczynnik perplexity. Zwykle taka ewaluacja stosowana jest
+do upewnienia się, że model nie jest przeuczony, że jest w stanie uogólniać
+swoje przewidywania na sytuacje inne niż dane treningowe. W takim wypadku
+alalizuje się współczynnik perplexity obliczony dla dodatkowego zbioru
+danych, które nie były wykorzystane do treningu i przykładowo zatrzymuje
+interacyjny proces uczenia modelu, kiedy zaczyna on wzrastać.
+
+W modelach języka jako pojedyncze zdarzenia stosuje się wyrazy lub zdania.
+Przykładowo \cite{perplexity-estimate} podaje współczynnik perplexity 247 dla
+korpusu Browna, zawierającego zróżnicowane teksty w języku algielskim
+osiągnięty przez model trigramowy. Jest to równoważne przypadkowi, gdy każde
+słowo jest wybierane niezależnie z równym prawdopodobieństwem spośród 247
+możliwości.
+
 \subsection{Dokładność i kompletność}
 
 \todo{Citation?}
@@ -101,8 +146,9 @@ wykorzystane w badaniach biblioteki programistyczne.
 Poniżej znajduje się omówienie krok po kroku sposobu w jaki osiągnięto
 prezentowane wyniki. Omawiane są zarówno operacje wykonywane na danych, wybór
 konkretnych możliwości w takich kwestiach jak schemat wagowy (patrz
-\ref{weighting-theory}), jak i sposób obliczania metryk jakości rozwiązania
-takich jak współczynnik perplexity.
+\ref{weighting-theory}), jak i sposób obliczania metryk jakości rozwiązania:
+wpółczynnika perplexity oraz współczynnika $M$ opisującego
+jakość zwróconego rankingu dokumentów.
 
 \subsubsection{Sprowadzenie do form podstawowych}
 
@@ -240,14 +286,6 @@ prawdopodobieństow, że dany dokument jest tym, czego szuka.
 
 \subsubsection{Obliczanie perplexity}
 
-Współczynnik perplexity który zaproponowany był do oceny modeli języka
-\cite{bahl-perplexity} ma oddawać niejako poziom ''zaskoczenia'' modelu
-niewidzianymi dotąd danymi. Jest on tak dobrany, że rzut symetryczną,
-$k$-ścienną kością będzie miał perplexity dokładnie $k$ - możemy co najwyżej
-przewidywać, że nastąpi jeden z $k$ rezultatów. Można też zdefiniować go jako
-eksponentę z entropii. Oczywiście jeżeli współczynnik ten się zmniejsza, to
-można powiedzieć, że model lepiej opisuje dane zjawisko.
-
 Jeżeli $p_i$ to prawdopodobieństwo przypisywane przez nasz model zdarzeniu
 polegającemu na wygenerowaniu $i$-tego wyrazu w danym dokumencie, znając temat
 lub tematy i ich wagi przyporządkowane danemu dokumentowi przez system, to
@@ -370,6 +408,7 @@ Opis etykiety: rzeczownik / męski nieżyw. / M.Lp.-0 / M.Lm.-i / D.Lp.-u\\
 Wektor odmiany: [1, 4]\\
 \end{quote}
 \section{Opis danych}
+\label{data-description}
 
 Działanie algorytmów LDA i LSI analizowane było na zbiorze 51574 notatek
 Polskiej Agencji Prasowej. Notatki te to krótkie wiadomości tekstowe (średnio
