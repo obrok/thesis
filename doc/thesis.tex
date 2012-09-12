@@ -12,6 +12,7 @@
 \usepackage{url}
 \usepackage{float}
 \usepackage[font=small,labelfont=bf]{caption}
+\usepackage{array}
 \frenchspacing
 
 \newcommand{\todo}[1]{\colorbox{yellow}{#1}}
@@ -31,23 +32,71 @@
 \section{Terminy i oznaczenia}
 
 \begin{itemize}
-\item LSI --- Latent Semantic Indexing
-\item LDA --- Latent Dirichlet Allocation
 \item Dokument --- tekst lub fragment tekstu
 \item FN (False Negatives) --- liczba odrzuconych dokumentów skojarzonych
 \item FP (False Positives) --- liczba zwróconych dokumentów skojarzonych
 \item Korpus --- zbiór dokumentów
+\item LDA --- Latent Dirichlet Allocation
+\item LSI --- Latent Semantic Indexing
+\item Leksykon --- zbiór wszystkich tokenów występujących w korpusie
 \item Przeuczenie --- zjawisko polegające na zbyt dokładnym odwzorowaniu danych treningowych przez model i utracie zdolności uogólniania
 \item Schemat Wagowy --- sposób w jaki dokument jest transformowany do reprezentacji wektorowej
 \item Skojarzony --- (o dokumencie) zgodny z kryteriami wyszukiwania, uznany za podobny do dokumentu wzorcowego
 \item TN (True Negatives) --- liczba odrzuconych dokumentów nieskojarzonych
 \item TP (True Positives) --- liczba zwróconych dokumentów skojarzonych
 \item Token --- wyraz, znak interpunkcyjny lub grupa znaków traktowana jako całość (na przykład liczba)
+\item VSM (Vector Space Model) --- modelowanie języka przez przedstawianie dokumetów jako wektorów
+\todo{tf, df, gf}
 \end{itemize}
+
+\pagebreak
 
 \section{Podstawy teoretyczne}
 \subsection{Vector Space Model}
-\label{weighting-theory}
+
+\label{weighting-theory} Model przestrzeni wektorowej (Vector Space Model -
+VSM) to metoda modelowania języka polegająca na reprezentowaniu dokumentów jako
+wekorów co umożliwia na przykład porównywanie ich metodami algebry liniowej.
+Wektor dla $i$-tego dokumentu ma postać:
+
+\begin{equation}
+d_i = (w^i_0, w^i_1, \ldots, w^i_N)
+\end{equation}
+
+gdzie wymiar $w^i_k$ odpowiada $k$-temu tokenowi z leksykonu. Współczynniki te
+nazywane są także wagami i mają oddawać znaczenie danego tokenu w danym
+dokumencie --- powinny być tym wyższe im bardziej kluczowy dla sensu $i$-tego
+dokumentu jest $k$-ty token. Przyjmuje się zwykle, że wymiary odpowiadające
+tokenom nie występującym w danym dokumencie są zerowe.
+
+Najbardziej ogólnie wagi $w^i_k$ uzyskuje się przez pomnożenie wagi globalnej
+$g_k$, która ma odzwierciedlać popularność tokenu w całym korpusie i wagi
+lokalnej $l^i_k$, która opisuje stricte znaczenie tokenu w danym dokumencie.
+Tabele \ref{global-weights} i \ref{local-weights} podsumowują popularnie
+stosowane wagi globalne i lokalne. Ich drobiazgowe porównanie dla języka
+polskiego znaleźć można w \cite{figiel}.
+
+\begin{table}[h]
+\caption{Możliwe wagi globalne $g_k$}
+\label{global-weights}
+\begin{tabular}[c]{|c|p{0.8\linewidth}|}
+\hline
+$1$ & Brak wagi globalnej --- częstość występowania tokenów w całym korpusie jest ignorowana \\\hline
+$\frac{1}{\sum_j (l^j_k)^2}$ & Normalizacja --- tutaj przez sumę kwadratów wag lokalnych tokenu w całym korpusie\\\hline
+$\frac{gf_k}{df_k}$ & gf-idf --- waga tym większa im więcej razy występuje dany token i tym mniejsza im więcej dokumentów go zawiera\\\hline
+\hline
+\todo{more content}
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\caption{Możliwe wagi lokalne}
+\label{local-weights}
+\begin{tabular}{|c|p{\linewidth}|}
+\todo{content}
+\end{tabular}
+\end{table}
+
 \subsubsection{Log-Entropy}
 \subsection{Latent Semantic Indexing}
 \subsection{Latent Dirichlet Allocation}
@@ -685,9 +734,21 @@ przedstawiający dla danego klasyfikatora zależność między stosunkiem liczby
 znalezionych dokumentów skojarzonych do liczby wszystkich zwróconych dokumentów
 (TPR --- True Positive Rate), a stosunkiem liczby odrzuconych dokumentów
 skojarzonych do liczby wszystkich odrzuconych dokumentów (FPR - False Positive
-Rate) w miarę zmiany progu detekcji. W tym wypadku ten zmienny próg to po
-prostu liczba $n$ - pierwszych $n$ dokumentów jest traktowane jako odnalezione,
-a pozostałe jako odrzucone.
+Rate) w miarę zmiany progu detekcji. Obliczanie tych wartości podsumowując
+wzory \ref{tpr} i \ref{fpr}.
+
+W tym wypadku ten zmienny próg to po prostu liczba $n$ - pierwszych $n$
+dokumentów jest traktowane jako odnalezione, a pozostałe jako odrzucone.
+
+\begin{equation}
+\label{tpr}
+TPR = \frac{TP}{TP + FN}
+\end{equation}
+
+\begin{equation}
+\label{fpr}
+FPR = \frac{FP}{FP + TN}
+\end{equation}
 
 Lepsze klasyfikatory charakteryzują się krzywymi ROC położonymi dalej od linii
 $x = y$.  Klasyfikatory blisko, lub na tej linii nie wykonują żadnej użytecznej
