@@ -31,6 +31,8 @@
 \section{Terminy i oznaczenia}
 
 \begin{itemize}
+\item LSI --- Latent Semantic Indexing
+\item LDA --- Latent Dirichlet Allocation
 \item Dokument --- tekst lub fragment tekstu
 \item FN (False Negatives) --- liczba odrzuconych dokumentów skojarzonych
 \item FP (False Positives) --- liczba zwróconych dokumentów skojarzonych
@@ -314,7 +316,7 @@ W celu obiektywnego porównania odpowiedzi systemu na zapytanie, która ma posta
 listy dokumentów uporządkowanych według malejącego podobieństwa do tego
 zapytania wprowadzamy metrykę mającą opisywać jakość takiej odpowiedzi. Jako,
 że głównym celem jest ocena jak wysoko w wynikach wyszukiwania znalazły się
-dokumenty relewantne możemy do takiej oceny zastosować sumę ich ranków lub ---
+dokumenty skojarzone możemy do takiej oceny zastosować sumę ich ranków lub ---
 jak ostatecznie zrobiono --- sumę kwadratów ranków, aby lepiej oddać sposób
 korzystania z tego typu systemów przez jego potencjalnych użykowników, któży
 zwykle zwracają znacznie mniejszą uwagę na dokumenty nie znajdujące się w
@@ -322,7 +324,7 @@ zwykle zwracają znacznie mniejszą uwagę na dokumenty nie znajdujące się w
 
 W przedstawionych wynikach metryka została znormalizowana przez wynik dla
 idealnego uszeregowania dokumentów, to znaczy takiego, gdzie wszystkie $n$
-relewantnych dokumentów znajduje się na pierwszych $n$ pozycjach rankingu. Wzór
+skojarzonych dokumentów znajduje się na pierwszych $n$ pozycjach rankingu. Wzór
 \ref{eq:rating} podsumowuje te obliczenia --- $r_i$ oznacza pozycję $i$-tego
 dokumentu w odpowiedzi systemu.
 
@@ -607,7 +609,25 @@ Lp. & Temat \\\hline
 
 \subsection{Czas działania}
 
-\todo{Czy to ma sens?}
+Poniższe wykresu (\ref{time-docs}, \ref{time-topics}) przedstawiając zależność
+czasu uczenia modelu dla metod LSI i LDA od odpowiednio wielkości korpusu
+dla stałej liczby tematów i liczby tematów dla stałej wielkości korpusu.
+
+\begin{figure}[h]
+\caption{Czas uczenia modelu dla 100 tematów}
+\label{time-docs}
+\includegraphics[width=\linewidth]{gfx/time_docs.png}
+\end{figure}
+
+\begin{figure}[h]
+\caption{Czas uczenia modelu dla 5000 dokumentów}
+\label{time-docs}
+\todo{Graphic here}
+\end{figure}
+
+\todo{Conclusions}
+
+\FloatBarrier
 
 \subsection{Metryki z nadzorem}
 
@@ -662,9 +682,9 @@ całkowicie osobno.
 
 Krzywa ROC \cite{roc-article1} (Receiver Operation Characteristic) to wykres
 przedstawiający dla danego klasyfikatora zależność między stosunkiem liczby
-znalezionych dokumentów relewantnych do liczby wszystkich zwróconych dokumentów
+znalezionych dokumentów skojarzonych do liczby wszystkich zwróconych dokumentów
 (TPR --- True Positive Rate), a stosunkiem liczby odrzuconych dokumentów
-relewantnych do liczby wszystkich odrzuconych dokumentów (FPR - False Positive
+skojarzonych do liczby wszystkich odrzuconych dokumentów (FPR - False Positive
 Rate) w miarę zmiany progu detekcji. W tym wypadku ten zmienny próg to po
 prostu liczba $n$ - pierwszych $n$ dokumentów jest traktowane jako odnalezione,
 a pozostałe jako odrzucone.
@@ -709,32 +729,33 @@ przy pomocy LSI.
 
 \FloatBarrier
 
-\subsubsection{Przywołanie i precyzja}
+\subsubsection{Dokładność i kompletność}
 
-Przywołanie (stosunek liczby zwróconych relewantnych dokumentów do liczby
-wszystkich relewantncyh dokumentów) i prezycja (stosunek liczby zwróconych
-relewantncyh dokumentów do liczby wszystkich zwróconych dokumentów) to częste
+Kompletność (stosunek liczby zwróconych skojarzonych dokumentów do liczby
+wszystkich skojarzonych dokumentów) i dokładność (stosunek liczby zwróconych
+skojarzonych dokumentów do liczby wszystkich zwróconych dokumentów) to częste
 metryki w zadaniach typu information retrieval. Wybranie jakiegoś poziomu
-przywołania reprezentuje pewien kompromis między kompletnością zwróconych
-danych, a częstością występowania w nich danych relewantnych, a więc ilością
-czasu, które musi poświęcić operator systemu na ich dalsze przetworzenie.
+kompletności reprezentuje pewien kompromis między prawdopodobieństwem zawarcia
+wszystkich interesujących wyników w zwróconych danych, a częstością
+występowania w nich danych skojarzonych, a więc ilością czasu, który musi
+poświęcić operator systemu na ich dalsze przetworzenie.
 
-Wykresy \ref{fig:lsi_precision} i \ref{fig:lda_precision} prezentują precyzę
-osiąganą przez algorytmy LDA i LSI na różnych poziomach przywołania dla
+Wykresy \ref{fig:lsi_precision} i \ref{fig:lda_precision} prezentują dkoładność
+osiąganą przez algorytmy LDA i LSI na różnych poziomach kompletności dla
 przykładowego problemu.
 
-Można zauważyć, że LDA daje znacznie gorszą precyzję niż LSI. Nawet najlepiej
-dobrana liczba tematów (w tym wypadku 300) pozwala osiągać precyzję
+Można zauważyć, że LDA daje znacznie gorszą dokładność niż LSI. Nawet najlepiej
+dobrana liczba tematów (w tym wypadku 300) pozwala osiągać dokładność
 porównywalną jedynie z LSI dla 30 tematów.
 
 \begin{figure}[h]
-\caption{Precyzja na różnych poziomach przywołania dla algorytmu LSI}
+\caption{Dokładność na różnych poziomach kompletności dla algorytmu LSI}
 \includegraphics[width=\linewidth]{gfx/lsi_precision.png}
 \label{fig:lsi_precision}
 \end{figure}
 
 \begin{figure}[h]
-\caption{Precyzja na różnych poziomach przywołania dla algorytmu LDA}
+\caption{Dokładność na różnych poziomach kompletności dla algorytmu LDA}
 \includegraphics[width=\linewidth]{gfx/lda_precision.png}
 \label{fig:lda_precision}
 \end{figure}
