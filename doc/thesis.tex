@@ -32,6 +32,9 @@
 \section{Terminy i oznaczenia}
 
 \begin{itemize}
+\item $df_i$ (Document Frequency) --- liczba dokumentów zawierjących $i$-ty token
+\item $gf_i$ (Global Frequency) --- stosunek liczby wystąpień $i$-tego tokenu do liczby wszystkich wyrazów w korpusie
+\item $tf_i^j$ (Term Frequency) --- stosunek liczby wystąpień $i$-tego tokenu do liczby wszystkich wyrazów w $j$-tym dokumencie
 \item Dokument --- tekst lub fragment tekstu
 \item FN (False Negatives) --- liczba odrzuconych dokumentów skojarzonych
 \item FP (False Positives) --- liczba zwróconych dokumentów skojarzonych
@@ -46,12 +49,18 @@
 \item TP (True Positives) --- liczba zwróconych dokumentów skojarzonych
 \item Token --- wyraz, znak interpunkcyjny lub grupa znaków traktowana jako całość (na przykład liczba)
 \item VSM (Vector Space Model) --- modelowanie języka przez przedstawianie dokumetów jako wektorów
-\todo{tf, df, gf}
 \end{itemize}
 
 \pagebreak
 
 \section{Podstawy teoretyczne}
+
+W tym rozdziale opisana jest ogólnie koncepcja wektorowego modelowania
+dokumentów oraz metody, które poddano porównaniu w tej pracy, a które od tej
+koncepcji pochodzą. W dalszej części rozdziału zawarto opis metryk perpexity,
+dokładności i kompletności wykorzystywanych przy ocenie działania modeli
+językowych i systemów wyszukiwania informacji.
+
 \subsection{Vector Space Model}
 
 \label{weighting-theory} Model przestrzeni wektorowej (Vector Space Model -
@@ -74,30 +83,54 @@ $g_k$, która ma odzwierciedlać popularność tokenu w całym korpusie i wagi
 lokalnej $l^i_k$, która opisuje stricte znaczenie tokenu w danym dokumencie.
 Tabele \ref{global-weights} i \ref{local-weights} podsumowują popularnie
 stosowane wagi globalne i lokalne. Ich drobiazgowe porównanie dla języka
-polskiego znaleźć można w \cite{figiel}.
+polskiego znaleźć można w \cite{figiel}. Dobór tych dwóch wag nazywamy
+schematem wagowym.
 
 \begin{table}[h]
 \caption{Możliwe wagi globalne $g_k$}
 \label{global-weights}
-\begin{tabular}[c]{|c|p{0.8\linewidth}|}
+\begin{tabular}[c]{|c|p{0.7\linewidth}|}
 \hline
 $1$ & Brak wagi globalnej --- częstość występowania tokenów w całym korpusie jest ignorowana \\\hline
 $\frac{1}{\sum_j (l^j_k)^2}$ & Normalizacja --- tutaj przez sumę kwadratów wag lokalnych tokenu w całym korpusie\\\hline
 $\frac{gf_k}{df_k}$ & gf-idf --- waga tym większa im więcej razy występuje dany token i tym mniejsza im więcej dokumentów go zawiera\\\hline
-\hline
-\todo{more content}
+$log(\frac{n}{df_k}) + 1$ & idf --- logarytm z liczby dokumentów w których występuje dany token znormalizowanej przez liczbę wszystkich dokumentów\\\hline
+$1 - \sum_{i/0}^n \frac{tf^i_klog(tf^i_k)}{log(n)}$ & Entropia --- waga pochodząca z teorii informacji, ilość informacji którą daje pojawienie się danego tokenu o numerze tekstu, w którym to nastąpiło\\\hline
 \end{tabular}
 \end{table}
 
 \begin{table}[h]
-\caption{Możliwe wagi lokalne}
+\caption{Możliwe wagi lokalne $l^i_k$}
 \label{local-weights}
-\begin{tabular}{|c|p{\linewidth}|}
-\todo{content}
+\begin{tabular}[c]{|c|p{0.875\linewidth}|}
+\hline
+$1$ & Waga binarna --- zachowana zostaje jedynie informacja o fakcie wystąpienia tokenu, liczba wystąpień jest ignorowana\\\hline
+$t^i_k$ & Częstość występowania --- najprostsza waga, można powiedzieć, że inne są próbą jej usprawnienia przez odpowiednid wygładzenie\\\hline
+$\sqrt{t^i_k}$ & Wygładzona częstość występowania --- aby oddać fakt, kolejne wystąpienia tego samego wyrazu dają stosunkowo mniejszą wskazówkę co do jego znaczenia dla danego dokumentu można wygładzić częstość występowania pierwiatskiem lub logarytmem\\\hline
 \end{tabular}
 \end{table}
 
-\subsubsection{Log-Entropy}
+Konkretny schemat wagowy dobiera się empirycznie, często pod jakąś klasę
+problemów. Dla zadań typu information retrieval dobrze sprawdzają się lokalne
+wagi wygładzone i entropia jako waga globalna z czego można wywnioskować, że
+obserwacja o mniejszym znaczeniu kolejnych wystąpień tokenu w tym samym
+dokumencie jest trafna.
+
+Brak wagi globalnej daje z reguły znacznie gorsze wyniki niż pozostałe
+możliwości. Jej zastosowanie pozwala automatycznie wykryć wyrazy takie jak
+spójniki, które występują bardzo często we wszystkich tekstach, a nie mają
+dużego ładunku semantycznego. W korpusach dotyczących jednej dziedziny mogą się
+pojawić inne wyrazy o takiej charakterystyce, przykładowo wyraz ,,wyraz''
+występuje bardzo często w tej pracy i najprawdopodobniej nie niesie wiele
+informacji o tematyce poszczególnych jej akapitów, w których się pojawia.
+
+Podobnie zastosowanie binarnej wagi lokalnej negatywnie wpływa na jakość
+otrzymywanych wyników. Utrata informacji na temat dokumentu jest w tym wypadku
+zbyt duża, dodatkowe wystąpienia tokenu mimo iż nie tak znaczące jak pierwsze
+są jednak wskazówką co do większego znaczenia tego tokenu w tekście.
+
+\FloatBarrier
+
 \subsection{Latent Semantic Indexing}
 \subsection{Latent Dirichlet Allocation}
 \label{sec:lda}
@@ -357,6 +390,15 @@ kosinusowa $j$-tego wyrazu rozponawanego przez system od danego dokumentu.
   \label{to-probability}
   p_i = \frac{\pi - arccos(d_i)}{\sum_j^N \pi - arccos(d_j)}
 \end{equation}
+
+Warto tutaj zaznaczyć, że w badaniach współczynnik perplexity obliczany był
+jedynie dla wyrazów znanych --- takich, które wystąpiły w danych treningowych.
+Aby być całkowicie dokładnym należałoby zdarzeniu polegającemu na wystąpieniu
+wyrazu nieznanego przypisać pewne prawdopodobieństwo i odpowiednio obniżyć
+prawdopodobieństwo wystąpienia wszystkich innych wyrazów, jednak nie ma to
+znaczenia dla przeprowadzanego porównania, gdyż zbiór wyrazów znanych jest taki
+sam dla obu modeli, ze względu na fakt stosowania tego samego preprocessingu w
+obu przypadkach.
 
 \subsubsection{Ocena uszeregowania zwracanych dokumentów}
 \label{sec:ranking}
@@ -877,6 +919,30 @@ podsumowań czy słów kluczowych.
 
 \appendix
 \section{Sposób użycia kodu}
+
+Kod wykorzystany do przeprowadzenia badań w tej pracy znaleźć można pod
+\cite{code}. Aby z niego skorzystać konieczne jest zainstalowanie pakietu
+gensim. Katalog \emph{bin} zawiera skrypty uruchomieniowe dla przeprowadzonych
+eksperymentów. W poniżych poleceniach \emph{model} oznaczna ciąg
+\emph{LsiModel} lub ciąg \emph{LdaModel} w zależności od rodzaju modelu, który
+ma być testowany. Plik z danymi powinien zawierać dokumenty, każdy w jednej
+linii, wyrazy powinny być sprowadzone do form podstawowych, jeżeli takie
+rozwiązanie ma być zastosowane.
+
+\begin{itemize}
+\item \emph{bin/test\_lsi [plik z korpusem] [model]} --- wypisuje na ekran
+listę wygenerowanych tematów
+\item \emph{bin/map\_topics [plik z korpusem] [model]} --- oblicza i wypisuje
+metrykę $M$ dla różnych liczb tematów
+\item \emph{bin/perplexity [plik z korpusem] [model]} --- oblicza i wypisuje
+współczynnik perplexity dla różnych liczb tematów
+\item \emph{bin/precision [plik z korpusem] [model] [liczba tematów]} ---
+oblicza i wypisuje zależność między dokładnością a kompletnością w formie
+par [dokładność kompletność] dla zadanej liczby tematów
+\item \emph{bin/roc [plik z korpusem] [model] [liczba tematów]} ---
+oblicza i wypisuje zależność między TPR a FPR w formie
+par [TPR FPR] dla zadanej liczby tematów
+\end{itemize}
 
 \addcontentsline{toc}{section}{Spis tablic}
 \listoftables
