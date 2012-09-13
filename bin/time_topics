@@ -22,5 +22,5 @@ with codecs.open(filename, "r", "utf-8") as file:
     model = ModelWrapper(docs, eval("models." + model_name), topics_no)
     end = clock()
 
-    print "{0} {1}".format(docs_no, end - beg)
+    print "{0} {1}".format(topics_no, end - beg)
     sys.stdout.flush()
