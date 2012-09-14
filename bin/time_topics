@@ -17,7 +17,7 @@ with codecs.open(filename, "r", "utf-8") as file:
   docs = file.read().rsplit("\n")
   docs = map(lambda d: d.split("|"), docs)[:5000]
 
-  for topics_no in range(10, 100, 10) + range(100, 1000, 100):
+  for topics_no in range(1000, 2000, 200):
     beg = clock()
     model = ModelWrapper(docs, eval("models." + model_name), topics_no)
     end = clock()
