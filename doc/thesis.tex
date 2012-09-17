@@ -25,6 +25,12 @@
 \maketitle
 \pagebreak
 
+\todo{Oświadczenie prawnoautorskie}
+\pagebreak
+
+\todo{Strona tytułowa po angielsku}
+\pagebreak
+
 \tableofcontents
 \pagebreak
 
@@ -134,6 +140,26 @@ są jednak wskazówką co do większego znaczenia tego tokenu w tekście.
 \subsection{Latent Semantic Indexing}
 \subsection{Latent Dirichlet Allocation}
 \label{sec:lda}
+
+Podczas gdy LSI ma u swoich podstaw metodę algebraiczną redukcji wymiarowości
+macierzy przy utracie jak najmniejszej ilości zawartej w tej macierzy
+informacji intuicja stojąca za LDA jest znacznie bliżej spokrewniona z
+wyobrażeniami na temat powstawania dokumentów tekstowych. Jak zostanie jednak
+przedstawione w tym rozdziale ostatecznie LDA również sprowadza się do redukcji
+wymiaru macierzy term-dokument przez wprowadzenie nowej przestrzeni, w której
+reprezentowane będą dokumenty.
+
+\subsubsection{Intuicja}
+
+LDA to probabilistyczny model generatywny opisujący powstawanie dokumentów.
+Zakłada, że dokumenty są zbiorami wyrazów i kolejność ich występowania nie ma
+znaczenia. Zakłada następnie, że każdy dokument traktuje o małej liczbie
+tematów z pewnego zbioru tematów, których liczba jest znana \emph{a priori}.
+
+\todo{Moar here}
+
+\subsubsection{Dobierani parametrów modelu}
+
 \subsection{Perplexity}
 
 Współczynnik perplexity, który zaproponowany został do oceny modeli języka
@@ -712,10 +738,11 @@ dla stałej liczby tematów i liczby tematów dla stałej wielkości korpusu.
 
 \begin{figure}[h]
 \caption{Czas uczenia modelu dla 5000 dokumentów}
-\label{time-docs}
-\todo{Graphic here}
+\label{time-topics}
+\includegraphics[width=\linewidth]{gfx/time_topics.png}
 \end{figure}
 
+\todo{Complexity discussion}
 \todo{Conclusions}
 
 \FloatBarrier
