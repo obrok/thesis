@@ -35,6 +35,9 @@
 \pagebreak
 
 \section{Wstęp}
+\todo{content}
+\pagebreak
+
 \section{Terminy i oznaczenia}
 
 \begin{itemize}
@@ -55,6 +58,7 @@
 \item TP (True Positives) --- liczba zwróconych dokumentów skojarzonych
 \item Token --- wyraz, znak interpunkcyjny lub grupa znaków traktowana jako całość (na przykład liczba)
 \item VSM (Vector Space Model) --- modelowanie języka przez przedstawianie dokumetów jako wektorów
+\item bag-of-words (worek ze słowami) --- założenie o możliowści pominięcia kolejności słów w dokumencie z małą utratą znaczenia
 \end{itemize}
 
 \pagebreak
@@ -135,6 +139,39 @@ otrzymywanych wyników. Utrata informacji na temat dokumentu jest w tym wypadku
 zbyt duża, dodatkowe wystąpienia tokenu mimo iż nie tak znaczące jak pierwsze
 są jednak wskazówką co do większego znaczenia tego tokenu w tekście.
 
+\subsubsection{Podobieństwo dokumentów}
+
+Aby ocenić podobieństwo dwóch dokumentów w modelu przestrzeni wektorowej
+stosuje się miarę kosinusową --- kosinus kąta między wektorami reprezentującymi
+te dokumnety. Dla wektorów dokumentów $d^i$ i $d^j$ wynosić ona będzie:
+
+\begin{equation}
+  d(d^i, d^j) = \langle \frac{d_i}{||d^i||}, \frac{d^j}{||d^j} \rangle
+\end{equation}
+
+Gdzie $\langle \bullet, \bullet \rangle$ oznacza iloczyn skalarny, a $||d|| =
+\lbrace d, d \rbrace$. Daje to liczbę z przedziału $[-1,1]$, gdzie $-1$ oznacza
+dokumenty skrajnie różne, a większe wartości coraz większe podobieństwo.
+Wartość $1$ osiągnięta zostanie dla dwóch dokumentów, w których względna
+częstość występowania słów (ewentualnie znormalizowana) jest taka sama.
+
+\subsubsection{Wady}
+
+Zgodnie z przedstawionym mechanizmem działania wszystkie wyrazy, które mają
+różne postaci w zapisie traktowane są jako całkowicie osobne wymiary
+przestrzeni wektorowej, pomijana jest możliwość występowania wyrazów w wielu
+formach (fleksja), możliwość oznaczenia tego samego pojęcia przez wiele różnych
+ciągów symboli (synonimy) oraz możliwość, że dany ciąg symboli może opisywać
+kilka różnych pojęć (polisemia).
+
+Aby mitygować te niedociągnięcia stosowane są różne rozszerzenia modelu
+przestrzeni wektorowej. Opisany w rozdziale \ref{sec:clp} słownik fleksyjny
+pozwala sprowadzić wyrazy do formy podstawowej co ,,spłaszczy'' je na powrót w
+jeden wymiar. Opisane w dalszych dwóch rozdziałach metody redukcji wymiarowości
+macierzy pozwalając wyekstrahować najczęściej pojawiające się kombinacje
+wyrazów i częściowo zredukować problem synonimów. Aby radzić sobie z polisemią
+możliwe jest zastosowanie mechanizmów kontekstowego ujednoznaczniania wyrazów.
+
 \FloatBarrier
 
 \subsection{Latent Semantic Indexing}
@@ -149,16 +186,23 @@ przedstawione w tym rozdziale ostatecznie LDA również sprowadza się do redukc
 wymiaru macierzy term-dokument przez wprowadzenie nowej przestrzeni, w której
 reprezentowane będą dokumenty.
 
+Metoda LDA została zaproponowana przez Davida Blei et al. w 2003 roku w
+\cite{lda-paper}.
+
 \subsubsection{Intuicja}
 
 LDA to probabilistyczny model generatywny opisujący powstawanie dokumentów.
 Zakłada, że dokumenty są zbiorami wyrazów i kolejność ich występowania nie ma
-znaczenia. Zakłada następnie, że każdy dokument traktuje o małej liczbie
-tematów z pewnego zbioru tematów, których liczba jest znana \emph{a priori}.
+znaczenia (założenie bag-of-words). Zakłada następnie, że każdy dokument
+traktuje o małej liczbie tematów z pewnego zbioru tematów, których liczba jest
+znana \emph{a priori}.
 
-\todo{Moar here}
+Proces generowania dokumentów przebiega przez powtarzanie dwuetapowego
+losowania: najpierw z dystrybucji tematów dla danego dokumentu losowany jest
+temat, a następnie z dystrybucji wyrazów w tym temacie losowany jest kolejny
+wyraz. 
 
-\subsubsection{Dobierani parametrów modelu}
+\subsubsection{Dobieranie parametrów modelu}
 
 \subsection{Perplexity}
 
