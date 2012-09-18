@@ -52,6 +52,7 @@
 \item LSI --- Latent Semantic Indexing
 \item Leksykon --- zbiór wszystkich tokenów występujących w korpusie
 \item Przeuczenie --- zjawisko polegające na zbyt dokładnym odwzorowaniu danych treningowych przez model i utracie zdolności uogólniania
+\item SVD --- Singular Value Decomposition
 \item Schemat Wagowy --- sposób w jaki dokument jest transformowany do reprezentacji wektorowej
 \item Skojarzony --- (o dokumencie) zgodny z kryteriami wyszukiwania, uznany za podobny do dokumentu wzorcowego
 \item TN (True Negatives) --- liczba odrzuconych dokumentów nieskojarzonych
@@ -59,6 +60,8 @@
 \item Token --- wyraz, znak interpunkcyjny lub grupa znaków traktowana jako całość (na przykład liczba)
 \item VSM (Vector Space Model) --- modelowanie języka przez przedstawianie dokumetów jako wektorów
 \item bag-of-words (worek ze słowami) --- założenie o możliowści pominięcia kolejności słów w dokumencie z małą utratą znaczenia
+\item forma podstawowa --- wyróżniona, najprostsza forma wyrazu, przykładowo mianownik rzeczownika
+\item polisemia --- możliwość wyrażania różnych koncepcji przez ten sam wyraz, przykładowo zamek
 \end{itemize}
 
 \pagebreak
@@ -175,6 +178,34 @@ możliwe jest zastosowanie mechanizmów kontekstowego ujednoznaczniania wyrazów
 \FloatBarrier
 
 \subsection{Latent Semantic Indexing}
+
+Metoda LSI to rozszerzenie modelu przestrzeni wektorowej mające na celu
+uzyskanie lepszych wyników dzięki automatycznej identyfikacji powiązań między
+wyrazami występującymi w dokumencie przez redukcję wymiaru macierzy
+term-dokument. Rozwiązuje to wspomniany wcześniej problem synonimów i do
+pewnego stopnia polisemii.  Istnieje przy tym nadzieja, że przez odpowiednie
+dobranie mechanizmu redukcji wymiaru macierzy usunięty zostanie szum przy
+jednoczesnym zachowaniu zawartej w niej informacji.
+
+\subsubsection{Intuicja}
+
+Dzięki temu, że traktujemy dokumenty jako elementy przestrzeni wektorowej
+możliwe staje się wprowadzenie dowolnej bazy w tej przestrzeni i
+reprezentowanie wektorów przy jej użyciu. Jedną ze stosowanych do tego metod
+jest SVD. SVD stara się znaleźć taką bazę przestrzeni, żeby jej kolejne
+współrzędne posorotwane były w kolejności malejącej wariancji wektorów z danego
+zbioru (w tym wypadku korpusu) w ich kierunku. Następnie po przeniesieniu
+wektorów do tej bazy możliwe jest odcięcie współrzędnych dalszych niż $n$-ta
+przy utracie minimalnej ilości informacji.
+
+W przypadku zastosowania SVD do przestrzeni dokumentów wektory nowej bazy można
+traktować właśnie jako tematy dokumentów z korpusu. Każdy z nich będzie
+opisywał kierunek w starej przestrzeni, wzdłuż którego dokumenty są jak
+najbardziej różne, a przez to wskazuje on na powiązanie między swoimi
+składowymi przez ich skorelowanie z tą właśnie różnicą.
+
+\subsubsection{Singular Value Decomposition}
+
 \subsection{Latent Dirichlet Allocation}
 \label{sec:lda}
 
