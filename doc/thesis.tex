@@ -76,10 +76,10 @@ językowych i systemów wyszukiwania informacji.
 
 \subsection{Vector Space Model}
 
-\label{weighting-theory} Model przestrzeni wektorowej (Vector Space Model -
-VSM) to metoda modelowania języka polegająca na reprezentowaniu dokumentów jako
-wekorów co umożliwia na przykład porównywanie ich metodami algebry liniowej.
-Wektor dla $i$-tego dokumentu ma postać:
+Model przestrzeni wektorowej (Vector Space Model --- VSM) to metoda modelowania
+języka polegająca na reprezentowaniu dokumentów jako wektorów co umożliwia na
+przykład porównywanie ich metodami algebry liniowej.  Wektor dla $i$-tego
+dokumentu ma postać:
 
 \begin{equation}
 d_i = (w^i_0, w^i_1, \ldots, w^i_N)
@@ -91,6 +91,8 @@ dokumencie --- powinny być tym wyższe im bardziej kluczowy dla sensu $i$-tego
 dokumentu jest $k$-ty token. Przyjmuje się zwykle, że wymiary odpowiadające
 tokenom nie występującym w danym dokumencie są zerowe.
 
+\subsection{Schemat wagowy}
+\label{weighting-theory}
 Najbardziej ogólnie wagi $w^i_k$ uzyskuje się przez pomnożenie wagi globalnej
 $g_k$, która ma odzwierciedlać popularność tokenu w całym korpusie i wagi
 lokalnej $l^i_k$, która opisuje stricte znaczenie tokenu w danym dokumencie.
@@ -206,6 +208,33 @@ składowymi przez ich skorelowanie z tą właśnie różnicą.
 
 \subsubsection{Singular Value Decomposition}
 
+SVD to sposób rozkładu macierzy na iloczyn macierzy o pewnych szczególnych
+własnościach, które okazują się przydatne w zastosowaniach związanych na
+przykład z przetwarzaniem sygnałów. Każdą macierz $M$ o wartościach będących
+liczbami zespolonymi można przedstawić jako:
+
+\begin{equation}
+  \label{svd}
+  M = U\Sigma V^*
+\end{equation}
+
+Przy czym macierz $\Sigma$ jest macierzą diagonalną, która na przekątnej
+zawiera wartości osobliwe macierzy $M$, macierz $U$ zawiera lewe wektory
+osobliwe $M$, a macierz $V^*$ jest macierzą sprzężoną do macierzy zawierającej
+prawe wektory osobliwe $M$.
+
+Tak zdefiniowany rozkład pozwala na redukcję rzędu macierzy zgodnie z
+twierdzeniem Eckharta-Younga, które głosi, że macierz o rzędzie $k$, najlepiej
+przybliżająca $M$ w sensie normy Frobeniusa czyli pierwiastka sumy kwadratów
+różnic odpowiadających sobie elementów macierzy jest zadana przez:
+
+\begin{equation}
+  M \approx \tilde{M} = U\tilde{\Sigma} V^*
+\end{equation}
+
+Gdzie macierz $\tilde{\Sigma}$ uzyskuje się poprzez wybranie $k$ największych
+wartości osobliwych i zastąpienie pozostałych zerami w macierzy $\Sigma$.
+
 \subsection{Latent Dirichlet Allocation}
 \label{sec:lda}
 
@@ -231,7 +260,7 @@ znana \emph{a priori}.
 Proces generowania dokumentów przebiega przez powtarzanie dwuetapowego
 losowania: najpierw z dystrybucji tematów dla danego dokumentu losowany jest
 temat, a następnie z dystrybucji wyrazów w tym temacie losowany jest kolejny
-wyraz. 
+wyraz.
 
 \subsubsection{Dobieranie parametrów modelu}
 
