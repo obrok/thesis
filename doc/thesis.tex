@@ -92,6 +92,50 @@ korpusie się nie pojawią nie są w ogóle dostępne. Metody tego rodzaju mają
 jednak tę zaletę, że operują jedynie na tekście, nie potrzebują dodatkowych
 informacji jak przedstawione wyżej podejścia.
 
+Najprostszą wersją tego podejścia jest Vector Space Modelling - metoda
+polegająca na reprezentowaniu dokumentów jako wektorów, których współrzędne
+odpowiadają w jakiś sposób częstościom występowania w nich pewnych wyrazów.
+Pozwala to na porównywanie dokumentów metodami algebry liniowej, na przykład
+ocenianie podobieństwa dokumentów przez pomiar kąta między odpowiadającymi im
+wektorami.
+
+VSM wykazuje niestety znaczne wady, przykładowo jest całkowicie nieczułe na
+istnienie synonimów albo możliwość występowania słowa w więcej niż jednym
+znaczeniu. Co więcej duża część wyrazów w dokumentach, to z semantycznego
+punktu widzenia szum, przykładowo znaki przestankowe, chociaż występują dość
+często nie są zwykle kluczowe do zrozumienia tekstu. Aby uporać się z tymi
+wadami proponuje się różne udoskonalenia tej metody, ta praca zajmuje się
+porównaniem dwóch z nich --- Latent Semantic Indexing oraz Latent Dirichlet
+Analysis.
+
+LSI to metoda pochodząca wprost z algebry liniowej. Sprowadza się ona do
+wprowadzenia nowej, mniejszej bazy do przestrzeni wektorów odpowiadających
+dokumentom, w taki jednak sposób, aby zachować jak najwięcej informacji
+zawartych w oryginalnej reprezentacji. Ma to wyeliminować szum, a także wykryć
+związki między wyrazami przez ich wspólne występowanie w wektorach nowej bazy.
+
+LDA stawia sobie za cel przedstawienie przynajmniej częściowego
+probabilistycznego modelu powstawania dokumentów i założywszy poprawność tego
+modelu znalezienie jego parametrów dla danego korpusu. Ze względu na specyfikę
+tego modelu, konkretnie założenie o tym, że na każdy tekst składa się jeden lub
+więcej tematów i pojawienie się w nim każdego wyrazu można przypisać jednemu z
+tych tematów, również pozwala on wykrywać zależności między słowami. W tym
+wypadku zależności te będą zadane przez występowanie słów w tym samym temacie.
+
+Zarówno LSI jak i LDA mogą być wykorzystane w szeregu zastosowań związanych z
+automatycznym przetwarzaniem tekstu, takich jak wyszukiwanie dokumentów w
+korpusie, automatyczna ekstrakcja słów kluczowych czy ocena podobieństwa
+dokumentów. Praca ta stawia sobie za zadanie porównanie działania tych metod
+w tego typu zadaniach.
+
+Istnieją już porównania LSI i LDA, jak choćby \cite{lda-paper}, jednak traktują
+one głównie o języku angielskim, który ma względnie prostą fleksję. Wyniki te
+nie zawsze przenoszą się na inne języki, jak choćby polski --- wykorzystany do
+testów w tej pracy --- gdzie każdy wyraz występuja w bardzo wielu formach. Aby
+rozwiązać ten problem zastosowano wraz z metodami LSI i LDA słownik fleksyjny
+języka polskiego. Poddano także porównaniu wyniki osiągane z i bez jego
+zastosowania.
+
 Rozdział \ref{sec:terms} tej pracy omawia najczęściej pojawiające się w niej
 terminy i oznaczenia.  Rozdział \ref{sec:theory} poświęcony jest teoretycznemu
 opisowi porównywanych metod jak i metryk stosowanych do ich oceny. W rozdziale
