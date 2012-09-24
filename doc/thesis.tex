@@ -35,10 +35,78 @@
 \pagebreak
 
 \section{Wstęp}
-\todo{content}
+
+Metody automatycznego przetwarzania tekstu nabierają w dzisiejszym świecie
+coraz większego znaczenia --- jesteśmy zalewani przez powodź informacji, a
+większość z nich ma właśnie postać tekstową. Aby poradzić sobie z tym ogromem
+napływających bodźców próbujemy uciekać się do mechanizmów, które pozwolą je
+przeanalizować albo przynajmniej wstępnie przetowrzyć. Technologie w rodzaju
+wyszukiwarek internetowych, agregatorów wiadomości czy baz filmów lub książek
+potrafiących wskazać dzieła podobne, do tych, które nam się podobały stają się
+coraz popularniejsze i często koniecznie do znalezienia porządanej informacji.
+
+Wspomniane mechanizmy zajmują się głównie segregowaniem czy przeszukiwaniem
+danych, ale wyobrażalne są również zadania na wyższym poziomie koncepcyjnym.
+Chcielibyśmy, aby odpowiednio zaprogramowane maszyny były w stanie rozumieć
+tekst tak jak ludzie i przetwarzać go nie tyle jako ciągi znaków ile jako idee,
+opisy zdarzeń, itp. wyrażone tymi znakami. Zadania takie jak automatyczne
+tłumaczenie, generowanie streszczeń lub parafrazowanie tekstów wydają się na
+tym etapie wymagać takiego właśnie zrozumienia i nadal ich sprawne wykonywanie
+pozostaje wyłączną domeną człowieka, mimo postępujących prac w tych
+dziedzinach.
+
+Naczelnym problemem, który należy przezwyciężyć w tego typu zagadnieniach jest
+fakt, że słowo pisane, a ogólniej język odnoszą się do pewnej rzeczywistości
+zewnętrznej, a wręcz jest to ich zasadniczą funkcją. Maszyny, które
+przetwarzają tekst nie mają zwykle bezpośredniej styczności z tą
+rzeczywistością, starając się operować jedynie na ciągach symboli. Ujawnia się
+tutaj przewaga w tym polu ludzi, którzy mają wiele lat na zbieranie informacji
+o świecie i o tym w jaki sposób odnosi się do niego język, którym się
+posługują.
+
+Istnieje wiele kierunków badań mających rzucić więcej światła na rozwiązanie
+tego problemu. Najbardziaj ambitne zakładają, że konieczne jest tutaj
+stworzenie uniwersalnej sztucznej inteligencji czyli maszyny o możliwościach
+podobnych ludzkiemu umysłowi, która miałaby dostęp do bodźców zmysłowych
+dokładnie tak jak człowiek i byłaby w stanie w jakimś sensie w stanie rozumieć
+język i rzeczywistość, którą opisuje.
+
+Nieco mniej radykalne podejście sugeruje budowę ontologii, czyli
+sformalizowanego opisu znaczeń wyrazów i powiązań między nimi wraz z typami
+tych powiązań. Przykładowo mogłaby ona zawierać wpis ,,tryb part-of zegar'',
+reprezentujący fakt, że zegary często zawierają tryby jako części. Taka baza
+wiedzy opisuje znaczenie słów niejako przez przykłady kontekstów, w których
+mogą występować i pozwala dokonywać rozumowania na temat tekstu w rodzaju
+wykrywania synekdochy (wykorzystywania całości na oznaczenie części lub
+odwrotnie, np. ,,Hollywood'' zamiast ,,Amerykański przemysł filmowy'') co
+umożliwi odkrycie jego prawdziwego znaczenia.
+
+Jeszcze inne podejście, któremy poświęcona jest ta praca, polega na próbie
+wykrywania powiązań w samym analizowanym tekście. U jej podstaw leży
+obserwacja, że wyrazy będą pojawiać się częściej w kontekście wyrazów
+związanych z nimi znaczeniowo, przykładowo ,,żaba'' może pojawić się blisko
+,,skakać'' czy ,,pływać'', rzadziej ,,biegać''. Znów daje nam to zestaw
+kontekstów dla danego wyrazu, tym razem jednak należy go wyekstrahować z
+tekstu, a częściej zbioru tekstów, natomiast konteksty dla słów, które w takim
+korpusie się nie pojawią nie są w ogóle dostępne. Metody tego rodzaju mają
+jednak tę zaletę, że operują jedynie na tekście, nie potrzebują dodatkowych
+informacji jak przedstawione wyżej podejścia.
+
+Rozdział \ref{sec:terms} tej pracy omawia najczęściej pojawiające się w niej
+terminy i oznaczenia.  Rozdział \ref{sec:theory} poświęcony jest teoretycznemu
+opisowi porównywanych metod jak i metryk stosowanych do ich oceny. W rozdziale
+\ref{sec:data} opisany został zbiór danych użytych do testów i wygenerowany
+przy jego użyciu testowy problem, natomiast w rozdziale \ref{sec:solution}
+opisane są mechanizmy użyte do jego rozwiązania. Rozdział \ref{sec:results}
+zawiera uzyskane wyniki numeryczne wraz z ich omówieniem, a rozdział
+\ref{sec:summary} podsumowuje pracę i proponuje dalsze ścieżki jej rozwoju.
+Ponadto w dodatku \ref{sec:code} podano sposób wykorzystania kodu użytego do
+uzyskania wyników przedtstawionych w tej pracy.
+
 \pagebreak
 
 \section{Terminy i oznaczenia}
+\label{sec:terms}
 
 \begin{itemize}
 \item $df_i$ (Document Frequency) --- liczba dokumentów zawierjących $i$-ty token
@@ -67,6 +135,7 @@
 \pagebreak
 
 \section{Podstawy teoretyczne}
+\label{sec:theory}
 
 W tym rozdziale opisana jest ogólnie koncepcja wektorowego modelowania
 dokumentów oraz metody, które poddano porównaniu w tej pracy, a które od tej
@@ -346,7 +415,10 @@ kosztem dokładności lub odwrotnie. Z tego też powodu analizuje się je zwykle
 tandemie i interesujące są nie tyle ich wartości jako takie, co zależność
 między nimi.
 
+\pagebreak
+
 \section{Architektura rozwiązania}
+\label{sec:solution}
 
 W tym rozdziale zawarty został szczegółowy opis rozwiązań użytych w tej pracy.
 Pierwsza część omawia sposób przetwarzania danych wejściowych (zbioru
@@ -630,7 +702,10 @@ Etykieta: ACABA\\
 Opis etykiety: rzeczownik / męski nieżyw. / M.Lp.-0 / M.Lm.-i / D.Lp.-u\\
 Wektor odmiany: [1, 4]\\
 \end{quote}
+\pagebreak
+
 \section{Opis danych}
+\label{sec:data}
 \label{data-description}
 
 Działanie algorytmów LDA i LSI analizowane było na zbiorze 51574 notatek
@@ -741,7 +816,10 @@ rozdzielonych przez lekarzy w Krakowie pod koniec czerwca, zmarł w środę
 wieczorem z powodu niewydolności krążenia - poinformował PAP docent Adam
 Bysiek.  \end{quote}
 
+\pagebreak
+
 \section{Wyniki i analiza}
+\label{sec:results}
 
 Niniejszy rozdział zawiera porównanie algorytmów LDA i LSI pod kątem jakości
 otrzymywanych wyników. Zawarte w nim zostały zarówno porównanie ich przez
@@ -1045,11 +1123,15 @@ wagami) słowa opisujące dany dokument/temat, podczas gdy w przypadku LSI mogą
 to być słowa najodleglejsze. Takie zachowanie może okazać się korzystne w
 zastosowaniach typu tagowanie dokumentów lub automatyczne generowanie
 podsumowań czy słów kluczowych.
+\pagebreak
 
 \section{Podsumowanie}
+\label{sec:summary}
+\pagebreak
 
 \appendix
 \section{Sposób użycia kodu}
+\label{sec:code}
 
 Kod wykorzystany do przeprowadzenia badań w tej pracy znaleźć można pod
 \cite{code}. Aby z niego skorzystać konieczne jest zainstalowanie pakietu
@@ -1074,6 +1156,8 @@ par [dokładność kompletność] dla zadanej liczby tematów
 oblicza i wypisuje zależność między TPR a FPR w formie
 par [TPR FPR] dla zadanej liczby tematów
 \end{itemize}
+
+\pagebreak
 
 \addcontentsline{toc}{section}{Spis tablic}
 \listoftables
