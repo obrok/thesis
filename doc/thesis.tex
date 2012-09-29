@@ -11,7 +11,7 @@
 \usepackage{natbib}
 \usepackage{url}
 \usepackage{float}
-\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[font=footnotesize,labelfont=bf,justification=centering]{caption}
 \usepackage{array}
 \frenchspacing
 
@@ -35,6 +35,10 @@
 \pagebreak
 
 \section{Wstęp}
+
+Poniższy rozdział przybliża temtykę pracy oraz opisuje jej zawartość.
+
+\subsection{Wprowadzenie}
 
 Metody automatycznego przetwarzania tekstu nabierają w dzisiejszym świecie
 coraz większego znaczenia --- jesteśmy zalewani przez powodź informacji, a
@@ -136,47 +140,24 @@ rozwiązać ten problem zastosowano wraz z metodami LSI i LDA słownik fleksyjny
 języka polskiego. Poddano także porównaniu wyniki osiągane z i bez jego
 zastosowania.
 
-Rozdział \ref{sec:terms} tej pracy omawia najczęściej pojawiające się w niej
-terminy i oznaczenia.  Rozdział \ref{sec:theory} poświęcony jest teoretycznemu
-opisowi porównywanych metod jak i metryk stosowanych do ich oceny. W rozdziale
-\ref{sec:data} opisany został zbiór danych użytych do testów i wygenerowany
-przy jego użyciu testowy problem, natomiast w rozdziale \ref{sec:solution}
-opisane są mechanizmy użyte do jego rozwiązania. Rozdział \ref{sec:results}
-zawiera uzyskane wyniki numeryczne wraz z ich omówieniem, a rozdział
-\ref{sec:summary} podsumowuje pracę i proponuje dalsze ścieżki jej rozwoju.
-Ponadto w dodatku \ref{sec:code} podano sposób wykorzystania kodu użytego do
-uzyskania wyników przedtstawionych w tej pracy.
+\subsection{Zawartość pracy}
+
+Rozdział \ref{sec:theory} poświęcony jest teoretycznemu opisowi porównywanych
+metod jak i metryk stosowanych do ich oceny. W rozdziale \ref{sec:data} opisany
+został zbiór danych użytych do testów i wygenerowany przy jego użyciu testowy
+problem, natomiast w rozdziale \ref{sec:solution} opisane są mechanizmy użyte
+do jego rozwiązania. Rozdział \ref{sec:results} zawiera uzyskane wyniki
+numeryczne wraz z ich omówieniem, a rozdział \ref{sec:summary} podsumowuje
+pracę i proponuje dalsze ścieżki jej rozwoju.
+
+Dodatek \ref{sec:terms} tej pracy omawia najczęściej pojawiające się w niej
+terminy i oznaczenia.  Ponadto w dodatku \ref{sec:code} podano sposób
+wykorzystania kodu użytego do uzyskania wyników przedtstawionych w tej pracy. W
+dodatku \ref{sec:full-results} zawarto pełną tabelę tematów wygenerowanych
+dla przykładowych danych.
 
 \pagebreak
 
-\section{Terminy i oznaczenia}
-\label{sec:terms}
-
-\begin{itemize}
-\item $df_i$ (Document Frequency) --- liczba dokumentów zawierjących $i$-ty token
-\item $gf_i$ (Global Frequency) --- stosunek liczby wystąpień $i$-tego tokenu do liczby wszystkich wyrazów w korpusie
-\item $tf_i^j$ (Term Frequency) --- stosunek liczby wystąpień $i$-tego tokenu do liczby wszystkich wyrazów w $j$-tym dokumencie
-\item Dokument --- tekst lub fragment tekstu
-\item FN (False Negatives) --- liczba odrzuconych dokumentów skojarzonych
-\item FP (False Positives) --- liczba zwróconych dokumentów skojarzonych
-\item Korpus --- zbiór dokumentów
-\item LDA --- Latent Dirichlet Allocation
-\item LSI --- Latent Semantic Indexing
-\item Leksykon --- zbiór wszystkich tokenów występujących w korpusie
-\item Przeuczenie --- zjawisko polegające na zbyt dokładnym odwzorowaniu danych treningowych przez model i utracie zdolności uogólniania
-\item SVD --- Singular Value Decomposition
-\item Schemat Wagowy --- sposób w jaki dokument jest transformowany do reprezentacji wektorowej
-\item Skojarzony --- (o dokumencie) zgodny z kryteriami wyszukiwania, uznany za podobny do dokumentu wzorcowego
-\item TN (True Negatives) --- liczba odrzuconych dokumentów nieskojarzonych
-\item TP (True Positives) --- liczba zwróconych dokumentów skojarzonych
-\item Token --- wyraz, znak interpunkcyjny lub grupa znaków traktowana jako całość (na przykład liczba)
-\item VSM (Vector Space Model) --- modelowanie języka przez przedstawianie dokumetów jako wektorów
-\item bag-of-words (worek ze słowami) --- założenie o możliowści pominięcia kolejności słów w dokumencie z małą utratą znaczenia
-\item forma podstawowa --- wyróżniona, najprostsza forma wyrazu, przykładowo mianownik rzeczownika
-\item polisemia --- możliwość wyrażania różnych koncepcji przez ten sam wyraz, przykładowo zamek
-\end{itemize}
-
-\pagebreak
 
 \section{Podstawy teoretyczne}
 \label{sec:theory}
@@ -198,13 +179,13 @@ dokumentu ma postać:
 d_i = (w^i_0, w^i_1, \ldots, w^i_N)
 \end{equation}
 
-gdzie wymiar $w^i_k$ odpowiada $k$-temu tokenowi z leksykonu. Współczynniki te
+gdzie wymiar $w^i_k$ odpowiada $k$-temu tokenowi z słownika. Współczynniki te
 nazywane są także wagami i mają oddawać znaczenie danego tokenu w danym
 dokumencie --- powinny być tym wyższe im bardziej kluczowy dla sensu $i$-tego
 dokumentu jest $k$-ty token. Przyjmuje się zwykle, że wymiary odpowiadające
 tokenom nie występującym w danym dokumencie są zerowe.
 
-\subsection{Schemat wagowy}
+\subsubsection{Schemat wagowy}
 \label{weighting-theory}
 Najbardziej ogólnie wagi $w^i_k$ uzyskuje się przez pomnożenie wagi globalnej
 $g_k$, która ma odzwierciedlać popularność tokenu w całym korpusie i wagi
@@ -377,6 +358,8 @@ wyraz.
 
 \subsubsection{Dobieranie parametrów modelu}
 
+\todo{Something here}
+
 \subsection{Perplexity}
 
 Współczynnik perplexity, który zaproponowany został do oceny modeli języka
@@ -424,8 +407,6 @@ możliwości.
 
 \subsection{Dokładność i kompletność}
 
-\todo{Citation?}
-
 Aby ocenić i porównywać wyniki działania algorytmów wyszukujących dokumenty w
 korpusach należy wprowadzić formalne metryki opsisujące jakość wyników przez
 nie uzyskiwanych. Należy przy tym zauważyć, że znaczenie ma nie tylko fakt
@@ -461,6 +442,132 @@ między nimi.
 
 \pagebreak
 
+\section{Opis danych}
+\label{sec:data}
+\label{data-description}
+
+Działanie algorytmów LDA i LSI analizowane było na zbiorze 51574 notatek
+Polskiej Agencji Prasowej. Notatki te to krótkie wiadomości tekstowe (średnio
+mające 409 znaków), z których większość dotyczy pojedynczego wydarzenia.
+Dotyczą one różnych dziedzin życia takich jak sport, polityka, gospodarka,
+sprawy obyczajowe, etc., co nadaje temu zbiorowi dodatkową różnorodność i
+pozwala oczekiwać, że osiągnięte wyniki będą miarodajne dla efektywności
+algorytmów w prawdziwych zastosowaniach.
+
+\subsection{Słownik}
+
+W korpusie znajduje sie w sumie 2846997 tokenów - wyrazów, liczb, znaków
+interpunkcyjnych i innych, wśród nich 443935 różnych form (pozostałe są
+powtórzeniami). Po sprowadzeniu wyrazów od form podstawowych oraz zastosowaniu
+podstawień w rodzaju użycia tokenu ,,NUMBER'' zamiast konkretnych liczb
+pozostaje 70536 różnych form. Z tych odrzucono występujące tylko w jednym
+dokumencie, występujące w więcej niż w 70\% dokumentów, oraz tokeny mające małe
+znaczenie semantyczne takie jak spójniki i znaki interpunkcyjne, co dało
+ostateczną liczbę 39007 tokenów. W przypadku eksperymentów bez zastosowania
+słownika fleksyjnego po tych operacjach pozostaje 131155 różnych tokenów.
+
+\subsection{Przykładowy problem}
+\label{sec:example}
+
+Aby przetestować działanie obu algorytmów przygotowane zostało przykładowe
+zapytanie do systemu wyszukiwania informacji dla zbioru notatek prasowych PAP.
+Problem polega na znalezieniu dokumentów podobnych do pojedynczej wybranej
+notatki na temat bliźniaczek syjamski. Została przygotowana modelowa odpowiedź
+systemu dla porównania z faktycznymi odpowiedziami.
+
+Zapytanie:
+
+\begin{quote} ***** \#000424 *****\\ W sobotę polskie bliźniaczki syjamskie
+Weronika i Wiktoria przylecą do Polski rejsem Newark-Kraków - poinformował PAP
+oddział LOT-u na nowojorskim lotnisku.  Bliźniaczki syjamskie Weronika i
+Wiktora urodziły się 26 maja 1999 w szpitalu Akademii Medycznej w Lublinie. Od
+16 sierpnia przebywają w Filadelfii. W listopadzie przeszły udaną operację
+rozdzielenia. Pierwszy termin wypisania dziewczynek wyznaczono na 11 lutego.
+Został jednak przesunięty o tydzień z uwagi na gorączkę Weroniki.  \end{quote}
+
+Najbardziej podobne dokumenty wybrane ręcznie:
+
+\begin{quote} ***** \#000516 *****\\ Wiktoria i Weronika, siostry syjamskie
+rozdzielone w listopadzie w Filadelfii, przyleciały z mamą w sobotę rano do
+Krakowa. Na lotnisku w Balicach żonę i córki przywitał ojciec dziewczynek,
+Edward Paleń. Byli też trzej bracia dziewczynek.  "Dziewczynki przyjechały w
+dobrym stanie, są zdrowe" - powiedziała na lotnisku w Balicach mama
+rozdzielonych bliźniaczek pani Krystyna Paleń. "Lekarze amerykańscy twierdzili,
+że gdyby dziewczynki miały po powrocie do kraju trafić do polskiego szpitala,
+to oni by je przytrzymali dłużej u siebie. Wypisali dziewczynki w takim stanie,
+że mogą iść do domu" - powiedziała dziennikarzom. Dodała, że Wiktoria i
+Weronika będą znajdowały się pod opieką lekarza pediatry w Stalowej Woli.
+\end{quote}
+
+\begin{quote} ***** \#009928 *****\\ W klasztorze Ojców Kapucynów w Stalowej Woli
+(Podkarpacie) ochrzczone zostały w niedzielę syjamskie bliźniaczki - Weronika i
+Wiktora Paleniówny, które urodziły się 26 maja ub. roku częściowo zrośnięte
+klatkami piersiowymi i brzuszkami. Pomoc w rozdzieleniu dzieci zaoferował
+Szpital Dziecięcy w Filadelfii w USA.  Rozdzielenia dokonano 3 listopada, po
+kilkunastogodzinnej operacji, w której udział wzięło 45 lekarzy.  \end{quote}
+
+\begin{quote} ***** \#011189 *****\\ Powoli stabilizuje się stan zdrowia
+9-miesięcznego Kamila, jednego z rozdzielonych w Krakowie braci syjamskich.
+Drugi z braci - Patryk - nadal jest w ciężkim stanie - poinformował w
+poniedziałek PAP opiekujący się braćmi docent Adam Bysiek.  Stan zdrowia Kamila
+docent Bysiek określił jako "rokujący nadzieję". Obaj bracia nadal przebywają
+na oddziale intensywnej terapii Polsko-Amerykańskiego Instytutu Pediatrii
+Uniwersytetu Jagiellońskiego w Krakowie Prokocimiu.  Bracia zostali rozdzieleni
+tydzień temu. O terminie operacji zadecydowało nagłe pogorszenie się stanu
+zdrowia jednego z nich.  Początkowo operacja rozdzielenia była planowana na
+wrzesień. Na początku czerwca braciom wszczepiono ekspandery, mające za zadanie
+namnożyć tkankę skórną potrzebną po operacji.  Operacja trwała 8 godzin,
+uczestniczyło w niej 14 lekarzy oraz zespół anestezjologów i pielęgniarek. Jej
+pierwszą część zajęło rozdzielenie braci, w drugiej lekarze zajęli się
+rekonstrukcją rozdzielonych narządów. Bracia byli zrośnięci powłokami
+piersiowo-brzusznymi, mieli wspólną przeponę, worek osierdziowy i wątrobę.
+Była to siódma operacja rozdzielenia bliźniaków syjamskich dokonana w
+Instytucie w Prokocimiu.  \end{quote}
+
+\begin{quote} ***** \#008779 *****\\ Bracia syjamscy Kamil i Patryk przeszli w
+poniedziałek pierwszy zabieg przygotowujący ich do operacji rozdzielenia,
+planowanej za trzy miesiące w Polsko-Amerykańskim  Instytucie Pediatrii UJ w
+Krakowie-Prokocimiu.  \end{quote}
+
+\begin{quote} ***** \#005662 *****\\ W Polsko-Amerykańskim Instytucie Pediatrii w
+Krakowie-Prokocimiu zmarły siostry syjamskie, które urodziły się przed
+tygodniem w Wejherowie.  \end{quote}
+
+\begin{quote} ***** \#000469 *****\\ Bliźniaczki syjamskie z Poznania - Małgosia i
+Dorota - przeszły już pierwsze badania w Polsko-Amerykańskim Instytucie
+Pediatrii UJ w Krakowie-Prokocimiu." Z przeprowadzonych badań wynika, że
+siostry mają wspólną watrobę i przeponę oraz prawdopodobnie wspólne drogi
+żółciowe i serce" - powiedział PAP opiekujący się bliźniaczkami dr Adam Bysiek
+z Instytutu. Siostry urodziły się 11 lutego w poznańskiej klinice św. Rodziny.
+Dziewczynki zrośnięte są brzuszkami i klatkami piersiowymi.  \end{quote}
+
+\begin{quote} ***** \#005855 *****\\ Liczba urodzeń bliźniąt syjamskich nie
+odbiega w Polsce od statystycznej normy - powiedział PAP prof. Jan Grochowski,
+dyrektor Polsko-Amerykańskiego Instytutu Pediatrii UJ, w którym przebywają dwie
+pary bliźniąt syjamskich.  \end{quote}
+
+\begin{quote} ***** \#010677 *****\\ Lekarze z Polsko-Amerykańskiego Instytutu
+Pediatrii UJ w Krakowie Prokocimiu rozdzielili 9-miesięcznych braci syjamskich
+Kamila i Patryka - poinformował PAP doc. Adam Bysiek, szef zespołu opiekującego
+się bliźniętami.  \end{quote}
+
+\begin{quote} ***** \#007320 *****\\ Prof. Louis Gerald Keith, który w ubiegłym
+roku przeprowadził operację rozdzielenia polskich bliźniaczek syjamskich
+Weroniki i Wiktorii, został odznaczony przez prezydenta Aleksandra
+Kwaśniewskiego Krzyżem Oficerskim Zasługi RP.  \end{quote}
+
+\begin{quote} ***** \#007872 *****\\ Komitet etyki szpitala w Palermo na Sycylii
+wydał zgodę na operację peruwiańskich bliźniaczek syjamskich, w wyniku której
+jedna z nich ma szansę na ocalenie kosztem życia drugiej - doniosła prasa
+włoska.  \end{quote}
+
+\begin{quote} ***** \#012193 *****\\ Jeden z 9-miesięcznych braci syjamskich,
+rozdzielonych przez lekarzy w Krakowie pod koniec czerwca, zmarł w środę
+wieczorem z powodu niewydolności krążenia - poinformował PAP docent Adam
+Bysiek.  \end{quote}
+
+\pagebreak
+
 \section{Architektura rozwiązania}
 \label{sec:solution}
 
@@ -470,8 +577,6 @@ dokumentów, patrz \ref{data-description}), druga natomiast omawia po krótce
 wykorzystane w badaniach biblioteki programistyczne.
 
 \subsection{Procedura przetwarzania}
-
-\todo{This is most likely not complete}
 
 Poniżej znajduje się omówienie krok po kroku sposobu w jaki osiągnięto
 prezentowane wyniki. Omawiane są zarówno operacje wykonywane na danych, wybór
@@ -483,9 +588,9 @@ jakość zwróconego rankingu dokumentów.
 \subsubsection{Sprowadzenie do form podstawowych}
 
 Metody macierzowe zachowują się znacznie lepiej dla mniejszych rozmiarów
-leksykonu, a co za tym idzie mniejszych rozmiarów wektorowej reprezentacji
+słownika, a co za tym idzie mniejszych rozmiarów wektorowej reprezentacji
 dokumentów. Poza oczywistym zyskiem polegającym na krótszym czasie
-przetwarzania pomniejszenie leksykonu w stosunku do liczby i długości
+przetwarzania pomniejszenie słownika w stosunku do liczby i długości
 dokumentów sprawia także, że metody te mogą łatwiej wykrywać, które wyrazy są
 powiązane --- każdy wyraz występuje w większej liczbie kontekstów, umożliwiając
 zebrania na jego temat więcej informacji.
@@ -570,7 +675,6 @@ zawierającą nowe wagi wyrazów.
 
 \begin{equation}
   g_i = 1 + \sum_{j=1}^n \frac{p_{ij} log(p_{ij})}{log(n)}
-  \todo{$log(p_{ij}) = -\infty?$}
 \end{equation}
 
 \begin{equation}
@@ -748,120 +852,6 @@ Wektor odmiany: [1, 4]\\
 \end{quote}
 \pagebreak
 
-\section{Opis danych}
-\label{sec:data}
-\label{data-description}
-
-Działanie algorytmów LDA i LSI analizowane było na zbiorze 51574 notatek
-Polskiej Agencji Prasowej. Notatki te to krótkie wiadomości tekstowe (średnio
-mające 409 znaków), z których większość dotyczy pojedynczego wydarzenia.
-Dotyczą one różnych dziedzin życia takich jak sport, polityka, gospodarka,
-sprawy obyczajowe, etc., co nadaje temu zbiorowi dodatkową różnorodność i
-pozwala oczekiwać, że osiągnięte wyniki będą miarodajne dla efektywności
-algorytmów w prawdziwych zastosowaniach.
-
-\subsection{Przykładowy problem}
-\label{sec:example}
-
-Aby przetestować działanie obu algorytmów przygotowane zostało przykładowe
-zapytanie do systemu wyszukiwania informacji dla zbioru notatek prasowych PAP.
-Problem polega na znalezieniu dokumentów podobnych do pojedynczej wybranej
-notatki na temat bliźniaczek syjamski. Została przygotowana modelowa odpowiedź
-systemu dla porównania z faktycznymi odpowiedziami.
-
-Zapytanie:
-
-\begin{quote} ***** \#000424 *****\\ W sobotę polskie bliźniaczki syjamskie
-Weronika i Wiktoria przylecą do Polski rejsem Newark-Kraków - poinformował PAP
-oddział LOT-u na nowojorskim lotnisku.  Bliźniaczki syjamskie Weronika i
-Wiktora urodziły się 26 maja 1999 w szpitalu Akademii Medycznej w Lublinie. Od
-16 sierpnia przebywają w Filadelfii. W listopadzie przeszły udaną operację
-rozdzielenia. Pierwszy termin wypisania dziewczynek wyznaczono na 11 lutego.
-Został jednak przesunięty o tydzień z uwagi na gorączkę Weroniki.  \end{quote}
-
-Najbardziej podobne dokumenty wybrane ręcznie:
-
-\begin{quote} ***** \#000516 *****\\ Wiktoria i Weronika, siostry syjamskie
-rozdzielone w listopadzie w Filadelfii, przyleciały z mamą w sobotę rano do
-Krakowa. Na lotnisku w Balicach żonę i córki przywitał ojciec dziewczynek,
-Edward Paleń. Byli też trzej bracia dziewczynek.  "Dziewczynki przyjechały w
-dobrym stanie, są zdrowe" - powiedziała na lotnisku w Balicach mama
-rozdzielonych bliźniaczek pani Krystyna Paleń. "Lekarze amerykańscy twierdzili,
-że gdyby dziewczynki miały po powrocie do kraju trafić do polskiego szpitala,
-to oni by je przytrzymali dłużej u siebie. Wypisali dziewczynki w takim stanie,
-że mogą iść do domu" - powiedziała dziennikarzom. Dodała, że Wiktoria i
-Weronika będą znajdowały się pod opieką lekarza pediatry w Stalowej Woli.
-\end{quote}
-
-\begin{quote} ***** \#009928 *****\\ W klasztorze Ojców Kapucynów w Stalowej Woli
-(Podkarpacie) ochrzczone zostały w niedzielę syjamskie bliźniaczki - Weronika i
-Wiktora Paleniówny, które urodziły się 26 maja ub. roku częściowo zrośnięte
-klatkami piersiowymi i brzuszkami. Pomoc w rozdzieleniu dzieci zaoferował
-Szpital Dziecięcy w Filadelfii w USA.  Rozdzielenia dokonano 3 listopada, po
-kilkunastogodzinnej operacji, w której udział wzięło 45 lekarzy.  \end{quote}
-
-\begin{quote} ***** \#011189 *****\\ Powoli stabilizuje się stan zdrowia
-9-miesięcznego Kamila, jednego z rozdzielonych w Krakowie braci syjamskich.
-Drugi z braci - Patryk - nadal jest w ciężkim stanie - poinformował w
-poniedziałek PAP opiekujący się braćmi docent Adam Bysiek.  Stan zdrowia Kamila
-docent Bysiek określił jako "rokujący nadzieję". Obaj bracia nadal przebywają
-na oddziale intensywnej terapii Polsko-Amerykańskiego Instytutu Pediatrii
-Uniwersytetu Jagiellońskiego w Krakowie Prokocimiu.  Bracia zostali rozdzieleni
-tydzień temu. O terminie operacji zadecydowało nagłe pogorszenie się stanu
-zdrowia jednego z nich.  Początkowo operacja rozdzielenia była planowana na
-wrzesień. Na początku czerwca braciom wszczepiono ekspandery, mające za zadanie
-namnożyć tkankę skórną potrzebną po operacji.  Operacja trwała 8 godzin,
-uczestniczyło w niej 14 lekarzy oraz zespół anestezjologów i pielęgniarek. Jej
-pierwszą część zajęło rozdzielenie braci, w drugiej lekarze zajęli się
-rekonstrukcją rozdzielonych narządów. Bracia byli zrośnięci powłokami
-piersiowo-brzusznymi, mieli wspólną przeponę, worek osierdziowy i wątrobę.
-Była to siódma operacja rozdzielenia bliźniaków syjamskich dokonana w
-Instytucie w Prokocimiu.  \end{quote}
-
-\begin{quote} ***** \#008779 *****\\ Bracia syjamscy Kamil i Patryk przeszli w
-poniedziałek pierwszy zabieg przygotowujący ich do operacji rozdzielenia,
-planowanej za trzy miesiące w Polsko-Amerykańskim  Instytucie Pediatrii UJ w
-Krakowie-Prokocimiu.  \end{quote}
-
-\begin{quote} ***** \#005662 *****\\ W Polsko-Amerykańskim Instytucie Pediatrii w
-Krakowie-Prokocimiu zmarły siostry syjamskie, które urodziły się przed
-tygodniem w Wejherowie.  \end{quote}
-
-\begin{quote} ***** \#000469 *****\\ Bliźniaczki syjamskie z Poznania - Małgosia i
-Dorota - przeszły już pierwsze badania w Polsko-Amerykańskim Instytucie
-Pediatrii UJ w Krakowie-Prokocimiu." Z przeprowadzonych badań wynika, że
-siostry mają wspólną watrobę i przeponę oraz prawdopodobnie wspólne drogi
-żółciowe i serce" - powiedział PAP opiekujący się bliźniaczkami dr Adam Bysiek
-z Instytutu. Siostry urodziły się 11 lutego w poznańskiej klinice św. Rodziny.
-Dziewczynki zrośnięte są brzuszkami i klatkami piersiowymi.  \end{quote}
-
-\begin{quote} ***** \#005855 *****\\ Liczba urodzeń bliźniąt syjamskich nie
-odbiega w Polsce od statystycznej normy - powiedział PAP prof. Jan Grochowski,
-dyrektor Polsko-Amerykańskiego Instytutu Pediatrii UJ, w którym przebywają dwie
-pary bliźniąt syjamskich.  \end{quote}
-
-\begin{quote} ***** \#010677 *****\\ Lekarze z Polsko-Amerykańskiego Instytutu
-Pediatrii UJ w Krakowie Prokocimiu rozdzielili 9-miesięcznych braci syjamskich
-Kamila i Patryka - poinformował PAP doc. Adam Bysiek, szef zespołu opiekującego
-się bliźniętami.  \end{quote}
-
-\begin{quote} ***** \#007320 *****\\ Prof. Louis Gerald Keith, który w ubiegłym
-roku przeprowadził operację rozdzielenia polskich bliźniaczek syjamskich
-Weroniki i Wiktorii, został odznaczony przez prezydenta Aleksandra
-Kwaśniewskiego Krzyżem Oficerskim Zasługi RP.  \end{quote}
-
-\begin{quote} ***** \#007872 *****\\ Komitet etyki szpitala w Palermo na Sycylii
-wydał zgodę na operację peruwiańskich bliźniaczek syjamskich, w wyniku której
-jedna z nich ma szansę na ocalenie kosztem życia drugiej - doniosła prasa
-włoska.  \end{quote}
-
-\begin{quote} ***** \#012193 *****\\ Jeden z 9-miesięcznych braci syjamskich,
-rozdzielonych przez lekarzy w Krakowie pod koniec czerwca, zmarł w środę
-wieczorem z powodu niewydolności krążenia - poinformował PAP docent Adam
-Bysiek.  \end{quote}
-
-\pagebreak
-
 \section{Wyniki i analiza}
 \label{sec:results}
 
@@ -957,15 +947,15 @@ czasu uczenia modelu dla metod LSI i LDA od odpowiednio wielkości korpusu
 dla stałej liczby tematów i liczby tematów dla stałej wielkości korpusu.
 
 \begin{figure}[h]
+\includegraphics[width=\linewidth]{gfx/time_docs.png}
 \caption{Czas uczenia modelu dla 100 tematów}
 \label{time-docs}
-\includegraphics[width=\linewidth]{gfx/time_docs.png}
 \end{figure}
 
 \begin{figure}[h]
+\includegraphics[width=\linewidth]{gfx/time_topics.png}
 \caption{Czas uczenia modelu dla 5000 dokumentów}
 \label{time-topics}
-\includegraphics[width=\linewidth]{gfx/time_topics.png}
 \end{figure}
 
 \todo{Complexity discussion}
@@ -1011,13 +1001,13 @@ sobą słów, które różnią się formą fleksyjną i są w tym wypadku trakto
 całkowicie osobno.
 
 \begin{figure}[h]
+\includegraphics[width=\linewidth]{gfx/ranks_stemming.png}
 \caption{Suma kwadratów ranków dokumentów ze wzorca dla testowego zapytania (z wykorzystaniem stemmingu)}
 \label{ranks_stemming_comparison}
-\includegraphics[width=\linewidth]{gfx/ranks_stemming.png}
 
+\includegraphics[width=\linewidth]{gfx/ranks_no_stemming.png}
 \caption{Suma kwadratów ranków dokumentów ze wzorca dla testowego zapytania (bez wykorzystania stemmingu)}
 \label{ranks_no_stemming_comparison}
-\includegraphics[width=\linewidth]{gfx/ranks_no_stemming.png}
 \end{figure}
 
 \FloatBarrier
@@ -1058,12 +1048,12 @@ tematów jest podobnej jakości lub lepszy jak ten uzyskany przy użyciu LSI dla
 100 tematów.
 
 \begin{figure}[h]
-\caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów}
 \includegraphics[width=\linewidth]{gfx/lsi_roc.png}
+\caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów}
 \label{roc_lsi}
 
-\caption{Krzywe ROC dla algorytmu LDA dla wybranych liczb tematów}
 \includegraphics[width=\linewidth]{gfx/lda_roc.png}
+\caption{Krzywe ROC dla algorytmu LDA dla wybranych liczb tematów}
 \label{roc_lda}
 \end{figure}
 
@@ -1074,12 +1064,12 @@ klasyfikator uzyskany dla 300 tematów jest znacznie lepszy od tego uzyskanego
 przy pomocy LSI.
 
 \begin{figure}[h]
-\caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów bez wykorzystania stemmingu}
 \includegraphics[width=\linewidth]{gfx/lsi_roc_untagged.png}
+\caption{Krzywe ROC dla algorytmu LSI dla wybranych liczb tematów bez wykorzystania stemmingu}
 \label{roc_lsi_untagged}
 
-\caption{Krzywe ROC dla algorytmu LDA dla wybranych liczb tematów bez wykorzystania stemmingu}
 \includegraphics[width=\linewidth]{gfx/lda_roc_untagged.png}
+\caption{Krzywe ROC dla algorytmu LDA dla wybranych liczb tematów bez wykorzystania stemmingu}
 \label{roc_lda_untagged}
 \end{figure}
 
@@ -1105,14 +1095,14 @@ dobrana liczba tematów (w tym wypadku 300) pozwala osiągać dokładność
 porównywalną jedynie z LSI dla 30 tematów.
 
 \begin{figure}[h]
-\caption{Dokładność na różnych poziomach kompletności dla algorytmu LSI}
 \includegraphics[width=\linewidth]{gfx/lsi_precision.png}
+\caption{Dokładność na różnych poziomach kompletności dla algorytmu LSI}
 \label{fig:lsi_precision}
 \end{figure}
 
 \begin{figure}[h]
-\caption{Dokładność na różnych poziomach kompletności dla algorytmu LDA}
 \includegraphics[width=\linewidth]{gfx/lda_precision.png}
+\caption{Dokładność na różnych poziomach kompletności dla algorytmu LDA}
 \label{fig:lda_precision}
 \end{figure}
 
@@ -1144,8 +1134,8 @@ optymalnej liczby tematów. Takie zachowanie może wymagać dokładnego strojeni
 algorytmu do każdego zastosowania, co bywa uciążliwe i czasochłonne.
 
 \begin{figure}[h]
-\caption{Współczynnik perplexity dla LDA i LSI w zależności od liczby tematów}
 \includegraphics[width=\linewidth]{gfx/perplexity.png}
+\caption{Współczynnik perplexity dla LDA i LSI w zależności od liczby tematów}
 \label{fig:perplexity}
 \end{figure}
 
@@ -1197,7 +1187,7 @@ tematem dalszych badań, w tym:
 
 \begin{itemize}
 \item Wpływ parametrów treningu, przykładowo kryterium stopu, na jakość modelu LDA
-\item Wpływ parametrów korpusu, głównie rozmiaru leksykonu, ale także udziału słów zapożyczonych czy terminów technicznych na działanie obu metod
+\item Wpływ parametrów korpusu, głównie rozmiaru słownika, ale także udziału słów zapożyczonych czy terminów technicznych na działanie obu metod
 \item Porównanie działania modeli dla różnych jęzków z uwzględnieniem złożoności ich fleksji
 \end{itemize}
 
@@ -1205,6 +1195,36 @@ tematem dalszych badań, w tym:
 \pagebreak
 
 \appendix
+\section{Terminy i oznaczenia}
+\label{sec:terms}
+
+\begin{itemize}
+\item $df_i$ (Document Frequency) --- liczba dokumentów zawierjących $i$-ty token
+\item $gf_i$ (Global Frequency) --- stosunek liczby wystąpień $i$-tego tokenu do liczby wszystkich wyrazów w korpusie
+\item $tf_i^j$ (Term Frequency) --- stosunek liczby wystąpień $i$-tego tokenu do liczby wszystkich wyrazów w $j$-tym dokumencie
+\item Bag-of-words (worek ze słowami) --- założenie o możliowści pominięcia kolejności słów w dokumencie z małą utratą znaczenia
+\item Dokument --- tekst lub fragment tekstu
+\item FN (False Negatives) --- liczba odrzuconych dokumentów skojarzonych
+\item FP (False Positives) --- liczba zwróconych dokumentów skojarzonych
+\item Forma podstawowa --- wyróżniona, najprostsza forma wyrazu, przykładowo mianownik rzeczownika
+\item Korpus --- zbiór dokumentów
+\item LDA --- Latent Dirichlet Allocation
+\item LSI --- Latent Semantic Indexing
+\item Leksykon --- zbiór wszystkich tokenów występujących w korpusie
+\item Polisemia --- możliwość wyrażania różnych koncepcji przez ten sam wyraz, przykładowo zamek
+\item Przeuczenie --- zjawisko polegające na zbyt dokładnym odwzorowaniu danych treningowych przez model i utracie zdolności uogólniania
+\item SVD --- Singular Value Decomposition
+\item Schemat Wagowy --- sposób w jaki dokument jest transformowany do reprezentacji wektorowej
+\item Skojarzony --- (o dokumencie) zgodny z kryteriami wyszukiwania, uznany za podobny do dokumentu wzorcowego
+\item Słownik --- zbiór wyrazów występująych w korpusie
+\item TN (True Negatives) --- liczba odrzuconych dokumentów nieskojarzonych
+\item TP (True Positives) --- liczba zwróconych dokumentów skojarzonych
+\item Token --- wyraz, znak interpunkcyjny lub grupa znaków traktowana jako całość (na przykład liczba)
+\item VSM (Vector Space Model) --- modelowanie języka przez przedstawianie dokumetów jako wektorów
+\end{itemize}
+
+\pagebreak
+
 \section{Sposób użycia kodu}
 \label{sec:code}
 
@@ -1234,10 +1254,19 @@ par [TPR FPR] dla zadanej liczby tematów
 
 \pagebreak
 
+\section{Tabele tematów}
+\label{sec:full-results}
+
+\pagebreak
+
 \addcontentsline{toc}{section}{Spis tablic}
 \listoftables
+
+\pagebreak
 \addcontentsline{toc}{section}{Spis rysunków}
 \listoffigures
+
+\pagebreak
 \addcontentsline{toc}{section}{Literatura}
 \bibliographystyle{abbrv}
 \bibliography{thesis}

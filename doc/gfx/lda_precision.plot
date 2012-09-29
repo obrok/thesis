@@ -211,13 +211,13 @@
 			</array>
 		</dict>
 		<string>D</string>
-		<string>%</string>
+		<string>function</string>
 		<string>E</string>
 		<string>A</string>
 		<string>B</string>
 		<string>C</string>
+		<string>%</string>
 		<string>weight</string>
-		<string>function</string>
 		<string></string>
 		<dict>
 			<key>$classes</key>
@@ -3865,7 +3865,7 @@
 				<integer>3</integer>
 			</dict>
 			<key>NS.string</key>
-			<string>Przywołanie</string>
+			<string>Kompletność</string>
 		</dict>
 		<dict>
 			<key>$class</key>
@@ -4259,7 +4259,7 @@
 				<integer>3</integer>
 			</dict>
 			<key>NS.string</key>
-			<string>Precyzja</string>
+			<string>Dokładność</string>
 		</dict>
 		<dict>
 			<key>$class</key>
