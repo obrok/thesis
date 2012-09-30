@@ -79,17 +79,17 @@ większość z nich ma właśnie postać tekstową. Aby poradzić sobie z tym og
 napływających bodźców próbujemy uciekać się do mechanizmów, które pozwolą je
 przeanalizować albo przynajmniej wstępnie przetowrzyć. Technologie w rodzaju
 wyszukiwarek internetowych, agregatorów wiadomości czy baz filmów lub książek
-potrafiących wskazać dzieła podobne, do tych, które nam się podobały stają się
-coraz popularniejsze i często koniecznie do znalezienia porządanej informacji.
+potrafiących wskazać dzieła podobne do tych, które nam się podobały stają się
+coraz popularniejsze i często koniecznie do znalezienia pożądanej informacji.
 
 Wspomniane mechanizmy zajmują się głównie segregowaniem czy przeszukiwaniem
 danych, ale wyobrażalne są również zadania na wyższym poziomie koncepcyjnym.
 Chcielibyśmy, aby odpowiednio zaprogramowane maszyny były w stanie rozumieć
 tekst tak jak ludzie i przetwarzać go nie tyle jako ciągi znaków ile jako idee,
-opisy zdarzeń, itp. wyrażone tymi znakami. Zadania takie jak automatyczne
+opisy zdarzeń itp. wyrażone tymi znakami. Zadania takie jak automatyczne
 tłumaczenie, generowanie streszczeń lub parafrazowanie tekstów wydają się na
 tym etapie wymagać takiego właśnie zrozumienia i nadal ich sprawne wykonywanie
-pozostaje wyłączną domeną człowieka, mimo postępujących prac w tych
+pozostaje wyłączną domeną człowieka mimo postępujących prac w tych
 dziedzinach.
 
 Naczelnym problemem, który należy przezwyciężyć w tego typu zagadnieniach jest
@@ -103,19 +103,19 @@ posługują.
 
 Istnieje wiele kierunków badań mających rzucić więcej światła na rozwiązanie
 tego problemu. Najbardziaj ambitne zakładają, że konieczne jest tutaj
-stworzenie uniwersalnej sztucznej inteligencji czyli maszyny o możliwościach
+stworzenie uniwersalnej sztucznej inteligencji, czyli maszyny o możliwościach
 podobnych ludzkiemu umysłowi, która miałaby dostęp do bodźców zmysłowych
-dokładnie tak jak człowiek i byłaby w stanie w jakimś sensie w stanie rozumieć
+dokładnie tak jak człowiek i byłaby w jakimś sensie w stanie rozumieć
 język i rzeczywistość, którą opisuje.
 
 Nieco mniej radykalne podejście sugeruje budowę ontologii, czyli
 sformalizowanego opisu znaczeń wyrazów i powiązań między nimi wraz z typami
-tych powiązań. Przykładowo mogłaby ona zawierać wpis ,,tryb part-of zegar'',
+tych powiązań. Przykładowo mogłaby ona zawierać wpis ,,tryb part-of zegar''
 reprezentujący fakt, że zegary często zawierają tryby jako części. Taka baza
 wiedzy opisuje znaczenie słów niejako przez przykłady kontekstów, w których
 mogą występować i pozwala dokonywać rozumowania na temat tekstu w rodzaju
 wykrywania synekdochy (wykorzystywania całości na oznaczenie części lub
-odwrotnie, np. ,,Hollywood'' zamiast ,,Amerykański przemysł filmowy'') co
+odwrotnie, np. ,,Hollywood'' zamiast ,,Amerykański przemysł filmowy''), co
 umożliwi odkrycie jego prawdziwego znaczenia.
 
 Jeszcze inne podejście, któremy poświęcona jest ta praca, polega na próbie
@@ -125,9 +125,9 @@ związanych z nimi znaczeniowo, przykładowo ,,żaba'' może pojawić się blisk
 ,,skakać'' czy ,,pływać'', rzadziej ,,biegać''. Znów daje nam to zestaw
 kontekstów dla danego wyrazu, tym razem jednak należy go wyekstrahować z
 tekstu, a częściej zbioru tekstów, natomiast konteksty dla słów, które w takim
-korpusie się nie pojawią nie są w ogóle dostępne. Metody tego rodzaju mają
+korpusie się nie pojawią, nie są w ogóle dostępne. Metody tego rodzaju mają
 jednak tę zaletę, że operują jedynie na tekście, nie potrzebują dodatkowych
-informacji jak przedstawione wyżej podejścia.
+informacji w przeciwieństwie do przedstawionych wyżej podejść.
 
 Najprostszą wersją tego podejścia jest Vector Space Modelling - metoda
 polegająca na reprezentowaniu dokumentów jako wektorów, których współrzędne
@@ -138,16 +138,16 @@ wektorami.
 
 VSM wykazuje niestety znaczne wady, przykładowo jest całkowicie nieczułe na
 istnienie synonimów albo możliwość występowania słowa w więcej niż jednym
-znaczeniu. Co więcej duża część wyrazów w dokumentach, to z semantycznego
+znaczeniu. Co więcej duża część wyrazów w dokumentach to z semantycznego
 punktu widzenia szum, przykładowo znaki przestankowe, chociaż występują dość
 często nie są zwykle kluczowe do zrozumienia tekstu. Aby uporać się z tymi
-wadami proponuje się różne udoskonalenia tej metody, ta praca zajmuje się
+wadami proponuje się różne udoskonalenia tej metody. Ta praca zajmuje się
 porównaniem dwóch z nich --- Latent Semantic Indexing oraz Latent Dirichlet
 Analysis.
 
 LSI to metoda pochodząca wprost z algebry liniowej. Sprowadza się ona do
 wprowadzenia nowej, mniejszej bazy do przestrzeni wektorów odpowiadających
-dokumentom, w taki jednak sposób, aby zachować jak najwięcej informacji
+dokumentom w taki jednak sposób, aby zachować jak najwięcej informacji
 zawartych w oryginalnej reprezentacji. Ma to wyeliminować szum, a także wykryć
 związki między wyrazami przez ich wspólne występowanie w wektorach nowej bazy.
 
@@ -168,22 +168,22 @@ w tego typu zadaniach.
 Istnieją już porównania LSI i LDA, jak choćby \cite{lda-paper}, jednak traktują
 one głównie o języku angielskim, który ma względnie prostą fleksję. Wyniki te
 nie zawsze przenoszą się na inne języki, jak choćby polski --- wykorzystany do
-testów w tej pracy --- gdzie każdy wyraz występuja w bardzo wielu formach. Aby
+testów w tej pracy --- gdzie każdy wyraz występuje w bardzo wielu formach. Aby
 rozwiązać ten problem zastosowano wraz z metodami LSI i LDA słownik fleksyjny
-języka polskiego. Poddano także porównaniu wyniki osiągane z i bez jego
-zastosowania.
+języka polskiego - \cite{lubaszewski-slownik}. Poddano także porównaniu wyniki
+osiągane z i bez jego zastosowania.
 
 \subsection{Zawartość pracy}
 
 Rozdział \ref{sec:theory} poświęcony jest teoretycznemu opisowi porównywanych
-metod jak i metryk stosowanych do ich oceny. W rozdziale \ref{sec:data} opisany
+metod, jak i metryk stosowanych do ich oceny. W rozdziale \ref{sec:data} opisany
 został zbiór danych użytych do testów i wygenerowany przy jego użyciu testowy
 problem, natomiast w rozdziale \ref{sec:solution} opisane są mechanizmy użyte
 do jego rozwiązania. Rozdział \ref{sec:results} zawiera uzyskane wyniki
 numeryczne wraz z ich omówieniem, a rozdział \ref{sec:summary} podsumowuje
 pracę i proponuje dalsze ścieżki jej rozwoju.
 
-Dodatek \ref{sec:terms} tej pracy omawia najczęściej pojawiające się w niej
+Dodatek \ref{sec:terms} omawia najczęściej pojawiające się w tej pracy
 terminy i oznaczenia.  Ponadto w dodatku \ref{sec:code} podano sposób
 wykorzystania kodu użytego do uzyskania wyników przedtstawionych w tej pracy. W
 dodatku \ref{sec:full-results} zawarto pełną tabelę tematów wygenerowanych
@@ -212,9 +212,10 @@ dokumentu ma postać:
 d_i = (w^i_0, w^i_1, \ldots, w^i_N)
 \end{equation}
 
-gdzie wymiar $w^i_k$ odpowiada $k$-temu tokenowi z słownika. Współczynniki te
+\noindent
+gdzie wymiar $w^i_k$ odpowiada $k$-temu tokenowi ze słownika. Współczynniki te
 nazywane są także wagami i mają oddawać znaczenie danego tokenu w danym
-dokumencie --- powinny być tym wyższe im bardziej kluczowy dla sensu $i$-tego
+dokumencie --- powinny być tym wyższe, im bardziej kluczowy dla sensu $i$-tego
 dokumentu jest $k$-ty token. Przyjmuje się zwykle, że wymiary odpowiadające
 tokenom nie występującym w danym dokumencie są zerowe.
 
@@ -235,7 +236,7 @@ schematem wagowym.
 \hline
 $1$ & Brak wagi globalnej --- częstość występowania tokenów w całym korpusie jest ignorowana \\\hline
 $\frac{1}{\sum_j (l^j_k)^2}$ & Normalizacja --- tutaj przez sumę kwadratów wag lokalnych tokenu w całym korpusie\\\hline
-$\frac{gf_k}{df_k}$ & gf-idf --- waga tym większa im więcej razy występuje dany token i tym mniejsza im więcej dokumentów go zawiera\\\hline
+$\frac{gf_k}{df_k}$ & gf-idf --- waga tym większa, im więcej razy występuje dany token i tym mniejsza, im więcej dokumentów go zawiera\\\hline
 $log(\frac{n}{df_k}) + 1$ & idf --- logarytm z liczby dokumentów w których występuje dany token znormalizowanej przez liczbę wszystkich dokumentów\\\hline
 $1 - \sum_{i/0}^n \frac{tf^i_klog(tf^i_k)}{log(n)}$ & Entropia --- waga pochodząca z teorii informacji, ilość informacji którą daje pojawienie się danego tokenu o numerze tekstu, w którym to nastąpiło\\\hline
 \end{tabular}
@@ -247,14 +248,14 @@ $1 - \sum_{i/0}^n \frac{tf^i_klog(tf^i_k)}{log(n)}$ & Entropia --- waga pochodz�
 \begin{tabular}[c]{|c|p{0.875\linewidth}|}
 \hline
 $1$ & Waga binarna --- zachowana zostaje jedynie informacja o fakcie wystąpienia tokenu, liczba wystąpień jest ignorowana\\\hline
-$t^i_k$ & Częstość występowania --- najprostsza waga, można powiedzieć, że inne są próbą jej usprawnienia przez odpowiednid wygładzenie\\\hline
-$\sqrt{t^i_k}$ & Wygładzona częstość występowania --- aby oddać fakt, kolejne wystąpienia tego samego wyrazu dają stosunkowo mniejszą wskazówkę co do jego znaczenia dla danego dokumentu można wygładzić częstość występowania pierwiatskiem lub logarytmem\\\hline
+$t^i_k$ & Częstość występowania --- najprostsza waga, można powiedzieć, że inne są próbą jej usprawnienia przez odpowiednie wygładzenie\\\hline
+$\sqrt{t^i_k}$ & Wygładzona częstość występowania --- aby oddać fakt, że kolejne wystąpienia tego samego wyrazu dają stosunkowo mniejszą wskazówkę co do jego znaczenia dla danego dokumentu, można wygładzić częstość występowania pierwiatskiem lub logarytmem\\\hline
 \end{tabular}
 \end{table}
 
 Konkretny schemat wagowy dobiera się empirycznie, często pod jakąś klasę
 problemów. Dla zadań typu information retrieval dobrze sprawdzają się lokalne
-wagi wygładzone i entropia jako waga globalna z czego można wywnioskować, że
+wagi wygładzone i entropia jako waga globalna, z czego można wywnioskować, że
 obserwacja o mniejszym znaczeniu kolejnych wystąpień tokenu w tym samym
 dokumencie jest trafna.
 
@@ -268,7 +269,7 @@ informacji o tematyce poszczególnych jej akapitów, w których się pojawia.
 
 Podobnie zastosowanie binarnej wagi lokalnej negatywnie wpływa na jakość
 otrzymywanych wyników. Utrata informacji na temat dokumentu jest w tym wypadku
-zbyt duża, dodatkowe wystąpienia tokenu mimo iż nie tak znaczące jak pierwsze
+zbyt duża, dodatkowe wystąpienia tokenu, mimo iż nie tak znaczące jak pierwsze,
 są jednak wskazówką co do większego znaczenia tego tokenu w tekście.
 
 \subsubsection{Podobieństwo dokumentów}
@@ -281,7 +282,8 @@ te dokumnety. Dla wektorów dokumentów $d^i$ i $d^j$ wynosić ona będzie:
   d(d^i, d^j) = \langle \frac{d_i}{||d^i||}, \frac{d^j}{||d^j} \rangle
 \end{equation}
 
-Gdzie $\langle \bullet, \bullet \rangle$ oznacza iloczyn skalarny, a $||d|| =
+\noindent
+gdzie $\langle \bullet, \bullet \rangle$ oznacza iloczyn skalarny, a $||d|| =
 \lbrace d, d \rbrace$. Daje to liczbę z przedziału $[-1,1]$, gdzie $-1$ oznacza
 dokumenty skrajnie różne, a większe wartości coraz większe podobieństwo.
 Wartość $1$ osiągnięta zostanie dla dwóch dokumentów, w których względna
@@ -290,17 +292,17 @@ częstość występowania słów (ewentualnie znormalizowana) jest taka sama.
 \subsubsection{Wady}
 
 Zgodnie z przedstawionym mechanizmem działania wszystkie wyrazy, które mają
-różne postaci w zapisie traktowane są jako całkowicie osobne wymiary
-przestrzeni wektorowej, pomijana jest możliwość występowania wyrazów w wielu
-formach (fleksja), możliwość oznaczenia tego samego pojęcia przez wiele różnych
-ciągów symboli (synonimy) oraz możliwość, że dany ciąg symboli może opisywać
-kilka różnych pojęć (polisemia).
+różne postaci w zapisie, traktowane są jako całkowicie osobne wymiary
+przestrzeni wektorowej. Pomijana jest także możliwość występowania wyrazów w
+wielu formach (fleksja), możliwość oznaczenia tego samego pojęcia przez wiele
+różnych ciągów symboli (synonimy) oraz możliwość, że dany ciąg symboli może
+opisywać kilka różnych pojęć (polisemia).
 
 Aby mitygować te niedociągnięcia stosowane są różne rozszerzenia modelu
 przestrzeni wektorowej. Opisany w rozdziale \ref{sec:clp} słownik fleksyjny
-pozwala sprowadzić wyrazy do formy podstawowej co ,,spłaszczy'' je na powrót w
+pozwala sprowadzić wyrazy do formy podstawowej, co ,,spłaszczy'' je na powrót w
 jeden wymiar. Opisane w dalszych dwóch rozdziałach metody redukcji wymiarowości
-macierzy pozwalając wyekstrahować najczęściej pojawiające się kombinacje
+macierzy pozwalają wyekstrahować najczęściej pojawiające się kombinacje
 wyrazów i częściowo zredukować problem synonimów. Aby radzić sobie z polisemią
 możliwe jest zastosowanie mechanizmów kontekstowego ujednoznaczniania wyrazów.
 
@@ -313,12 +315,12 @@ uzyskanie lepszych wyników dzięki automatycznej identyfikacji powiązań międ
 wyrazami występującymi w dokumencie przez redukcję wymiaru macierzy
 term-dokument. Rozwiązuje to wspomniany wcześniej problem synonimów i do
 pewnego stopnia polisemii.  Istnieje przy tym nadzieja, że przez odpowiednie
-dobranie mechanizmu redukcji wymiaru macierzy usunięty zostanie szum przy
+dobranie mechanizmu redukcji wymiaru macierzy usunięty zostanie szum, przy
 jednoczesnym zachowaniu zawartej w niej informacji.
 
 \subsubsection{Intuicja}
 
-Dzięki temu, że traktujemy dokumenty jako elementy przestrzeni wektorowej
+Dzięki temu, że traktujemy dokumenty jako elementy przestrzeni wektorowej,
 możliwe staje się wprowadzenie dowolnej bazy w tej przestrzeni i
 reprezentowanie wektorów przy jej użyciu. Jedną ze stosowanych do tego metod
 jest SVD. SVD stara się znaleźć taką bazę przestrzeni, żeby jej kolejne
@@ -345,6 +347,7 @@ liczbami zespolonymi można przedstawić jako:
   M = U\Sigma V^*
 \end{equation}
 
+\noindent
 Przy czym macierz $\Sigma$ jest macierzą diagonalną, która na przekątnej
 zawiera wartości osobliwe macierzy $M$, macierz $U$ zawiera lewe wektory
 osobliwe $M$, a macierz $V^*$ jest macierzą sprzężoną do macierzy zawierającej
@@ -359,6 +362,7 @@ różnic odpowiadających sobie elementów macierzy jest zadana przez:
   M \approx \tilde{M} = U\tilde{\Sigma} V^*
 \end{equation}
 
+\noindent
 Gdzie macierz $\tilde{\Sigma}$ uzyskuje się poprzez wybranie $k$ największych
 wartości osobliwych i zastąpienie pozostałych zerami w macierzy $\Sigma$.
 
@@ -367,9 +371,9 @@ wartości osobliwych i zastąpienie pozostałych zerami w macierzy $\Sigma$.
 
 Podczas gdy LSI ma u swoich podstaw metodę algebraiczną redukcji wymiarowości
 macierzy przy utracie jak najmniejszej ilości zawartej w tej macierzy
-informacji intuicja stojąca za LDA jest znacznie bliżej spokrewniona z
+informacji, intuicja stojąca za LDA jest znacznie bliżej spokrewniona z
 wyobrażeniami na temat powstawania dokumentów tekstowych. Jak zostanie jednak
-przedstawione w tym rozdziale ostatecznie LDA również sprowadza się do redukcji
+przedstawione w tym rozdziale, ostatecznie LDA również sprowadza się do redukcji
 wymiaru macierzy term-dokument przez wprowadzenie nowej przestrzeni, w której
 reprezentowane będą dokumenty.
 
@@ -417,7 +421,7 @@ eksponentę entropii $p$, czyli:
 
 Dla dyskretnej dystrybucji o $n$ równoprawdopodonych możliwych wydarzeniach
 współczynnik perplexity wyniesie $n$ --- daje to możliwość porównania innego
-rodzaju dytrybucji (rónież ciągłych --- zamieniwszy sumę we wzorze
+rodzaju dytrybucji (również ciągłych --- zamieniwszy sumę we wzorze
 \ref{perplexity-definition} na całkę) pod względem ich ,,rozstrzelenia'', a co
 więcej daje dodatkową intuicję, że dana dystrybucja będzie generować dane,
 które będą podobnie ,,zaskakujące'' jak rzut $n$-ścienną kostką.
@@ -433,7 +437,7 @@ $\{x_1, x_2, \ldots, x_N\}$ następująco:
 
 Zaletą tego podejścia jest możliwość całkowicie automatycznej oceny jakości
 modelu --- modele lepiej opisujące dane zjawisko będą przyporządkowywać wyższe
-prawdopodobieństwa wydarzeniom, które rzeczywiście zachodzą i co za tym idzie
+prawdopodobieństwa wydarzeniom, które rzeczywiście zachodzą i co za tym idzie,
 będą miały niższy współczynnik perplexity. Zwykle taka ewaluacja stosowana jest
 do upewnienia się, że model nie jest przeuczony, że jest w stanie uogólniać
 swoje przewidywania na sytuacje inne niż dane treningowe. W takim wypadku
@@ -443,7 +447,7 @@ interacyjny proces uczenia modelu, kiedy zaczyna on wzrastać.
 
 W modelach języka jako pojedyncze zdarzenia stosuje się wyrazy lub zdania.
 Przykładowo \cite{perplexity-estimate} podaje współczynnik perplexity 247 dla
-korpusu Browna, zawierającego zróżnicowane teksty w języku algielskim
+korpusu Browna, zawierającego zróżnicowane teksty w języku angielskim,
 osiągnięty przez model trigramowy. Jest to równoważne przypadkowi, gdy każde
 słowo jest wybierane niezależnie z równym prawdopodobieństwem spośród 247
 możliwości.
@@ -451,26 +455,26 @@ możliwości.
 \subsection{Dokładność i kompletność}
 
 Aby ocenić i porównywać wyniki działania algorytmów wyszukujących dokumenty w
-korpusach należy wprowadzić formalne metryki opsisujące jakość wyników przez
+korpusach należy wprowadzić formalne metryki opisujące jakość wyników przez
 nie uzyskiwanych. Należy przy tym zauważyć, że znaczenie ma nie tylko fakt
 zwrócenia wielu czy nawet wszystkich dokumentów skojarzonych z zapytaniem, ale
 także liczba zwróconych dokumentów nieskojarzonych, gdyż stanowią one szum i
-wyniki zaweierające wiele takich dokumentów wymagają dalszego, ręcznego
+wyniki zawierające wiele takich dokumentów wymagają dalszego, ręcznego
 przetwarzania. Aby uchwycić te dwie interesujące nas cechy stosuje się
 zazwyczaj dwie metryki: dokładność i kompletność.
 
-Kompletność ma wyrażać jak dużo interesujących wyników zostało odnalezione przez
-algorytm, obliczana jest według wzoru:
+Kompletność ma wyrażać, jak dużo interesujących wyników zostało odnalezione przez
+algorytm i obliczana jest według wzoru:
 
 \begin{equation}
   K = \frac{TP}{TP + FN}
 \end{equation}
 
-W tym wzorze licznik, to liczba poprawnie zwrócocnych dokumentów, a mianownik
+W tym wzorze licznik to liczba poprawnie zwrócocnych dokumentów, a mianownik
 to po prostu liczba wszyskich dokumentów skojarzonych, które występują w danym
 korpusie.
 
-Dokładność opisuje udział skojarzonych dokumentów w zwróconych wynikach, formalnie
+Dokładność opisuje udział skojarzonych dokumentów w zwróconych wynikach i formalnie
 opisuje ją wzór:
 
 \begin{equation}
@@ -490,10 +494,10 @@ przedstawiający dla danego klasyfikatora zależność między stosunkiem liczby
 znalezionych dokumentów skojarzonych do liczby wszystkich zwróconych dokumentów
 (TPR --- True Positive Rate), a stosunkiem liczby odrzuconych dokumentów
 skojarzonych do liczby wszystkich odrzuconych dokumentów (FPR - False Positive
-Rate) w miarę zmiany progu detekcji. Obliczanie tych wartości podsumowując
+Rate) w miarę zmiany progu detekcji. Obliczanie tych wartości podsumowują
 wzory \ref{tpr} i \ref{fpr}.
 
-W tym wypadku ten zmienny próg to po prostu liczba $n$ - pierwszych $n$
+W tym wypadku ten zmienny próg to po prostu liczba $n$ --- pierwszych $n$
 dokumentów jest traktowane jako odnalezione, a pozostałe jako odrzucone.
 
 \begin{equation}
@@ -507,7 +511,7 @@ FPR = \frac{FP}{FP + TN}
 \end{equation}
 
 Lepsze klasyfikatory charakteryzują się krzywymi ROC położonymi dalej od linii
-$x = y$.  Klasyfikatory blisko, lub na tej linii nie wykonują żadnej użytecznej
+$x = y$.  Klasyfikatory blisko tej linii lub na niej nie wykonują żadnej użytecznej
 pracy. Analiza odległości krzywej ROC od linii $x = y$ w różnych miejscach
 wykresu może dać wskazówkę co do najlepszego dobrania progu detekcji dla danego
 problemu.
@@ -519,22 +523,22 @@ problemu.
 \label{data-description}
 
 Działanie algorytmów LDA i LSI analizowane było na zbiorze 51574 notatek
-Polskiej Agencji Prasowej. Notatki te to krótkie wiadomości tekstowe (średnio
-mające 409 znaków), z których większość dotyczy pojedynczego wydarzenia.
+Polskiej Agencji Prasowej. Notatki te to krótkie wiadomości tekstowe (mające
+średnio 409 znaków), z których większość dotyczy pojedynczego wydarzenia.
 Dotyczą one różnych dziedzin życia takich jak sport, polityka, gospodarka,
-sprawy obyczajowe, etc., co nadaje temu zbiorowi dodatkową różnorodność i
+sprawy obyczajowe itp., co nadaje temu zbiorowi dodatkową różnorodność i
 pozwala oczekiwać, że osiągnięte wyniki będą miarodajne dla efektywności
 algorytmów w prawdziwych zastosowaniach.
 
 \subsection{Słownik}
 
-W korpusie znajduje sie w sumie 2846997 tokenów - wyrazów, liczb, znaków
+W korpusie znajduje się w sumie 2846997 tokenów --- wyrazów, liczb, znaków
 interpunkcyjnych i innych, wśród nich 443935 różnych form (pozostałe są
 powtórzeniami). Po sprowadzeniu wyrazów od form podstawowych oraz zastosowaniu
 podstawień w rodzaju użycia tokenu ,,NUMBER'' zamiast konkretnych liczb
 pozostaje 70536 różnych form. Z tych odrzucono występujące tylko w jednym
 dokumencie, występujące w więcej niż w 70\% dokumentów, oraz tokeny mające małe
-znaczenie semantyczne takie jak spójniki i znaki interpunkcyjne, co dało
+znaczenie semantyczne, takie jak spójniki i znaki interpunkcyjne, co dało
 ostateczną liczbę 39007 tokenów. W przypadku eksperymentów bez zastosowania
 słownika fleksyjnego po tych operacjach pozostaje 131155 różnych tokenów.
 
@@ -544,8 +548,8 @@ słownika fleksyjnego po tych operacjach pozostaje 131155 różnych tokenów.
 Aby przetestować działanie obu algorytmów przygotowane zostało przykładowe
 zapytanie do systemu wyszukiwania informacji dla zbioru notatek prasowych PAP.
 Problem polega na znalezieniu dokumentów podobnych do pojedynczej wybranej
-notatki na temat bliźniaczek syjamski. Została przygotowana modelowa odpowiedź
-systemu dla porównania z faktycznymi odpowiedziami.
+notatki na temat bliźniaczek syjamskich. Została przygotowana modelowa
+odpowiedź systemu dla porównania z faktycznymi odpowiedziami.
 
 Zapytanie:
 
@@ -645,12 +649,12 @@ Bysiek.  \end{quote}
 
 W tym rozdziale zawarty został szczegółowy opis rozwiązań użytych w tej pracy.
 Pierwsza część omawia sposób przetwarzania danych wejściowych (zbioru
-dokumentów, patrz \ref{data-description}), druga natomiast omawia po krótce
+dokumentów, patrz \ref{data-description}), druga natomiast omawia pokrótce
 wykorzystane w badaniach biblioteki programistyczne.
 
 \subsection{Procedura przetwarzania}
 
-Poniżej znajduje się omówienie krok po kroku sposobu w jaki osiągnięto
+Poniżej znajduje się omówienie krok po kroku sposobu, w jaki osiągnięto
 prezentowane wyniki. Omawiane są zarówno operacje wykonywane na danych, wybór
 konkretnych możliwości w takich kwestiach jak schemat wagowy (patrz
 \ref{weighting-theory}), jak i sposób obliczania metryk jakości rozwiązania:
@@ -662,7 +666,7 @@ jakość zwróconego rankingu dokumentów.
 Metody macierzowe zachowują się znacznie lepiej dla mniejszych rozmiarów
 słownika, a co za tym idzie mniejszych rozmiarów wektorowej reprezentacji
 dokumentów. Poza oczywistym zyskiem polegającym na krótszym czasie
-przetwarzania pomniejszenie słownika w stosunku do liczby i długości
+przetwarzania, pomniejszenie słownika w stosunku do liczby i długości
 dokumentów sprawia także, że metody te mogą łatwiej wykrywać, które wyrazy są
 powiązane --- każdy wyraz występuje w większej liczbie kontekstów, umożliwiając
 zebrania na jego temat więcej informacji.
@@ -675,15 +679,15 @@ samym wyrazem. Bez niej przykładowo wyrazy ,,bliźniak`` i ,,bliźniaka`` były
 traktowane jako całkowicie różne i nie wnosiły by nic do oceny przez algorytm
 tekstów, w których występują.
 
-W \cite{manning-schuetze} sugerowano, że tego typu krok można pominąc posiadając
-odpowiednio duży korpus danych, jednak uwaga ta dotyczy języka angielskiego, w
-którym liczba form wyrazów jest stosunkowo mała. Polski jako język silnie
-fleksyjny wymagałby w tym wypadku zapewne zbioru danych o dużo więksych
-rozmiarach, którego przetwarzanie mogłoby być niepraktyczne.
+W \cite{manning-schuetze} sugerowano, że tego typu krok można pominąć
+posiadając odpowiednio duży korpus danych, jednak uwaga ta dotyczy języka
+angielskiego, w którym liczba form wyrazów jest stosunkowo mała. Polski jako
+język silnie fleksyjny wymagałby w tym wypadku zapewne zbioru danych o dużo
+większych rozmiarach, którego przetwarzanie mogłoby być niepraktyczne.
 
 \subsubsection{Preprocessing}
 
-Aby zmniejszyć rozmiar przetwarzanych danych i poprawić ich uwarukowanie po
+Aby zmniejszyć rozmiar przetwarzanych danych i poprawić ich uwarunkowanie po
 sprowadzeniu wszystkich wyrazów danego dokumentu do form podstawowych
 zastosowano dodatkowy preprocessing polegający na odrzuceniu wyrazów
 występujących w więcej niż 70\% dokumentów i takich, które wystąpiły w co
@@ -717,7 +721,7 @@ York rangers RATIO
 \label{weighting}
 
 Bezpośrednie zastosowanie podejścia bag-of-words może dawać mylny obraz
-dokumentu --- pewne wyrazy mogą pojawiać się bardzo często a mimo to nie
+dokumentu --- pewne wyrazy mogą pojawiać się bardzo często, a mimo to nie
 dostarczać żadnej pożytecznej informacji o danym dokumencie ze względu na fakt
 występowania bardzo często w danym korpusie. Innym problemem może być
 przecenianie wielokrotnego występowania danego wyrazu --- trzykrotne pojawienie
@@ -736,7 +740,7 @@ będzie on niski) i zastosowaniu logarytmu jako funkcji wygładzającej.
 
 Mając daną macierz $w_{ij}$, której $j$-ty wiersz odpowiada $j$-temu
 dokumentowi, a jego $i$-ta pozycja zawiera liczbę wystąpień $i$-tego wyrazu w
-tym dokumecie dokonujemy przeształcenia opisanego równaniami
+tym dokumecie, dokonujemy przeształcenia opisanego równaniami
 \ref{eq:log-entr-beg}--\ref{eq:log-entr-end} uzyskując macierz $a_{ij}$
 zawierającą nowe wagi wyrazów.
 
@@ -762,7 +766,7 @@ Drobiazgowe omówienie i porównanie różnych schematów wagowych znaleźć mo�
 
 Mając dany model macierzowy dla pewnego korpusu pojawia się standardowy problem
 wykonania zapytania do modelu i uzyskania z niego informacji. Dla pewnego
-dokumentu stanowiącego zapytanie $d_q$ (może to być dokument, podobny do tych,
+dokumentu stanowiącego zapytanie $d_q$ (może to być dokument podobny do tych,
 które znajdują się w korpusie, albo po prostu zbitek wyrazów w rodzaju zapytań
 wprowadzanych zwykle w wyszukiwarce internetowej) chcielibyśmy uzyskać teksty z
 korpusu $d_i$ posortowane według malejącej oceny podobieństwa tych tekstów do
@@ -785,10 +789,10 @@ $d_q$. W tym celu obliczamy dla każdego $d_i$ ranking $r_i$ według wzorów
 
 Nietrudno zauważyć, że obliczone rankingi to po prostu odległość kosinusowa
 między wektorami reprezentującymi dokumenty.  Warto zauważyć, że same rankingi
-$r_i$ także mogą okazać się przydatne, gdyż zawierając informację o ocenie
+$r_i$ także mogą okazać się przydatne, gdyż zawierają informację o ocenie
 stopnia podobieństwa między dokumentami przez system. Można sobie wyobrazić
-sytuację, w której na ich podstawie obliczan i wyświetlane operatorowi będzie
-prawdopodobieństow, że dany dokument jest tym, czego szuka.
+sytuację, w której na ich podstawie obliczane i wyświetlane operatorowi będzie
+prawdopodobieństwo, że dany dokument jest tym, czego szuka.
 
 \subsubsection{Obliczanie perplexity}
 
@@ -801,12 +805,13 @@ $2^{H_i}$ opisany jest wzorem \ref{perplexity}.
   2^{H_i} = \frac{2^{-\sum_{i/1}^n p_ilog_2(p_i)}}{n}
 \end{equation}
 
+\noindent
 Gdzie $p_i$ to prawdopodobieństwo pojawienia się $i$-tego wyrazu dla dokumentu,
 którego rozkład tematów jest taki jak w danym dokumencie, a $n$ to liczba słów
 w danym dokumencie.
 
 Aby obliczyć prawdopodobieństwo $p_i$ obliczamy odległość kosinusową $d_i$
-między danym wyrazem, a dokumentem, zgodnie z \ref{processing}. Następnie
+między danym wyrazem a dokumentem zgodnie z \ref{processing}. Następnie
 dokonujemy transformacji \ref{to-probability}, gdzie $d_j$ to odległość
 kosinusowa $j$-tego wyrazu rozponawanego przez system od danego dokumentu.
 
@@ -828,12 +833,12 @@ obu przypadkach.
 \label{sec:ranking}
 
 W celu obiektywnego porównania odpowiedzi systemu na zapytanie, która ma postać
-listy dokumentów uporządkowanych według malejącego podobieństwa do tego
-zapytania wprowadzamy metrykę mającą opisywać jakość takiej odpowiedzi. Jako,
-że głównym celem jest ocena jak wysoko w wynikach wyszukiwania znalazły się
-dokumenty skojarzone możemy do takiej oceny zastosować sumę ich ranków lub ---
+listy dokumentów uporządkowanych według malejącego podobieństwa, do tego
+zapytania wprowadzamy metrykę mającą opisywać jakość takiej odpowiedzi. Jako że
+głównym celem jest ocena, jak wysoko w wynikach wyszukiwania znalazły się
+dokumenty skojarzone, możemy do takiej oceny zastosować sumę ich ranków lub ---
 jak ostatecznie zrobiono --- sumę kwadratów ranków, aby lepiej oddać sposób
-korzystania z tego typu systemów przez jego potencjalnych użykowników, któży
+korzystania z tego typu systemów przez jego potencjalnych użykowników, którzy
 zwykle zwracają znacznie mniejszą uwagę na dokumenty nie znajdujące się w
 ścisłej czołówce zwróconego rankingu.
 
@@ -848,7 +853,7 @@ dokumentu w odpowiedzi systemu.
   \mathrm{M} = \frac{\sqrt{\sum_i^n r_i^2}}{\sqrt{\sum_i^n i^2}}
 \end{equation}
 
-\subsection{Wykorzystne rozwiązania/biblioteki}
+\subsection{Wykorzystane rozwiązania/biblioteki}
 
 Poniżej zawarto opisy najważniejszych bibliotek programistycznych
 wykorzystywanych w przeprowadzonych badaniach. Należy zauważyć, że dla
@@ -859,7 +864,7 @@ implementacyjnymi, a ich porównanie wykracza poza zakres tej pracy.
 
 \subsubsection{Biblioteka gensim}
 Do badań wykorzystano pakiet gensim \cite{gensim}. Jest to biblioteka napisana
-w języku Python tworzoan przez Radima Řehůřeka i stawiająca sobie za cel
+w języku Python tworzona przez Radima Řehůřeka i stawiająca sobie za cel
 udostępnienie narzędzi do łatwego i wydajnego przetwarzania tesktów w językach
 naturalych. Zawiera ona szereg funkcjonalności użytecznych w zadaniach
 dotyczących przetwarzania języka naturalnego takich jak:
@@ -884,7 +889,7 @@ zastosowany został słownik fleksyjny języka polskiego CLP
 \cite{gajecki-slownik} rozwijany w Zespole Przetwarzania Języka Naturalnego
 Instytutu Informatyki AGH. Jest to biblioteka napisana w języku C,
 udostępniająca interfejs pozwalający przeszukiwać zawarte w słowniku dane.
-Słownik obejmuje obecnie ponad 150 tysięcy wpisów co pokrywa niemal całkowicie
+Słownik obejmuje obecnie ponad 150 tysięcy wpisów, co pokrywa niemal całkowicie
 zbiór polskich wyrazów pospolitych. Zawiera on także najczęściej występujące
 nazwy własne i skróty.
 
@@ -899,7 +904,7 @@ w jakiej występuje
 
 Ponadto zastosowane zostało rozszerzenie słownika zaproponowane w
 \cite{korzycki-stemmer}, które umożliwia automatyczną ekstrakcję ogólnych reguł
-fleksyjnych z podstawowedo słownika.  Pozwala to na sprowadzanie do form
+fleksyjnych z podstawowego słownika.  Pozwala to na sprowadzanie do form
 podstawowych również wyrazów, które nie zostały uwzględnione w słowniku.
 
 Przykładowo, dla wyrazu ''zamek'' uzyskać można następujące informacje:
@@ -932,34 +937,34 @@ Wektor odmiany: [1, 4]\\
 Niniejszy rozdział zawiera porównanie algorytmów LDA i LSI pod kątem jakości
 otrzymywanych wyników. Zawarte w nim zostały zarówno porównanie ich przez
 pryzmat metryk z nadzorem (metryka $M$, dokładność, kompletność), które dobrze
-odpowiadają prawdziwym zastosowaniom tego typu rozwiązań jak i współczynnika
+odpowiadają prawdziwym zastosowaniom tego typu rozwiązań, jak i współczynnika
 perplexity, który może dawać sugestie na temat zdolności danej metody do
-uogólniania na nienznane dane (na przykład przy zastosowaniu do generowania
+uogólniania na nieznane dane (na przykład przy zastosowaniu do generowania
 automatycznych podsumowań) i odporności na przeuczenie.
 
 Przedstawione wyniki uzyskane są każdorazowo dla różnych liczb tematów w celu
-przedstawienia w pełni zachowania omawianych metod w różnych warunkach wraz z
-wpływem tego czynnika na ich zachownie. Jako, że parametr ten można dowolnie
+przedstawienia w pełni zachowania omawianych metod w różnych warunkach, wraz z
+wpływem tego czynnika na ich zachownie. Jako że parametr ten można dowolnie
 regulować, może pozwalać on sterować jakością osiąganych wyników kosztem
 zwiększonego nakładu obliczeniowego. Rozdział zawiera także porównanie czasu
-działania obydwu metod. Na jego końcu znajdują się wnioski jakie można
+działania obydwu metod. Na jego końcu znajdują się wnioski, jakie można
 wyciągnąć z zebranych danych.
 
 \subsection{Tematy}
 Tabele \ref{lsi_topics} i \ref{lda_topics} zawierają niektóre tematy
 wygenerowane przez algorytmy LSI i LDA skonfigurowane na 100 tematów (po
 dziesięć najbardziej znaczących słów w każdym temacie). Pojedynczy wiersz
-tabeli zawiera jeden temat - liczby przy tokenach oznaczają wagi poszczególnych
+tabeli zawiera jeden temat --- liczby przy tokenach oznaczają wagi poszczególnych
 słów w danym temacie.
 
 Tematy uzyskane przy pomocy LDA wydają się bardziej odpowiadać postrzeganiu
 tekstu przez człowieka niż te wygenerowane przez LSI.  Przykładowo temat numer
 4 w tabeli \ref{lsi_topics} można interpretować jako ,,pogoda'', jednak ma on
-znak ujemy --- dokument, dla którego podobieństwo do tego tematu będzie duże z
+znak ujemy --- dokument, dla którego podobieństwo do tego tematu będzie duże, z
 dużą pewnością nie traktuje o pogodzie. Temat numer 8 w tej samej tabeli
 prezentuje inne zachodzące zjawisko --- możliwość połączenie dwóch konceptów
 jednak z przeciwnymi znakami w jeden temat, w tym wypadku ,,policja'' ze
-znakiem dodatnim i ,,giełda'' ze znakiem uejmnym. Podobieństwo do tego tematu
+znakiem dodatnim i ,,giełda'' ze znakiem ujemnym. Podobieństwo do tego tematu
 może wskazywać, że danych tekst traktuje o pracy policji, lecz łatwo je
 przecenić --- wiele tekstów, które zawierając co innego niż informacje giełdowe
 będzie wykazywało takie podobieństow.
@@ -969,7 +974,7 @@ zawsze mają ten sam znak, jak na przykład temat numer 4 w tabeli
 \ref{lda_topics}, który wydaje się łączyć koncepty ,,sport'' i ,,giełda''. Tego
 typu tematy powodują podobny problem jak przy LSI, ale jeżeli na przykład
 stosować te metody do klastowania tekstów, to zbiór zawierający przemieszane
-teksty sportowe i giełdowe wydaj się bardziej przydatny niż taki, który zawiera
+teksty sportowe i giełdowe wydaje się bardziej przydatny niż taki, który zawiera
 różnorodne teksty, które akurat nie traktują o pogodzie.
 
 \begin{table}[h]
@@ -1016,12 +1021,12 @@ Lp. & Temat \\\hline
 
 \subsection{Czas działania}
 
-Poniższe wykresu (\ref{time-docs}, \ref{time-topics}) przedstawiając zależność
+Poniższe wykresy (\ref{time-docs}, \ref{time-topics}) przedstawiają zależność
 czasu uczenia modelu dla metod LSI i LDA od odpowiednio wielkości korpusu
 dla stałej liczby tematów i liczby tematów dla stałej wielkości korpusu.
 
 Zgodnie z wynikami zaprezentowanymi w \cite{gensim-algorithm} LDA skaluje się
-liniowo zarówno w zależności od liczby tematów jak i liczby analizowany
+liniowo zarówno w zależności od liczby tematów, jak i liczby analizowany
 dokumetów. W przypadlu LSI skalowanie jest liniowe dla liczby analizowanych
 dokumentów, jednak superliniowe w zależności od liczby tematów. Sugeruje to, że
 dla dużych liczb tematów algorytm LDA może działać znacznie szybciej.
@@ -1057,25 +1062,25 @@ przedstawiają sumę kwadratów ranków dokumentów (patrz \ref{sec:ranking}) z
 wzorca przygotowanego ręcznie dla danego zapytania w wynikach działania
 odpowiednio algorytmów LDA i LSI dla różnej liczby tematów.
 
-Algorytm LDA osiąga ogólnie gorsze wyniki niż LSI - poza przedziałem $50 - 100$
+Algorytm LDA osiąga ogólnie gorsze wyniki niż LSI, poza przedziałem $50 - 100$
 tematów. Gorszy jest też (aczkolwiek niewiele) najlepszy wynik jaki udałoby się
 osiągnąć odpowiednio dobierając liczbę tematów. Na wykresie daje się także
-zauważyć stochastyczna natura LDA - podczas gdy dla LSI wyniki niemal
-monotonicznie poprawiają się wraz ze wzrostem liczby tematów dla LDA zdarza się
+zauważyć stochastyczna natura LDA --- podczas gdy dla LSI wyniki niemal
+monotonicznie poprawiają się wraz ze wzrostem liczby tematów, dla LDA zdarza się
 znaczne pogorszenie wyników przy zwiększeniu tej liczby.
 
 Polepszenie wyników dzięki zastosowaniu stemmingu jest widoczne na pierwszy
 rzut oka --- polski jako język silnie fleksyjny jest znakomitym kandydatem do
 zastosowania tego typu techniki. W \cite{manning-schuetze} zasugerowano, że ze
-stemmingu można zrezygnować dyponując odpowiednio dużym zbiorem danych jednak
+stemmingu można zrezygnować dysponując odpowiednio dużym zbiorem danych, jednak
 wyniki te uzyskano dla języka angielskiego, którego fleksja jest znacznie mniej
 rozbudowana. W tym wypadku zebranie tak dużej ilości danych może być mniej
-praktyczne niż skonstruowanie słownika fleksyjnego takiego jak na przykład ten
+praktyczne niż skonstruowanie słownika fleksyjnego, takiego jak na przykład ten
 opisany w \cite{lubaszewski-slownik}.
 
 Co ciekawe algorytm LDA radzi sobie znacznie lepiej od LSI bez wykorzystania
 stemmingu.  Może to być spowodowane trudnością w przypadku LSI połączenia ze
-sobą słów, które różnią się formą fleksyjną i są w tym wypadku traktownae
+sobą słów, które różnią się formą fleksyjną i są w tym wypadku traktowane
 całkowicie osobno.
 
 \begin{figure}[h]
@@ -1093,7 +1098,7 @@ całkowicie osobno.
 \subsubsection{Krzywe ROC}
 
 Krzywe ROC przedstawiają zależność między True Positive Rate --- stosunkiem
-liczby poprawnie zwróconych dokumentów do liczby wszyskich skojarzonych
+liczby poprawnie zwróconych dokumentów do liczby wszystkich skojarzonych
 dokumentów, a False Negative Rate --- stosunkiem liczby niepoprawnie zwróconych
 dokumentów do liczby wszystkich nieskojarzonych dokumentów:
 
@@ -1124,7 +1129,7 @@ tematów jest podobnej jakości lub lepszy jak ten uzyskany przy użyciu LSI dla
 
 Na wykresach \ref{roc_lsi_untagged} i \ref{roc_lda_untagged} przedstawione
 zostały krzywe ROC dla algorytmów LSI i LDA bez wykorzystania stemmingu.
-Ponownie daje się zauważyć lepsze działanie algorytmu LDA w tym wypadku -
+Ponownie daje się zauważyć lepsze działanie algorytmu LDA w tym wypadku ---
 klasyfikator uzyskany dla 300 tematów jest znacznie lepszy od tego uzyskanego
 przy pomocy LSI.
 
@@ -1147,11 +1152,11 @@ wszystkich skojarzonych dokumentów) i dokładność (stosunek liczby zwróconyc
 skojarzonych dokumentów do liczby wszystkich zwróconych dokumentów) to częste
 metryki w zagadnieniach typu information retrieval. Wybranie jakiegoś poziomu
 kompletności reprezentuje pewien kompromis między prawdopodobieństwem zawarcia
-wszystkich interesujących wyników w zwróconych danych, a częstością
+wszystkich interesujących wyników w zwróconych danych a częstością
 występowania w nich danych skojarzonych, a więc ilością czasu, który musi
 poświęcić operator systemu na ich dalsze przetworzenie.
 
-Wykresy \ref{fig:lsi_precision} i \ref{fig:lda_precision} prezentują dkoładność
+Wykresy \ref{fig:lsi_precision} i \ref{fig:lda_precision} prezentują dokładność
 osiąganą przez algorytmy LDA i LSI na różnych poziomach kompletności dla
 przykładowego problemu.
 
@@ -1177,10 +1182,10 @@ porównywalną jedynie z LSI dla 30 tematów.
 
 Współczynnik perplexity, który dla pewnych prawdopodobieństw $p_i$
 przypisywanych przez model zdarzeniom obliczyć można zgodnie ze wzorem
-\ref{perplexity2}, daje pewne pojęcie o tym jak dobrze model jest w stanie
+\ref{perplexity2}, daje pewne pojęcie o tym, jak dobrze model jest w stanie
 przewidzieć nowe dane. Wysokie wartości współczynnika mogą wskazywać, że model
-jest przeuczony i będze słabo uogólniał swoje działania na nieznane dane. Jest
-on dobrym wskaźnikiem jak dobrze model będzie sobie radził z klastrowaniem tego
+jest przeuczony i będzie słabo uogólniał swoje działania na nieznane dane. Jest
+on dobrym wskaźnikiem, jak dobrze model będzie sobie radził z klastrowaniem tego
 typu danych.
 
 \begin{equation}
@@ -1190,12 +1195,12 @@ typu danych.
 
 W tym wypadku $p_i$ to prawdopodobieństwo wygenerowania $i$-tego wyrazu w
 kontekście dokumentu, w którym on występuje, czyli pod warunkiem pewnej
-kombinacji tematów (która zdaje rozkład prawdopodobieństwa po słowach) jaką
+kombinacji tematów (która zdaje rozkład prawdopodobieństwa po słowach), jaką
 system przyporządkował temu dokumentowi. Liczba $n$ to czynnik normalizujący
 będący liczbą wszystkich wyrazów w danym dokumencie.
 
 Wartości współczynnika perplexity dla omawianych metod w zależności od liczby
-tematów są przedstawione na wykresie \ref{fig:perplexity}, Wykres demonstruje,
+tematów są przedstawione na wykresie \ref{fig:perplexity}. Wykres demonstruje,
 że optymalne wartości współczynnika perplexity zostają osiągnięte w okolicach
 50 tematów. W tym wypadku może to sugerować, że mniej więcej na tyle właśnie
 grup tematycznych należałoby podzielić ten zbiór danych.
@@ -1216,12 +1221,12 @@ algorytmu do każdego zastosowania, co bywa uciążliwe i czasochłonne.
 
 Algorytm LDA daje gorszej jakości (a przynajmniej mniej stabilne) wyniki dla
 typowych problemów klasyfikacji i wyszukiwania informacji spotykanych w
-codziennej praktyce co nie jest zaskakujące, zważywszy na fakt, że LDA można
-traktować jako metodą analogiczną do LSI z nałożonym dodatkowym ograniczeniem o
+codziennej praktyce, co nie jest zaskakujące zważywszy na fakt, że LDA można
+traktować jako metodę analogiczną do LSI z nałożonym dodatkowym ograniczeniem o
 dodatniości wag. Wydaje się za to być w stanie działać w sytuacji, gdy wiele
 różnych tokenów oznacza to samo (przypadek bez wykorzystania stemmingu), w
 odróżnieniu od LSI, którego wyniki są wtedy całkowicie nieprzydatne. To bardzo
-porządana cecha w przypadku braku odpowiedniego słownika fleksyjnego dla danego
+pożądana cecha w przypadku braku odpowiedniego słownika fleksyjnego dla danego
 języka.
 
 Metryka perplexity zdaje się sugerować, że LDA jest w stanie uogólniać się na
@@ -1229,17 +1234,17 @@ nieznane dane podobnie dobrze jak LSI, jednak trudniej dobrać parametry, dla
 których tak się stanie.
 
 Zarówno LSI jak i LDA skalują się liniowo z liczbą analizowanych dokumentów,
-jednak LSI potrzebuje ponad-liniowego czasu w zależności od liczby tematów.
+jednak LSI potrzebuje ponadliniowego czasu w zależności od liczby tematów.
 Bardzo duże liczby tematów będą praktyczne dopiero dla wielkich korpusów,
 jednak jest to kolejne potencjalne zastosowanie dla LDA.
 
 Przewagą LDA wydaje się być jakość generowanych tematów --- przez wymuszenie
 dodatnich wag otrzymujemy na najbardziej znaczących pozycjach (z najwyższymi
 wagami) słowa opisujące dany dokument/temat, podczas gdy w przypadku LSI mogą
-to być słowa najodleglejsze. Takie zachowanie może okazać się korzystne w
+to być słowa najodleg\-lejsze. Takie zachowanie może okazać się korzystne w
 zastosowaniach typu tagowanie dokumentów lub automatyczne generowanie
 podsumowań czy słów kluczowych, odpowiada ono lepiej postrzeganiu tekstu przez
-człowiek, a przecież to on będzie odbiorcą takich podsumowań.
+człowieka, a przecież to on będzie odbiorcą takich podsumowań.
 
 \pagebreak
 
@@ -1249,9 +1254,9 @@ W tej pracy opisano i poddano porównaniu metody Latent Semantic Indexing i
 Latent Dirichlet Analysis pod kątem ich przydatności do automatycznego
 porównywania i ekstrahowania tematu dokumentów w języku polskim. W typowych
 zadaniach metoda LSI daje lepsze wyniki i łatwiej jest dobrać liczbę tematów
-dla danego odpowiednią dla danego korpusu. Metoda LDA pozwala ekstrahować
-tematy lepiej odpowiadające ludzkiemu postrzeganiu tekstu przez co lepiej
-nadaje się do tagowania czy generowania skrótów dokumentów.
+odpowiednią dla danego korpusu. Metoda LDA pozwala ekstrahować tematy lepiej
+odpowiadające ludzkiemu postrzeganiu tekstu, przez co lepiej nadaje się do
+tagowania czy generowania skrótów dokumentów.
 
 Z braku czasu nie rozważono pewncyh aspektów tego zagadnienia, które mogą być
 tematem dalszych badań. Jednym z nich jest wpływ parametrów uczenia modelu LDA
@@ -1265,7 +1270,7 @@ wartości tych parametrów dla danego problemu znacznie poprawi osiągane wyniki
 Innym potencjalnym kierunkiem rozwoju jest porównanie działania LDA na różnych
 rodzajach korpusów. W świetle osiągniętych dobrych wyników dla dużych rozmiarów
 słownika można się spodziewać, że korpusy zawierające wiele rzadkich wyrazów,
-które są jednak kluczowe dla ich znacznie, takie jak na przykład prace naukowe
+które są jednak kluczowe dla ich znacznia, takie jak na przykład prace naukowe,
 będą dobrze klastrowane przez LDA.
 
 Powiązana z powyższym jest możliwość dalszego porównania działania LDA dla

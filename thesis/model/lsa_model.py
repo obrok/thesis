@@ -18,6 +18,7 @@ class ModelWrapper:
     self.docs = docs
     self.dictionary = corpora.Dictionary(docs)
     self.dictionary.filter_extremes(NO_BELOW, NO_ABOVE, None)
+    print len(self.dictionary.keys())
     self.vectors = map(self.vectorize, docs)
     self.logmodel = models.LogEntropyModel(self.vectors, self.dictionary)
     self.vectors = self.logmodel[self.vectors]
