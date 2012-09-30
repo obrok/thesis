@@ -4,7 +4,7 @@
 \usepackage{polski}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{graphicx}
+\usepackage[pdftex]{graphicx}
 \usepackage{color}
 \usepackage{placeins}
 \usepackage[math]{anttor}
@@ -15,20 +15,53 @@
 \usepackage{array}
 \frenchspacing
 
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
 \newcommand{\todo}[1]{\colorbox{yellow}{#1}}
 
 \begin{document}
 
-\title{Automatyczna klasyfikacja i ekstrakcja tematu krótkich notatek w języku polskim}
-\author{Paweł Obrok\\pod kierunkiem dr. Michała Korzyckiego}
+\begin{titlepage}
 
-\maketitle
-\pagebreak
+\begin{center}
+\includegraphics[width=2cm]{gfx/agh-logo.png}\\[1cm]
 
-\todo{Oświadczenie prawnoautorskie}
-\pagebreak
+\textsc{\LARGE Akademia Górniczo-Hutnicza\\im. Stanisława Staszica w Krakowie}\\[0.5cm]
+\textsc{\Large Wydział Elektrotechniki, Automatyki, Informatyki i Elektroniki}\\[0.5cm]
+\textsc{\Large Katedra Informatyki}\\[1.5cm]
+\textsc{\Large Praca magisterska}\\[0.5cm]
 
-\todo{Strona tytułowa po angielsku}
+\HRule \\[0.4cm]
+{ \Large \bfseries Automatyczna klasyfikacja i ekstrakcja tematu krótkich wiadomości tekstowych w języku polskim}\\[0.4cm]
+
+\HRule \\[1.5cm]
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Autor:}\\
+Paweł Obrok
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Promotor:} \\
+dr inż. Michał Korzycki
+\end{flushright}
+\end{minipage}
+
+\vfill
+
+{\large Kraków 2012}
+
+\end{center}
+
+\end{titlepage}
+
+\begin{center}
+\vfill
+
+\textsc{\Large Oświadczenie autora}\\[0.5cm]
+\textsc{Oświadczam, świadomy odpowiedzialności karnej za poświadczenie nieprawdy, że niniejszą pracę dyplomową wykonałem osobiście i samodzielnie i że nie korzystałem ze źródeł innych niż wymienione w pracy.}\\[0.5cm]
+\end{center}
 \pagebreak
 
 \tableofcontents
@@ -356,9 +389,19 @@ losowania: najpierw z dystrybucji tematów dla danego dokumentu losowany jest
 temat, a następnie z dystrybucji wyrazów w tym temacie losowany jest kolejny
 wyraz.
 
-\subsubsection{Dobieranie parametrów modelu}
+\subsubsection{Budowa modelu}
 
-\todo{Something here}
+Mechanizm Latent Dirichlet Allocation opiera się na założeniu, że dany dokument
+bądź wyraz związany jest z pewną liczbą tematów.  Model dla Latent Dirichlet
+Allocation jest macierzą $K \times V$ (dla $K$: liczba tematów, $V$ -
+rozmiaru słownika) gdzie wiersz oznacza prawdopodobieństwo  przynależności
+danego wyrazu do danego tematu.  Rozkład tematów dla danych dokumentów i
+wyrazów jest modelowy przez rozkład Dirichleta, którego parametry są estymowane
+na podstawie obserwowanego korpusu. Rozkład Dirichleta jest faktycznie rodziną
+ciągłych rozkładów wielu zmiennych parametryzowaną przez wektor $\alpha$
+dodatnich parametrów rzeczywistych (stanowi wielowymiarowe uogólnienie rozkładu
+beta).  Algorytm zastosowany tu do estymacji modelu to online variational Bayes
+algorithm for Latent Dirichlet Allocation \cite{gensim-algorithm}.
 
 \subsection{Perplexity}
 
@@ -977,6 +1020,12 @@ Poniższe wykresu (\ref{time-docs}, \ref{time-topics}) przedstawiając zależno�
 czasu uczenia modelu dla metod LSI i LDA od odpowiednio wielkości korpusu
 dla stałej liczby tematów i liczby tematów dla stałej wielkości korpusu.
 
+Zgodnie z wynikami zaprezentowanymi w \cite{gensim-algorithm} LDA skaluje się
+liniowo zarówno w zależności od liczby tematów jak i liczby analizowany
+dokumetów. W przypadlu LSI skalowanie jest liniowe dla liczby analizowanych
+dokumentów, jednak superliniowe w zależności od liczby tematów. Sugeruje to, że
+dla dużych liczb tematów algorytm LDA może działać znacznie szybciej.
+
 \begin{figure}[h]
 \includegraphics[width=\linewidth]{gfx/time_docs.png}
 \caption{Czas uczenia modelu dla 100 tematów}
@@ -989,8 +1038,6 @@ dla stałej liczby tematów i liczby tematów dla stałej wielkości korpusu.
 \label{time-topics}
 \end{figure}
 
-\todo{Complexity discussion}
-\todo{Conclusions}
 
 \FloatBarrier
 
@@ -1207,13 +1254,25 @@ tematy lepiej odpowiadające ludzkiemu postrzeganiu tekstu przez co lepiej
 nadaje się do tagowania czy generowania skrótów dokumentów.
 
 Z braku czasu nie rozważono pewncyh aspektów tego zagadnienia, które mogą być
-tematem dalszych badań, w tym:
+tematem dalszych badań. Jednym z nich jest wpływ parametrów uczenia modelu LDA
+na jakość otrzymywanych wyników. Stosowany tu algorytm
+(\cite{gensim-algorithm}) ma trzy takie parametry: $\kappa$ kontrolujący
+szybkość zapominania starych informacji, $\gamma_0$ wpływający na zmniejszenie
+wagi wczesnych iteracji oraz $S$ oznaczający liczbę dokumentów, które mają być
+użyte w każdej iteracji. Można się spodziewać, że dobranie odpowiednich
+wartości tych parametrów dla danego problemu znacznie poprawi osiągane wyniki.
 
-\begin{itemize}
-\item Wpływ parametrów treningu, przykładowo kryterium stopu, na jakość modelu LDA
-\item Wpływ parametrów korpusu, głównie rozmiaru słownika, ale także udziału słów zapożyczonych czy terminów technicznych na działanie obu metod
-\item Porównanie działania modeli dla różnych jęzków z uwzględnieniem złożoności ich fleksji
-\end{itemize}
+Innym potencjalnym kierunkiem rozwoju jest porównanie działania LDA na różnych
+rodzajach korpusów. W świetle osiągniętych dobrych wyników dla dużych rozmiarów
+słownika można się spodziewać, że korpusy zawierające wiele rzadkich wyrazów,
+które są jednak kluczowe dla ich znacznie, takie jak na przykład prace naukowe
+będą dobrze klastrowane przez LDA.
+
+Powiązana z powyższym jest możliwość dalszego porównania działania LDA dla
+korpusów w różnych językach. Tutaj również można się spodziewać, że LDA będzie
+działać stosunkowo lepiej dla języków o bogatszym słownictwie albo bardziej
+rozbudowanej fleksji, zwłaszcze w wypadku braku narzędzi umożliwiających
+sprowadzenie tekstu w danym jęzku do form podstawowych.
 
 \label{sec:summary}
 \pagebreak
